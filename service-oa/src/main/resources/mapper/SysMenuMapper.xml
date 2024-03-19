@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace等于mapper接口类的全限定名,这样实现对应 -->
+<mapper namespace="com.myPro.auth.mapper.SysMenuMapper">
+    
+    <resultMap id="sysMenuMap"
+               type="com.myPro.model.system.SysMenu" autoMapping="true">
+
+    </resultMap>
+    <select id="getMenuListByUserId" resultMap="sysMenuMap">
+        SELECT DISTINCT `sys_menu`.*
+        FROM `sys_menu`,(
+        SELECT DISTINCT menu_id
+        FROM `sys_role_menu` ,
+        (
+        SELECT DISTINCT role_id
+        FROM `sys_user_role`
+        WHERE user_id = 2 AND is_deleted = 0
+        ) AS t1
+        WHERE `sys_role_menu`.role_id = t1.role_id AND is_deleted = 0
+        )AS t2
+        WHERE `sys_menu`.id = t2.menu_id AND is_deleted = 0
+
+    </select>
+</mapper>
