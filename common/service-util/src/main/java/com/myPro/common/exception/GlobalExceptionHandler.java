@@ -1,6 +1,7 @@
 package com.myPro.common.exception;
 
 import com.myPro.common.result.Result;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,5 +24,13 @@ public class GlobalExceptionHandler {
     public Result error(NullPointerException e){
         e.printStackTrace();
         return Result.fail(e.getMessage()).message("执行了空指针异常处理...");
+    }
+
+    //权限异常
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseBody
+    public Result error(AccessDeniedException e){
+        e.printStackTrace();
+        return Result.fail(e.getMessage()).message("你TM没权限还想操作?!");
     }
 }

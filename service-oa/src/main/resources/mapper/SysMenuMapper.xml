@@ -17,7 +17,7 @@
         (
         SELECT DISTINCT role_id
         FROM `sys_user_role`
-        WHERE user_id = 2 AND is_deleted = 0
+        WHERE user_id = #{ userId } AND is_deleted = 0
         ) AS t1
         WHERE `sys_role_menu`.role_id = t1.role_id AND is_deleted = 0
         )AS t2

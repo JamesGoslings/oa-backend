@@ -171,7 +171,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         return routerPath;
     }
 
-    //根据userId返回用户能操作的的按钮列表
+    //根据userId返回用户能操作的的菜单、按钮列表
     @Override
     public List<String> getUserPermsByUserId(Long userId) {
         List<SysMenu> sysMenuList;

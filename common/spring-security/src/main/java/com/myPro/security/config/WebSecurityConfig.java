@@ -9,12 +9,14 @@ import com.myPro.security.filter.TokenLoginFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -28,7 +30,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @SuppressWarnings("all")
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig{
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -53,8 +59,8 @@ public class WebSecurityConfig{
                         .requestMatchers(HttpMethod.POST,"/admin/system/index/login").permitAll()
                         .anyRequest().authenticated())
 //                .authenticationProvider(authenticationProvider())
-                .addFilterBefore(new TokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-                .addFilter(new TokenLoginFilter(authenticationManager()));
+                .addFilterBefore(new TokenAuthenticationFilter(redisTemplate), UsernamePasswordAuthenticationFilter.class)
+                .addFilter(new TokenLoginFilter(authenticationManager(),redisTemplate));
         return http.build();
 
     }
@@ -75,31 +81,5 @@ public class WebSecurityConfig{
         provider.setPasswordEncoder(customMd5PasswordEncoder);
         return new ProviderManager(provider);
     }
-
-
-
-
-//    private AuthenticationManager myAuthenticationManager;
-
-//    @Bean
-//    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-//        myAuthenticationManager = config.getAuthenticationManager();
-//        return config.getAuthenticationManager();
-//    }
-
-//    @Bean
-//    public AuthenticationProvider authenticationProvider() {
-//        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-//        // DaoAuthenticationProvider 从自定义的 userDetailsService.loadUserByUsername 方法获取UserDetails
-//        authProvider.setUserDetailsService(userDetailsService());
-//        // 设置密码编辑器
-//        authProvider.setPasswordEncoder(customMd5PasswordEncoder);
-//        return authProvider;
-//    }
-
-
-
-
-
 
 }
