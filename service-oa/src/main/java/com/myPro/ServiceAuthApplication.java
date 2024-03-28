@@ -1,13 +1,11 @@
-package com.myPro.auth;
+package com.myPro;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
-import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 
-@MapperScan("com.myPro.auth.mapper")
+@MapperScan({"com.myPro.auth.mapper","com.myPro.process.mapper"})
 @SpringBootApplication(scanBasePackages = {"com.myPro"})
 //@EnableSwagger2WebMvc
 public class ServiceAuthApplication {
