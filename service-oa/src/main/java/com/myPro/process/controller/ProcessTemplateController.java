@@ -1,10 +1,12 @@
 package com.myPro.process.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.myPro.common.result.Result;
 import com.myPro.model.process.ProcessTemplate;
 import com.myPro.process.service.ProcessTemplateService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +23,10 @@ public class ProcessTemplateController {
     public Result page(@PathVariable Long page,
                        @PathVariable Long limit){
         Page<ProcessTemplate> pageParam = new Page<>(page, limit);
-        return Result.ok(processTemplateService.page(pageParam));
+        //根据类型id把审批类型对应名称查询出来放到返回的page中
+        IPage<ProcessTemplate> pageModel =
+                processTemplateService.selectPageProcessTemplate(pageParam);
+        return Result.ok(pageModel);
     }
 
     @GetMapping("get/{id}")
