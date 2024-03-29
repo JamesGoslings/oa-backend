@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace等于mapper接口类的全限定名,这样实现对应 -->
+<mapper namespace="com.myPro.process.mapper.ProcessMapper">
+
+    <select id="selectPage" resultType="com.myPro.vo.process.ProcessVo">
+        SELECT pro.*, `user`.name, `pte`.name AS processTemplateName,`pty`.name AS processTypeName
+        FROM `oa_process` pro,`sys_user` `user`,`oa_process_template` pte,`oa_process_type` pty
+        WHERE pro.user_id = `user`.id
+        AND pro.`process_template_id` = pte.id
+        AND pro.`process_type_id` = pty.id
+        AND `user`.is_deleted = 0
+        AND pro.is_deleted = 0
+        AND pte.is_deleted = 0
+        AND pty.is_deleted = 0
+        <if test="vo.keyword != null and vo.keyword != ''">
+            and (pro.process_code like CONCAT('%',#{vo.keyword},'%')
+            or  pro.title like CONCAT('%',#{vo.keyword},'%')
+            or `user`.phone like CONCAT('%',#{vo.keyword},'%')
+            or `user`.name like CONCAT('%',#{vo.keyword},'%'))
+        </if>
+        <if test="vo.userId != null and vo.userId != ''">
+            and pro.user_id = #{vo.userId}
+        </if>
+        <if test="vo.status != null and vo.status != ''">
+            and pro.status = #{vo.status}
+        </if>
+        <if test="vo.createTimeBegin != null and vo.createTimeBegin != ''">
+            and pro.create_time >= #{vo.createTimeBegin}
+        </if>
+        <if test="vo.createTimeEnd != null and vo.createTimeEnd != ''">
+            and pro.create_time &lt;= #{vo.createTimeEnd}
+        </if>
+
+    </select>
+</mapper>
