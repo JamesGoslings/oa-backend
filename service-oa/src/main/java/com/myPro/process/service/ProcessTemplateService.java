@@ -8,4 +8,5 @@ import com.myPro.model.process.ProcessTemplate;
 public interface ProcessTemplateService extends IService<ProcessTemplate> {
     IPage<ProcessTemplate> selectPageProcessTemplate(Page<ProcessTemplate> pageParam);
 
+    void publish(Long id);
 }

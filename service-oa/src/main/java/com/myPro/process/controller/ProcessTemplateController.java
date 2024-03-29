@@ -3,12 +3,21 @@ package com.myPro.process.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.myPro.common.exception.MyException;
 import com.myPro.common.result.Result;
 import com.myPro.model.process.ProcessTemplate;
 import com.myPro.process.service.ProcessTemplateService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @SuppressWarnings("all")
@@ -28,6 +37,15 @@ public class ProcessTemplateController {
                 processTemplateService.selectPageProcessTemplate(pageParam);
         return Result.ok(pageModel);
     }
+
+    //部署流程定义(发布)
+    @GetMapping("/publish/{id}")
+    public Result publish(@PathVariable Long id){
+        //修改模板发布状态 1：已经发布
+        processTemplateService.publish(id);
+        return Result.ok();
+    }
+
 
     @GetMapping("get/{id}")
     public Result get(@PathVariable Long id){
@@ -53,4 +71,30 @@ public class ProcessTemplateController {
         return Result.ok();
     }
 
+    @PostMapping("uploadProcessDefinition")
+    public Result uploadProcessDefinition(MultipartFile file) throws FileNotFoundException {
+         //TODO 获取classes目录路径
+        String path = new File(ResourceUtils.getURL("classpath:").getPath()).getAbsolutePath();
+        //TODO 设置上传文件夹
+        File tempFile = new File(path + "/processes/");
+        if(!tempFile.exists()){
+            tempFile.mkdirs();
+        }
+        //todo 创建空文件，实现文件写入
+        String fileName = file.getOriginalFilename();
+        File zipFile = new File(path + "/processes/" + fileName);
+
+        //todo 保存文件
+        try {
+            file.transferTo(zipFile);
+        } catch (IOException e) {
+            throw new MyException(503,"保存文件失败~");
+        }
+
+        Map<String, Object> map = new HashMap<>();
+        //todo 根据上传地址后续部署流程定义，文件名称为流程定义的默认key
+        map.put("processDefinitionPath", "processes/" + fileName);
+        map.put("processDefinitionKey", fileName.substring(0, fileName.lastIndexOf(".")));
+        return Result.ok(map);
+    }
 }

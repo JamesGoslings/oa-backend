@@ -24,6 +24,10 @@ public class ProcessTypeController {
         return Result.ok(processTypeService.page(pageParam));
     }
 
+    @GetMapping("findAll")
+    public Result getAll() {
+        return Result.ok(processTypeService.list());
+    }
 
     @GetMapping("get/{id}")
     public Result get(@PathVariable Long id) {
