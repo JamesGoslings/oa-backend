@@ -7,10 +7,12 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.myPro.model.process.ProcessTemplate;
 import com.myPro.model.process.ProcessType;
 import com.myPro.process.mapper.ProcessTemplateMapper;
+import com.myPro.process.service.ProcessService;
 import com.myPro.process.service.ProcessTemplateService;
 import com.myPro.process.service.ProcessTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -20,6 +22,9 @@ public class ProcessTemplateServiceImpl extends ServiceImpl<ProcessTemplateMappe
 
     @Autowired
     private ProcessTypeService processTypeService;
+
+    @Autowired
+    private ProcessService processService;
 
     @Override
     public IPage<ProcessTemplate> selectPageProcessTemplate(Page<ProcessTemplate> pageParam) {
@@ -48,6 +53,9 @@ public class ProcessTemplateServiceImpl extends ServiceImpl<ProcessTemplateMappe
         baseMapper.updateById(processTemplate);
 
         //TODO 流程定义部署
+        if(!StringUtils.isEmpty(processTemplate.getProcessDefinitionPath())){
+            processService.deployByZip(processTemplate.getProcessDefinitionPath());
+        }
 
     }
 }

@@ -8,5 +8,10 @@ import com.myPro.vo.process.ProcessQueryVo;
 import com.myPro.vo.process.ProcessVo;
 
 public interface ProcessService extends IService<Process> {
+
+    //审批管理列表
     IPage<ProcessVo> selectPage(Page<ProcessVo> pageParam, ProcessQueryVo processQueryVo);
+
+    //部署流程定义
+    void deployByZip(String deployPath);
 }
