@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.myPro.auth.service.SysUserService;
 import com.myPro.common.jwt.JwtHelper;
 import com.myPro.common.result.Result;
+import com.myPro.common.utils.FileUtil;
 import com.myPro.common.utils.MD5;
 import com.myPro.model.system.SysUser;
 import com.myPro.vo.system.SysUserQueryVo;
@@ -17,9 +18,16 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -106,35 +114,72 @@ public class SysUserController {
 
     //上传并保存用户的头像
     @PostMapping("uploadAvatar")
-    public Result uploadAvatar (HttpServletRequest  request) throws FileNotFoundException {
-        String classpath = new File(ResourceUtils.getURL("classpath:").getPath()).getAbsolutePath();
+    public Result uploadAvatar (HttpServletRequest  request) throws FileNotFoundException, UnknownHostException {
+        String classpath = FileUtil.classpath;
 
         MultipartHttpServletRequest req = (MultipartHttpServletRequest) request;
         MultipartFile file = req.getFile("myFile");
 
 
-        File tempFile = new File(classpath + "/user-avatars/");
-        if(!tempFile.exists()){
-            tempFile.mkdirs();
+//        File tempFile = new File(classpath + "/user-avatars/");
+//        if(!tempFile.exists()){
+//            tempFile.mkdirs();
+//        }
+        String token = request.getHeader("token");
+        Long userId = JwtHelper.getUserId(token);
+        String username = JwtHelper.getUsername(token);
+
+        String suffix = FileUtil.getFileSuffix(file);
+
+        String fileName = userId + "-" + username + suffix;
+        if(!FileUtil.uploadFile(file, classpath + "/user-avatars/" , fileName)){
+            return Result.build(503, "文件保存失败");
         }
+//        String fileName = file.getOriginalFilename();
 
-        String fileName = file.getOriginalFilename();
+//        File saveFile = new File(classpath + "/user-avatars/" + fileName);
+//
+//        try{
+//            file.transferTo(saveFile);
+//        }catch (IOException e){
+//            return Result.build(503, e.getMessage());
+//        }
 
-        File saveFile = new File(classpath + "/user-avatars/" + fileName);
+        SysUser user = service.getById(userId);
+        user.setHeadUrl(classpath + "/user-avatars/" + fileName);
+        service.updateById(user);
 
-        try{
-            file.transferTo(saveFile);
-        }catch (IOException e){
-            return Result.build(503, e.getMessage());
-        }
+//        //获得本机Ip（获取的是服务器的Ip）
+//        InetAddress inetAddress = InetAddress.getLocalHost();
+//        String ip = inetAddress.getHostAddress();
+//        //返回保存的url，根据url可以进行文件查看或者下载
+//        String fileDownloadUrl = request.getScheme() + "://" + ip + ":" + request.getServerPort() + "/api/file/"  + fileName;
+//
+//        String token = request.getHeader("token");
+//        Long userId = JwtHelper.getUserId(token);
+//
+//
+//        SysUser user = service.getById(userId);
+//        user.setHeadUrl(fileDownloadUrl);
+//
+//        service.updateById(user);
 
-//        System.out.println(classpath);
-        return  Result.ok("成功保存文件");
+
+
+        System.out.println("=========================>");
+        System.out.println(file);
+        System.out.println("=========================>");
+        //        System.out.println(classpath);
+        return  Result.ok(file);
     }
 
     @GetMapping("getAvatar/{id}")
-    public Result getAvatar (@PathVariable Long id){
-
+    public String  getAvatar (@PathVariable Long id){
+        SysUser user = service.getById(id);
+        String base64Str = FileUtil.convertImageToBase64Str(user.getHeadUrl());
+        System.out.println("base64==================>");
+        System.out.println(base64Str);
+        return  base64Str;
     }
 
 
