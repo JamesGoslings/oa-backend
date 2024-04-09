@@ -49,16 +49,14 @@ public class WebSecurityConfig{
                 .csrf().disable()
                 .formLogin().disable()
                 .logout().disable()
-
                 //开启跨域
-//                .cors().and()
+                .cors().and()
 //                .authorizeRequests().and()
                 //禁用session
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorizeHttpRequest -> authorizeHttpRequest
                         .requestMatchers(HttpMethod.POST,"/admin/system/index/login").permitAll()
                         .anyRequest().authenticated())
-//                .authenticationProvider(authenticationProvider())
                 .addFilterBefore(new TokenAuthenticationFilter(redisTemplate), UsernamePasswordAuthenticationFilter.class)
                 .addFilter(new TokenLoginFilter(authenticationManager(),redisTemplate));
         return http.build();

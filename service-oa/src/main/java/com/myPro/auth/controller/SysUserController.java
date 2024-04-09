@@ -4,14 +4,22 @@ package com.myPro.auth.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.myPro.auth.service.SysUserService;
+import com.myPro.common.jwt.JwtHelper;
 import com.myPro.common.result.Result;
 import com.myPro.common.utils.MD5;
 import com.myPro.model.system.SysUser;
 import com.myPro.vo.system.SysUserQueryVo;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ResourceUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -95,6 +103,40 @@ public class SysUserController {
         }
         return Result.fail();
     }
+
+    //上传并保存用户的头像
+    @PostMapping("uploadAvatar")
+    public Result uploadAvatar (HttpServletRequest  request) throws FileNotFoundException {
+        String classpath = new File(ResourceUtils.getURL("classpath:").getPath()).getAbsolutePath();
+
+        MultipartHttpServletRequest req = (MultipartHttpServletRequest) request;
+        MultipartFile file = req.getFile("myFile");
+
+
+        File tempFile = new File(classpath + "/user-avatars/");
+        if(!tempFile.exists()){
+            tempFile.mkdirs();
+        }
+
+        String fileName = file.getOriginalFilename();
+
+        File saveFile = new File(classpath + "/user-avatars/" + fileName);
+
+        try{
+            file.transferTo(saveFile);
+        }catch (IOException e){
+            return Result.build(503, e.getMessage());
+        }
+
+//        System.out.println(classpath);
+        return  Result.ok("成功保存文件");
+    }
+
+    @GetMapping("getAvatar/{id}")
+    public Result getAvatar (@PathVariable Long id){
+
+    }
+
 
 }
 

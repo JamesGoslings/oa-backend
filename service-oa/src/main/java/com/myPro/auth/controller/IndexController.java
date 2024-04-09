@@ -35,12 +35,13 @@ public class IndexController {
      */
     @PostMapping("login")
     public Result login(@RequestBody LoginVo loginVo){
+
         String password = MD5.encrypt(loginVo.getPassword());
         String username = loginVo.getUsername();
 
         SysUser user = sysUserService.getOne(
                 new LambdaQueryWrapper<SysUser>().eq(SysUser::getUsername, username));
-
+        System.out.println("66662");
         if(user == null){
             throw new MyException(404,"用户不存在");
         }
@@ -65,13 +66,16 @@ public class IndexController {
         String token = request.getHeader("token");
         Long userId = JwtHelper.getUserId(token);
         String username = JwtHelper.getUsername(token);
+        //TODO 获取用户姓名
+        String name = sysUserService.getById(userId).getName();
         //TODO 获取用户可以操作的菜单
         List<RouterVo> routerList = sysMenuService.getUserMenuListByUser(userId);
         //TODO 获取用户可以操作的按钮列表
         List<String> permsList = sysMenuService.getUserPermsByUserId(userId);
         Map<String, Object> map = new HashMap<>();
         map.put("roles","[admin]");
-        map.put("name",username);
+        map.put("name",name);
+        map.put("userId", userId);
         map.put("avatar","https://oss.aliyuncs.com/aliyun_id_photo_bucket/default_handsome.jpg");
         //TODO 返回用户可以操作的菜单
         map.put("routers",routerList);

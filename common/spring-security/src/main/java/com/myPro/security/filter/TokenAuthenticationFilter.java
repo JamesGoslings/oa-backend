@@ -40,7 +40,6 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         //登录接口，直接放行
         if(request.getRequestURI().equals("/admin/system/index/login")){
             chain.doFilter(request,response);
-
             return;
         }
         UsernamePasswordAuthenticationToken authentication = getAuthentication(request);

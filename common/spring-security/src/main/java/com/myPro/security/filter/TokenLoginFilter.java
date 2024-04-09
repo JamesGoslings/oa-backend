@@ -83,6 +83,8 @@ public class TokenLoginFilter extends UsernamePasswordAuthenticationFilter {
     protected void unsuccessfulAuthentication(HttpServletRequest request,
                                               HttpServletResponse response,
                                               AuthenticationException failed) throws IOException, ServletException {
-        ResponseUtil.out(response,Result.build(null, ResultCodeEnum.LOGIN_ERROR));
+//        System.out.println(failed.getMessage());
+//        ResponseUtil.out(response,Result.build(null, ResultCodeEnum.LOGIN_ERROR));
+        ResponseUtil.out(response,Result.build(203, failed.getMessage()));
     }
 }
