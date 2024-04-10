@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class SysUserVo {
 
-    private String userId;
+    private Long userId;
 
     private String name;
 

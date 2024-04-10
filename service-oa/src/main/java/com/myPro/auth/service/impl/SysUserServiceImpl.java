@@ -7,6 +7,7 @@ import com.myPro.auth.mapper.SysUserMapper;
 import com.myPro.auth.service.SysUserService;
 import com.myPro.common.utils.FileUtil;
 import com.myPro.model.system.SysUser;
+import com.myPro.vo.app.SysUserVo;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,7 +30,10 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public String getAvatarBase64StrById(Long id) {
-        SysUser user = getById(id);
+        return getAvatarBase64StrByUser(getById(id));
+    }
+
+    public String getAvatarBase64StrByUser(SysUser user){
         String imgPath = user.getHeadUrl();
         String base64Str = FileUtil.convertImageToBase64Str(FileUtil.classpath + imgPath);
         String suffix = FileUtil.getFileSuffix(imgPath).substring(1);
@@ -40,8 +44,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
-    public String updateAvatar(MultipartFile file, Long userId) {
+    public SysUserVo getUserVoById(Long userId) {
+        SysUser user = getById(userId);
+        SysUserVo userVo = new SysUserVo();
+        userVo.setName(user.getName());
+        userVo.setUserId(userId);
+        userVo.setAvatarUrl(getAvatarBase64StrByUser(user));
 
-        return null;
+        return userVo;
     }
+
 }

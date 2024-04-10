@@ -9,6 +9,7 @@ import com.myPro.common.result.Result;
 import com.myPro.common.utils.FileUtil;
 import com.myPro.common.utils.MD5;
 import com.myPro.model.system.SysUser;
+import com.myPro.vo.app.SysUserVo;
 import com.myPro.vo.system.SysUserQueryVo;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,15 +113,14 @@ public class SysUserController {
         return Result.fail();
     }
 
-    @PostMapping("updateAvatar")
-    public Result updateAvatar(HttpServletRequest request)  throws FileNotFoundException{
-        MultipartHttpServletRequest req = (MultipartHttpServletRequest) request;
-        MultipartFile file = req.getFile("myFile");
-        String token = request.getHeader("token");
-        Long userId = JwtHelper.getUserId(token);
-        String avatarBase64Str = service.updateAvatar(file,userId);
-        return Result.ok(avatarBase64Str);
+    @PostMapping("userInfo")
+    public Result userInfo(HttpServletRequest request){
+        Long userId = JwtHelper.getUserId(request.getHeader("token"));
+        SysUserVo userVo = service.getUserVoById(userId);
+        return Result.ok(userVo);
     }
+
+
 
     // 上传并保存用户的头像并将新的图片转成base64字符串传回去
     @PostMapping("uploadAvatar")
@@ -148,8 +148,8 @@ public class SysUserController {
         return  Result.ok(service.getAvatarBase64StrById(userId));
     }
 
-    @GetMapping("getAvatar/{id}")
-    public Result getAvatar (@PathVariable Long id){
+//    @GetMapping("getAvatar/{id}")
+//    public Result getAvatar (@PathVariable Long id){
 //        SysUser user = service.getById(id);
 //        String imgPath = user.getHeadUrl();
 //        String base64Str = FileUtil.convertImageToBase64Str(FileUtil.classpath + imgPath);
@@ -160,8 +160,8 @@ public class SysUserController {
 //        String finalBase64Str =  "data:image/" + suffix + ";base64," + base64Str;
 //        System.out.println("finalBase64Str=============>");
 //        System.out.println(finalBase64Str);
-        return  Result.ok(service.getAvatarBase64StrById(id));
-    }
+//        return  Result.ok(service.getAvatarBase64StrById(id));
+//    }
 
 
 }

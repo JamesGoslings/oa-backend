@@ -1,6 +1,7 @@
 package com.myPro.common.utils;
 
 import com.myPro.common.result.Result;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -61,9 +62,6 @@ public class FileUtil {
         return null;
     }
 
-
-
-
     /**
      * 通过文件对象获取文件后缀(MultipartFile的文件对象)
      * @param file MultipartFile对象
@@ -74,7 +72,7 @@ public class FileUtil {
 
     /**
      * 通过文件名称获取文件后缀
-     * @param file MultipartFile对象
+     * @param fileName 文件名称
      * */
     public static String getFileSuffix(String fileName){
         return fileName.substring(fileName.lastIndexOf("."));

@@ -2,6 +2,7 @@ package com.myPro.auth.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.myPro.model.system.SysUser;
+import com.myPro.vo.app.SysUserVo;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface SysUserService extends IService<SysUser>{
@@ -17,7 +18,7 @@ public interface SysUserService extends IService<SysUser>{
     String getAvatarBase64StrById(Long id);
 
     /**
-     * 修改用户的头像的base64字符串
-     * **/
-    String updateAvatar(MultipartFile file, Long userId);
+     * 获取移动端的初始化信息
+     * */
+    SysUserVo getUserVoById(Long userId);
 }
