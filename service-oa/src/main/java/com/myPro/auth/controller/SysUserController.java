@@ -120,11 +120,6 @@ public class SysUserController {
         MultipartHttpServletRequest req = (MultipartHttpServletRequest) request;
         MultipartFile file = req.getFile("myFile");
 
-
-//        File tempFile = new File(classpath + "/user-avatars/");
-//        if(!tempFile.exists()){
-//            tempFile.mkdirs();
-//        }
         String token = request.getHeader("token");
         Long userId = JwtHelper.getUserId(token);
         String username = JwtHelper.getUsername(token);
@@ -135,51 +130,27 @@ public class SysUserController {
         if(!FileUtil.uploadFile(file, classpath + "/user-avatars/" , fileName)){
             return Result.build(503, "文件保存失败");
         }
-//        String fileName = file.getOriginalFilename();
-
-//        File saveFile = new File(classpath + "/user-avatars/" + fileName);
-//
-//        try{
-//            file.transferTo(saveFile);
-//        }catch (IOException e){
-//            return Result.build(503, e.getMessage());
-//        }
-
         SysUser user = service.getById(userId);
-        user.setHeadUrl(classpath + "/user-avatars/" + fileName);
+//        user.setHeadUrl(classpath + "/user-avatars/" + fileName);
+        user.setHeadUrl("/user-avatars/" + fileName);
         service.updateById(user);
 
-//        //获得本机Ip（获取的是服务器的Ip）
-//        InetAddress inetAddress = InetAddress.getLocalHost();
-//        String ip = inetAddress.getHostAddress();
-//        //返回保存的url，根据url可以进行文件查看或者下载
-//        String fileDownloadUrl = request.getScheme() + "://" + ip + ":" + request.getServerPort() + "/api/file/"  + fileName;
-//
-//        String token = request.getHeader("token");
-//        Long userId = JwtHelper.getUserId(token);
-//
-//
-//        SysUser user = service.getById(userId);
-//        user.setHeadUrl(fileDownloadUrl);
-//
-//        service.updateById(user);
-
-
-
-        System.out.println("=========================>");
-        System.out.println(file);
-        System.out.println("=========================>");
-        //        System.out.println(classpath);
-        return  Result.ok(file);
+        return  Result.ok();
     }
 
     @GetMapping("getAvatar/{id}")
-    public String  getAvatar (@PathVariable Long id){
+    public Result getAvatar (@PathVariable Long id){
         SysUser user = service.getById(id);
-        String base64Str = FileUtil.convertImageToBase64Str(user.getHeadUrl());
-        System.out.println("base64==================>");
-        System.out.println(base64Str);
-        return  base64Str;
+        String imgPath = user.getHeadUrl();
+        String base64Str = FileUtil.convertImageToBase64Str(FileUtil.classpath + imgPath);
+        String suffix = FileUtil.getFileSuffix(imgPath).substring(1);
+        if(!suffix.equals("gif")){
+            suffix = "png";
+        }
+        String finalBase64Str =  "data:image/" + suffix + ";base64," + base64Str;
+        System.out.println("finalBase64Str=============>");
+        System.out.println(finalBase64Str);
+        return  Result.ok(finalBase64Str);
     }
 
 

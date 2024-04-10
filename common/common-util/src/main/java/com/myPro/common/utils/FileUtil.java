@@ -70,6 +70,15 @@ public class FileUtil {
     }
 
     /**
+     * 通过文件名称获取文件后缀
+     * @param file MultipartFile对象
+     * */
+    public static String getFileSuffix(String fileName){
+        return fileName.substring(fileName.lastIndexOf("."));
+    }
+
+
+    /**
      * 单文件上传，传地址、文件名、MultipartFile对象
      * @return 返回是否成功上传
      * */
