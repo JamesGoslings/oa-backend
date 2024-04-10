@@ -112,7 +112,17 @@ public class SysUserController {
         return Result.fail();
     }
 
-    //上传并保存用户的头像
+    @PostMapping("updateAvatar")
+    public Result updateAvatar(HttpServletRequest request)  throws FileNotFoundException{
+        MultipartHttpServletRequest req = (MultipartHttpServletRequest) request;
+        MultipartFile file = req.getFile("myFile");
+        String token = request.getHeader("token");
+        Long userId = JwtHelper.getUserId(token);
+        String avatarBase64Str = service.updateAvatar(file,userId);
+        return Result.ok(avatarBase64Str);
+    }
+
+    // 上传并保存用户的头像并将新的图片转成base64字符串传回去
     @PostMapping("uploadAvatar")
     public Result uploadAvatar (HttpServletRequest  request) throws FileNotFoundException, UnknownHostException {
         String classpath = FileUtil.classpath;
@@ -135,22 +145,22 @@ public class SysUserController {
         user.setHeadUrl("/user-avatars/" + fileName);
         service.updateById(user);
 
-        return  Result.ok();
+        return  Result.ok(service.getAvatarBase64StrById(userId));
     }
 
     @GetMapping("getAvatar/{id}")
     public Result getAvatar (@PathVariable Long id){
-        SysUser user = service.getById(id);
-        String imgPath = user.getHeadUrl();
-        String base64Str = FileUtil.convertImageToBase64Str(FileUtil.classpath + imgPath);
-        String suffix = FileUtil.getFileSuffix(imgPath).substring(1);
-        if(!suffix.equals("gif")){
-            suffix = "png";
-        }
-        String finalBase64Str =  "data:image/" + suffix + ";base64," + base64Str;
-        System.out.println("finalBase64Str=============>");
-        System.out.println(finalBase64Str);
-        return  Result.ok(finalBase64Str);
+//        SysUser user = service.getById(id);
+//        String imgPath = user.getHeadUrl();
+//        String base64Str = FileUtil.convertImageToBase64Str(FileUtil.classpath + imgPath);
+//        String suffix = FileUtil.getFileSuffix(imgPath).substring(1);
+//        if(!suffix.equals("gif")){
+//            suffix = "png";
+//        }
+//        String finalBase64Str =  "data:image/" + suffix + ";base64," + base64Str;
+//        System.out.println("finalBase64Str=============>");
+//        System.out.println(finalBase64Str);
+        return  Result.ok(service.getAvatarBase64StrById(id));
     }
 
 

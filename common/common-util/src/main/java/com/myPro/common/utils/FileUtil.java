@@ -61,6 +61,9 @@ public class FileUtil {
         return null;
     }
 
+
+
+
     /**
      * 通过文件对象获取文件后缀(MultipartFile的文件对象)
      * @param file MultipartFile对象

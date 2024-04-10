@@ -57,7 +57,7 @@ public class IndexController {
     }
 
     /**
-     * 获取用户信息
+     * 获取用户信息（PC）
      * @return
      */
     @GetMapping("info")

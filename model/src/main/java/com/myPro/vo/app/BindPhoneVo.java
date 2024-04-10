@@ -1,4 +1,4 @@
-package com.myPro.vo.wechat;
+package com.myPro.vo.app;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
