@@ -24,13 +24,13 @@ public class SysDept extends BaseEntity {
 	@TableField("parent_id")
 	private Long parentId;
 
-	@ApiModelProperty(value = "树结构")
-	@TableField("tree_path")
-	private String treePath;
-
-	@ApiModelProperty(value = "排序")
-	@TableField("sort_value")
-	private Integer sortValue;
+//	@ApiModelProperty(value = "树结构")
+//	@TableField("tree_path")
+//	private String treePath;
+//
+//	@ApiModelProperty(value = "排序")
+//	@TableField("sort_value")
+//	private Integer sortValue;
 
 	@ApiModelProperty(value = "负责人")
 	@TableField("leader")
