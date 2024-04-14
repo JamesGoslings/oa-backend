@@ -12,6 +12,7 @@ import com.myPro.model.system.SysUser;
 import com.myPro.vo.app.SysUserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -44,6 +45,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     public String getAvatarBase64StrByUser(SysUser user){
         String imgPath = user.getHeadUrl();
+        if(StringUtils.isEmpty(imgPath)){
+            return "";
+        }
         String base64Str = FileUtil.convertImageToBase64Str(FileUtil.classpath + imgPath);
         String suffix = FileUtil.getFileSuffix(imgPath).substring(1);
         if(!suffix.equals("gif")){

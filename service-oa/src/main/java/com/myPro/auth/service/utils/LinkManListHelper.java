@@ -23,10 +23,13 @@ public class LinkManListHelper {
             } else if(parentId == 2){
                 // 以上一级为总经理的的部门为起始节点
                 linkManVoList.add(getChildrenAndItSelf(linkManVo, originList));
+                floor = 0;
             }
         }
         return linkManVoList;
     }
+
+    private static Integer floor = 0;
 
     public static LinkManVo getChildrenAndItSelf(LinkManVo linkManVo,List<LinkManVo> originList){
         linkManVo.setChildren(new ArrayList<LinkManVo>());
@@ -38,7 +41,10 @@ public class LinkManListHelper {
                 originVo.setChildren(new ArrayList<LinkManVo>());
             }
             if(itSelfId == originParentId && originParentId >= 2){
+                Integer tempFloor = floor;
+                originVo.setFloor(++floor);
                 linkManVo.getChildren().add(getChildrenAndItSelf(originVo,originList));
+                floor = tempFloor;
             }
         }
 

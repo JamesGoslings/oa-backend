@@ -37,7 +37,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
             LinkManVo linkManVo = new LinkManVo();
             linkManVo.setDeptName(dept.getName());
             SysUserVo userVo = userService.getUserVoById(dept.getLeaderId(),false);
-            linkManVo.setSysUserVo(userVo);
+            linkManVo.setLeader(userVo);
             linkManVo.setParentId(dept.getParentId());
             linkManVo.setDeptId(dept.getId());
             linkManVoList.add(linkManVo);

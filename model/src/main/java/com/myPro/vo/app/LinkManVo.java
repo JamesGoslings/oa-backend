@@ -15,7 +15,7 @@ public class LinkManVo {
 
     private String deptName;
 
-    private SysUserVo sysUserVo;
+    private SysUserVo leader;
 
 //    // true表示是相关负责人,false表示不是
 //    private boolean isHeader = false;
@@ -27,4 +27,7 @@ public class LinkManVo {
 
     // 用于确定部门的层级关系，最终封装时，将其清空再返回
     private Long parentId;
+
+    // 确定当前目录的层数
+    private Integer floor = 0;
 }
