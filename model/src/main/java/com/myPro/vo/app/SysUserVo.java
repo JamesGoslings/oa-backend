@@ -18,4 +18,6 @@ public class SysUserVo {
     private String dept;
 
     private String avatarUrl;
+
+    private String phone;
 }

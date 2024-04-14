@@ -24,9 +24,9 @@ public class DeptController {
     @GetMapping("linkManListInfo")
     public Result getLinkMenInfo(){
         List<LinkManVo> linkManVoList = deptService.getCompanyLinkMenInfo();
-        System.out.println("========================DATA============================");
-        linkManVoList.forEach(System.out::println);
-        System.out.println("========================DATA============================");
+//        System.out.println("========================DATA============================");
+//        linkManVoList.forEach(System.out::println);
+//        System.out.println("========================DATA============================");
         return Result.ok(linkManVoList);
     }
 }
