@@ -17,8 +17,23 @@ public interface SysUserService extends IService<SysUser>{
      * */
     String getAvatarBase64StrById(Long id);
 
+
     /**
-     * 获取移动端的初始化信息
+     * 根据userId获取user对象并封装成SysUserVo对象,也用于获取移动端的初始化信息
+     * @param userId 待进行操作的id
+     * @param hasId 确定是否需要封装userId进去
+     * @return 封装好的UserVo
+     * */
+    SysUserVo getUserVoById(Long userId,boolean hasId);
+
+
+    /**
+     * 根据userId获取user对象并封装成SysUserVo对象,也用于获取移动端的初始化信息
+     * 要封装id
+     * @param userId 待进行操作的id
+     * @return 封装好的UserVo
      * */
     SysUserVo getUserVoById(Long userId);
+
+
 }

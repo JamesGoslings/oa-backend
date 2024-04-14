@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/admin/system/dept")
 public class DeptController {
@@ -19,7 +21,7 @@ public class DeptController {
     // 获取规定树型的公司通讯录
     @GetMapping("linkMenInfo")
     public Result getLinkMenInfo(){
-        LinkManVo linkManVo = deptService.getCompanyLinkMenInfo();
-        return Result.ok(linkManVo);
+        List<LinkManVo> linkManVoList = deptService.getCompanyLinkMenInfo();
+        return Result.ok(linkManVoList);
     }
 }

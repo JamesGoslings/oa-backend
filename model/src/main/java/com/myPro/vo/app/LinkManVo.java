@@ -17,8 +17,14 @@ public class LinkManVo {
 
     private SysUserVo sysUserVo;
 
-    // true表示是相关负责人,false表示不是
-    private boolean isHeader = false;
+//    // true表示是相关负责人,false表示不是
+//    private boolean isHeader = false;
 
     private List<LinkManVo> children;
+
+    // 用于确定部门的层级关系，最终封装时，将其清空再返回
+    private Long deptId;
+
+    // 用于确定部门的层级关系，最终封装时，将其清空再返回
+    private Long parentId;
 }

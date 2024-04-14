@@ -9,8 +9,8 @@ import lombok.Data;
 
 @Data
 @ApiModel(description = "岗位")
-@TableName("sys_post")
-public class SysPost extends BaseEntity {
+@TableName("post")
+public class Post extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -18,13 +18,16 @@ public class SysPost extends BaseEntity {
 	@TableField("post_code")
 	private String postCode;
 
+	@TableField("dept_id")
+	private Long deptId;
+
 	@ApiModelProperty(value = "岗位名称")
 	@TableField("name")
 	private String name;
 
-	@ApiModelProperty(value = "显示顺序")
-	@TableField("description")
-	private String description;
+//	@ApiModelProperty(value = "显示顺序")
+//	@TableField("description")
+//	private String description;
 
 	@ApiModelProperty(value = "状态（1正常 0停用）")
 	@TableField("status")
