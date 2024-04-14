@@ -30,4 +30,6 @@ public class LinkManVo {
 
     // 确定当前目录的层数
     private Integer floor = 0;
+
+    private  boolean isChoose = false;
 }
