@@ -1,15 +1,12 @@
 package com.myPro.auth.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.myPro.auth.service.PrivateLinkManService;
 import com.myPro.common.result.Result;
 import com.myPro.model.app.PrivateLinkMan;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -23,5 +20,12 @@ public class PrivateLinkManController {
     public Result getPrivateLinkManList(@PathVariable Long userId){
         List<PrivateLinkMan> linkManList = linkManService.getLinkManListByUserId(userId);
         return Result.ok(linkManList);
+    }
+
+    @PutMapping("update")
+    public Result updatePrivateLinkMan(@RequestBody PrivateLinkMan linkMan){
+        linkMan.setUpdateTime(new Date());
+        linkManService.updateById(linkMan);
+        return Result.ok();
     }
 }
