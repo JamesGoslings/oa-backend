@@ -64,4 +64,9 @@ public class LinkManController {
         return Result.ok(resultList);
     }
 
+    @PostMapping("savePrivateLinkMan")
+    public Result savePrivateLinkMan(@RequestBody PrivateLinkMan linkMan){
+        privateLinkManService.save(linkMan);
+        return Result.ok();
+    }
 }
