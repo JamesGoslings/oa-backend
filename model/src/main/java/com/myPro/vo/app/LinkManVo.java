@@ -13,6 +13,10 @@ import java.util.List;
 @Data
 public class LinkManVo {
 
+    private Long typeId;
+
+    private String typeName;
+
     private String deptName;
 
     private SysUserVo leader;

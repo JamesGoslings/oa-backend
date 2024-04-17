@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- com.myPro.model.system.LeaderDetail -->
+<!--,`sys_user`.`name` AS username, `sys_user`.phone AS phone-->
+
+<mapper namespace="com.myPro.auth.mapper.DeptMapper">
+    <select id="getDeptListByKey" resultType="com.myPro.model.system.Dept">
+        SELECT  DISTINCT `dept`.*
+        FROM `dept`,`sys_user`
+        WHERE `dept`.`leader_id` = sys_user.id
+        AND (`sys_user`.name REGEXP #{ key } OR `sys_user`.phone REGEXP #{ key })
+        AND `sys_user`.is_deleted = 0
+        AND `dept`.is_deleted = 0
+    </select>
+</mapper>

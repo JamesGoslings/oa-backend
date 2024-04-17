@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- -->
+<mapper namespace="com.myPro.auth.mapper.PrivateLinkManMapper">
+
+    <select id="getLinkManListByUserIdAndKey" resultType="com.myPro.model.app.PrivateLinkMan">
+        SELECT * FROM `private_link_man`
+        WHERE user_id = #{ userId }
+        AND `is_deleted` = 0
+        AND (`phone` REGEXP #{ key } OR `name` REGEXP #{ key })
+    </select>
+</mapper>

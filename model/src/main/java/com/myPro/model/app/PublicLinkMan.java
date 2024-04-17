@@ -12,7 +12,7 @@ import lombok.Data;
 
 @Data
 @TableName("public_link_man")
-public class PublicLinkMan extends BaseEntity {
+public class PublicLinkMan extends BaseEntity implements LinkMan{
 
     @TableField("id")
     private Long id;
@@ -22,4 +22,11 @@ public class PublicLinkMan extends BaseEntity {
 
     @TableField("phone")
     private String phone;
+
+//    @TableField(exist = false)
+//    private Long typeId = 3L;
+//
+//    @TableField(exist = false)
+//    private String typeName = "公共通讯录";
+
 }

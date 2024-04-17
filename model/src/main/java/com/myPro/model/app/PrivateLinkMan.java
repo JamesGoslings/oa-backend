@@ -12,7 +12,7 @@ import java.io.Serial;
  * */
 @Data
 @TableName("private_link_man")
-public class PrivateLinkMan extends BaseEntity {
+public class PrivateLinkMan extends BaseEntity implements LinkMan{
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -31,5 +31,11 @@ public class PrivateLinkMan extends BaseEntity {
 
     @TableField("relationship")
     private String relationship;
+
+//    @TableField(exist = false)
+//    private Long typeId = 2L;
+//
+//    @TableField(exist = false)
+//    private String typeName = "个人通讯录";
 
 }

@@ -1,12 +1,12 @@
 package com.myPro.model.system;
 
+import com.baomidou.mybatisplus.annotation.*;
 import com.myPro.model.base.BaseEntity;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -15,6 +15,19 @@ import java.util.List;
 public class Dept extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
+
+	@TableId(type = IdType.AUTO)
+	private Long id;
+
+	@TableField("create_time")
+	private Date createTime;
+
+	@TableField("update_time")
+	private Date updateTime;
+
+	@TableLogic
+	@TableField("is_deleted")
+	private Integer isDeleted;
 
 	@ApiModelProperty(value = "部门名称")
 	@TableField("name")
@@ -46,6 +59,7 @@ public class Dept extends BaseEntity {
 	@ApiModelProperty(value = "状态（1正常 0停用）")
 	@TableField("status")
 	private Integer status;
+
 
 	@ApiModelProperty(value = "下级部门")
 	@TableField(exist = false)

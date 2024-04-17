@@ -1,12 +1,18 @@
 package com.myPro.auth.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.myPro.auth.service.DeptService;
 import com.myPro.auth.service.PrivateLinkManService;
 import com.myPro.auth.service.PublicLinkManService;
 import com.myPro.common.result.Result;
 import com.myPro.model.app.PrivateLinkMan;
+import com.myPro.model.app.PublicLinkMan;
+import com.myPro.vo.app.LinkManVo;
+import com.myPro.vo.app.TotalLinkManVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,14 +21,17 @@ import java.util.List;
 public class LinkManController {
 
     @Autowired
-    private PrivateLinkManService linkManService;
+    private PrivateLinkManService privateLinkManService;
 
     @Autowired
     private PublicLinkManService publicLinkManService;
 
+    @Autowired
+    private DeptService deptService;
+
     @GetMapping("getPrivateList/{userId}")
     public Result getPrivateLinkManList(@PathVariable Long userId){
-        List<PrivateLinkMan> linkManList = linkManService.getLinkManListByUserId(userId);
+        List<PrivateLinkMan> linkManList = privateLinkManService.getLinkManListByUserId(userId);
         return Result.ok(linkManList);
     }
 
@@ -34,7 +43,25 @@ public class LinkManController {
     @PutMapping("updatePrivateLinkMan")
     public Result updatePrivateLinkMan(@RequestBody PrivateLinkMan linkMan){
         linkMan.setUpdateTime(new Date());
-        linkManService.updateById(linkMan);
+        privateLinkManService.updateById(linkMan);
         return Result.ok();
     }
+
+    @GetMapping("searchLinkManList/{userId}/{key}")
+    public Result getLinkManList(@PathVariable Long userId,@PathVariable String key){
+
+        List<LinkManVo> companyLinkManList = deptService.getOriginListManByKey(key);
+
+        List<TotalLinkManVo> privateLinkManList = privateLinkManService.getLinkManListByUserIdAndKey(userId,key);
+
+        List<TotalLinkManVo> publicLinkManList = publicLinkManService.getLinkManListByKey(key);
+
+        ArrayList<Object> resultList = new ArrayList<>();
+        resultList.addAll(companyLinkManList);
+        resultList.addAll(privateLinkManList);
+        resultList.addAll(publicLinkManList);
+
+        return Result.ok(resultList);
+    }
+
 }
