@@ -22,4 +22,5 @@ public interface PrivateLinkManService extends IService<PrivateLinkMan> {
      * @return 符合条件的所以个人联系人的列表
      * */
     List<TotalLinkManVo> getLinkManListByUserIdAndKey(Long userId, String key);
+
 }

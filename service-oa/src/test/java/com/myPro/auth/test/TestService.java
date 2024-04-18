@@ -5,12 +5,14 @@ import com.myPro.auth.service.PrivateLinkManService;
 import com.myPro.auth.service.PublicLinkManService;
 import com.myPro.model.app.PrivateLinkMan;
 import com.myPro.vo.app.LinkManVo;
+import com.myPro.vo.app.SysUserVo;
 import com.myPro.vo.app.TotalLinkManVo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.Scanner;
 
 @SpringBootTest
 public class TestService {
@@ -43,4 +45,7 @@ public class TestService {
         list.forEach(System.out::println);
         System.out.println("==========================================");
     }
+
+
+
 }

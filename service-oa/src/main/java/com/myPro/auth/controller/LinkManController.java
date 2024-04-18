@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 @RestController
 @RequestMapping("admin/system/linkMan")
@@ -69,4 +70,13 @@ public class LinkManController {
         privateLinkManService.save(linkMan);
         return Result.ok();
     }
+
+    @DeleteMapping("remove/{id}")
+    public Result removePrivateLinkMan(@PathVariable Long id){
+
+        privateLinkManService.removeById(id);
+        return Result.ok();
+    }
+
 }
+
