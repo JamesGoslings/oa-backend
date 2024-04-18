@@ -64,6 +64,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         if(hasId) {
             userVo.setUserId(userId);
         }
+        userVo.setCreateTime(user.getCreateTime());
         userVo.setAvatarUrl(getAvatarBase64StrByUser(user));
         userVo.setPost(postMapper.selectById(user.getPostId()).getName());
         userVo.setDept(deptMapper.selectById(user.getDeptId()).getName());

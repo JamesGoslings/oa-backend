@@ -2,6 +2,8 @@ package com.myPro.vo.app;
 
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * 移动端初始化的用户对象
  * */
@@ -20,4 +22,6 @@ public class SysUserVo {
     private String avatarUrl;
 
     private String phone;
+
+    private Date createTime;
 }
