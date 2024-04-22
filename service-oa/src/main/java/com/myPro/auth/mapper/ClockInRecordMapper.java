@@ -14,4 +14,10 @@ public interface ClockInRecordMapper extends BaseMapper<ClockInRecord> {
      * @return 最新的打卡记录
      * */
     ClockInRecord selectFirstRecord(@Param("userId") Long userId);
+
+    /**
+     * 拿到当前用户的本月打卡记录的总数目
+     * @return 本月的考勤记录数
+     * */
+    int selectCountThisMonth(Long userId);
 }

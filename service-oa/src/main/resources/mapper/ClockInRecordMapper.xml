@@ -12,4 +12,11 @@
         ORDER BY clock_in_time DESC
         LIMIT 1;
     </select>
+    <select id="selectCountThisMonth" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM `clock_in_record`
+        WHERE `clock_in_time` BETWEEN DATE_FORMAT(NOW() ,'%Y-%m-01') AND LAST_DAY(NOW())
+        AND user_id = #{ userId }
+        AND is_deleted = 0;
+    </select>
 </mapper>

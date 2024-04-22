@@ -6,7 +6,9 @@ import com.myPro.model.app.ClockInRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/admin/system/clockInRecord")
@@ -42,5 +44,17 @@ public class ClockInRecordController {
     public Result getFirst(@PathVariable Long userId){
         ClockInRecord record = clockInRecordService.getFirstRecord(userId);
         return Result.ok(record);
+    }
+
+    /**
+     * 拿到当前用户的本月打卡记录的总数目
+     * @return 本月的考勤记录树
+     * */
+    @GetMapping("getCountOneMonth/{userId}")
+    public Result getCountOneMonth(@PathVariable Long userId){
+        int count = clockInRecordService.getCountThisMonth(userId);
+        Map<String, Integer> map = new HashMap<>();
+        map.put("recordCountThisMonth", count);
+        return Result.ok(map);
     }
 }

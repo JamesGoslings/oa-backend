@@ -18,4 +18,10 @@ public interface ClockInRecordService extends IService<ClockInRecord> {
      * @return 最新的打卡记录
      * */
     ClockInRecord getFirstRecord(Long userId);
+
+    /**
+     * 拿到当前用户的本月打卡记录的总数目
+     * @return 本月的考勤记录数
+     * */
+    int getCountThisMonth(Long userId);
 }

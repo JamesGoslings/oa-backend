@@ -7,6 +7,8 @@ import com.myPro.auth.service.ClockInRecordService;
 import com.myPro.model.app.ClockInRecord;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -22,5 +24,10 @@ public class ClockInRecordServiceImpl extends ServiceImpl<ClockInRecordMapper, C
     @Override
     public ClockInRecord getFirstRecord(Long userId) {
         return baseMapper.selectFirstRecord(userId);
+    }
+
+    @Override
+    public int getCountThisMonth(Long userId) {
+        return baseMapper.selectCountThisMonth(userId);
     }
 }
