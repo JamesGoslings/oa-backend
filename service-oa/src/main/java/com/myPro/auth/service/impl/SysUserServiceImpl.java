@@ -2,6 +2,7 @@ package com.myPro.auth.service.impl;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.myPro.auth.mapper.DeptMapper;
 import com.myPro.auth.mapper.PostMapper;
@@ -10,10 +11,14 @@ import com.myPro.auth.service.SysUserService;
 import com.myPro.common.utils.FileUtil;
 import com.myPro.model.system.SysUser;
 import com.myPro.vo.app.SysUserVo;
+import com.myPro.vo.system.SysUserWebVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
@@ -76,6 +81,42 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public SysUserVo getUserVoById(Long userId) {
         return getUserVoById(userId, true);
+    }
+
+    @Override
+    public Page<SysUserWebVo> getUserWebVoPage(Page<SysUser> page) {
+        // user列表
+        List<SysUser> users = page.getRecords();
+        // 待装webVo的列表
+        List<SysUserWebVo> webVos = new ArrayList<>();
+        for (SysUser user : users) {
+            SysUserWebVo userWebVo = getUserWebVoByUser(user);
+            webVos.add(userWebVo);
+        }
+        Page<SysUserWebVo> webVoPage = new Page<>();
+        // 将原始的page的元素值封装到vo的page中
+        webVoPage.setRecords(webVos);
+        webVoPage.setCurrent(page.getCurrent());
+        webVoPage.setPages(page.getPages());
+        webVoPage.setSize(page.getSize());
+        webVoPage.setTotal(page.getTotal());
+        return webVoPage;
+    }
+
+    // 将user对象封装成userWebVo
+    private SysUserWebVo getUserWebVoByUser(SysUser user) {
+        SysUserWebVo webVo = new SysUserWebVo();
+        webVo.setName(user.getName());
+        webVo.setPhone(user.getPhone());
+        webVo.setCreateTime(user.getCreateTime());
+        webVo.setUpdateTime(user.getUpdateTime());
+        webVo.setRoleList(user.getRoleList());
+        webVo.setStatus(user.getStatus());
+        webVo.setUsername(user.getUsername());
+        webVo.setAvatarUrl(getAvatarBase64StrByUser(user));
+        webVo.setPost(postMapper.selectById(user.getPostId()).getName());
+        webVo.setDept(deptMapper.selectById(user.getDeptId()).getName());
+        return webVo;
     }
 
 

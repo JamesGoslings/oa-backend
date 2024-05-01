@@ -9,9 +9,7 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
- * <p>
  * 用户查询实体
- * </p>
  */
 @Data
 public class SysUserQueryVo implements Serializable {
@@ -21,8 +19,8 @@ public class SysUserQueryVo implements Serializable {
 	
 	private String keyword;
 
-	private String createTimeBegin;
-	private String createTimeEnd;
+//	private String createTimeBegin;
+//	private String createTimeEnd;
 
 	private Long roleId;
 	private Long postId;

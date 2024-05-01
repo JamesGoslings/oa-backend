@@ -2,6 +2,7 @@ package com.myPro.auth.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.myPro.auth.service.SysUserService;
 import com.myPro.common.jwt.JwtHelper;
@@ -11,6 +12,7 @@ import com.myPro.common.utils.MD5;
 import com.myPro.model.system.SysUser;
 import com.myPro.vo.app.SysUserVo;
 import com.myPro.vo.system.SysUserQueryVo;
+import com.myPro.vo.system.SysUserWebVo;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ResourceUtils;
@@ -62,22 +64,15 @@ public class SysUserController {
         LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>();
 
         String username = sysUserQueryVo.getKeyword();
-        String createTimeBegin = sysUserQueryVo.getCreateTimeBegin();
-        String createTimeEnd = sysUserQueryVo.getCreateTimeEnd();
 
-        //判断条件值不为空
+        //如果条件值不为空
         if(!StringUtils.isEmpty(username)){
             wrapper.like(SysUser::getUsername,username);
         }
         //ge大于等于
-        if(!StringUtils.isEmpty(createTimeBegin)){
-            wrapper.ge(SysUser::getCreateTime,createTimeBegin);
-        }
         //le小于等于
-        if(!StringUtils.isEmpty(createTimeEnd)){
-            wrapper.le(SysUser::getCreateTime,createTimeEnd);
-        }
-        return Result.ok(service.page(pageParam, wrapper));
+        Page<SysUserWebVo> userPage = service.getUserWebVoPage(service.page(pageParam, wrapper));
+        return Result.ok(userPage);
     }
 
 

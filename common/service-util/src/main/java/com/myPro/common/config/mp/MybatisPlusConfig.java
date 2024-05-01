@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @MapperScan("com.myPro.auth.mapper")
 public class MybatisPlusConfig {
-
     /**
      * 添加分页插件
      */
@@ -21,4 +20,18 @@ public class MybatisPlusConfig {
         //interceptor.addInnerInterceptor(new PaginationInnerInterceptor()); 如果有多数据源可以不配具体类型 否则都建议配上具体的DbType
         return interceptor;
     }
+    @Bean
+    public PaginationInnerInterceptor paginationInnerInterceptor() {
+        PaginationInnerInterceptor paginationInterceptor = new PaginationInnerInterceptor();
+        // 设置最大单页限制数量，默认 500 条，-1 不受限制
+        paginationInterceptor.setMaxLimit(-1L);
+        paginationInterceptor.setDbType(DbType.MYSQL);
+        // 开启 count 的 join 优化,只针对部分 left join
+        paginationInterceptor.setOptimizeJoin(true);
+        // 查询单页数超最大单页数时依旧能返回
+        paginationInterceptor.setOverflow(true);
+        return paginationInterceptor;
+    }
+
+
 }

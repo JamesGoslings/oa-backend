@@ -1,8 +1,10 @@
 package com.myPro.auth.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.myPro.model.system.SysUser;
 import com.myPro.vo.app.SysUserVo;
+import com.myPro.vo.system.SysUserWebVo;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface SysUserService extends IService<SysUser>{
@@ -36,4 +38,8 @@ public interface SysUserService extends IService<SysUser>{
     SysUserVo getUserVoById(Long userId);
 
 
+    /**
+     * 将获得到的page对象中的record的user改成sysUserWebVo,再返回这个page
+     * */
+    Page<SysUserWebVo> getUserWebVoPage(Page<SysUser> page);
 }
