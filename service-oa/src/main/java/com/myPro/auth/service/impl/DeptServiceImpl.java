@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements DeptService {
@@ -68,5 +69,32 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
         originLinkManList.forEach(System.out::println);
         System.out.println("====================NB=====================");
         return originLinkManList;
+    }
+
+    @Override
+    public List<Long> getDeptIdListSelfAndChildren(Long deptId) {
+        //TODO 拿到所有部门数据，然后进行筛选
+        List<Dept> orginDeptList = list();
+        // 如果是最高级直接返回所有id构成的list
+        if(deptId <= 0){
+            return baseMapper.getAllIdList();
+        }
+        // 先将根id添加进入
+        List<Long> idList = new ArrayList<>();
+        idList.add(deptId);
+        return getChildrenId(deptId, orginDeptList,idList);
+    }
+    /**
+     * 递归拿到给的根id的所有子id
+     * */
+    private List<Long> getChildrenId(Long parentDeptId,List<Dept> orginDeptList,List<Long> resList){
+        for (Dept dept :orginDeptList) {
+            // 是目标部门的子部门就进行添加并递归
+            if(dept.getParentId().longValue() == parentDeptId.longValue()){
+                resList.add(dept.getId());
+                getChildrenId(dept.getId(), orginDeptList, resList);
+            }
+        }
+        return resList;
     }
 }

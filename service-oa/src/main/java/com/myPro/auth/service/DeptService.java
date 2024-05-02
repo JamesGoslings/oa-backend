@@ -19,4 +19,10 @@ public interface DeptService extends IService<Dept> {
 
     // 根据文字查询，结合多表查询获取列表元素封装成listVo的列表
     List<LinkManVo> getOriginListManByKey(String key);
+
+    /**
+     * 通过传入的部门id拿到该id和其所有子部门id构成的list
+     * @param deptId 根部门id
+     * */
+    List<Long> getDeptIdListSelfAndChildren(Long deptId);
 }

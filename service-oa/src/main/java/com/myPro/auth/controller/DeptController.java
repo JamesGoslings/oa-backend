@@ -29,4 +29,9 @@ public class DeptController {
 //        System.out.println("========================DATA============================");
         return Result.ok(linkManVoList);
     }
+    // 直接获取列表型的所有原始部门数据
+    @GetMapping("all")
+    public Result getAllDeptList(){
+        return Result.ok(deptService.list());
+    }
 }

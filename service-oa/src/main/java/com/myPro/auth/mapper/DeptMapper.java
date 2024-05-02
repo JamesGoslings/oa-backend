@@ -17,4 +17,8 @@ public interface DeptMapper extends BaseMapper<Dept> {
     List<Dept> getDeptListByKey (@Param("key") String  key);
 
 
+    /**
+     * 拿到所有的部门id
+     * */
+    List<Long> getAllIdList();
 }

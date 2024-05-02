@@ -103,6 +103,17 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         return webVoPage;
     }
 
+    @Override
+    public List<SysUserWebVo> getAllUsersWebVo() {
+        List<SysUser> users = list();
+        ArrayList<SysUserWebVo> webVos = new ArrayList<>();
+        for (SysUser user : users) {
+            SysUserWebVo webVo = getUserWebVoByUser(user);
+            webVos.add(webVo);
+        }
+        return webVos;
+    }
+
     // 将user对象封装成userWebVo
     private SysUserWebVo getUserWebVoByUser(SysUser user) {
         SysUserWebVo webVo = new SysUserWebVo();
@@ -113,6 +124,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         webVo.setRoleList(user.getRoleList());
         webVo.setStatus(user.getStatus());
         webVo.setUsername(user.getUsername());
+        webVo.setUserId(user.getId());
         webVo.setAvatarUrl(getAvatarBase64StrByUser(user));
         webVo.setPost(postMapper.selectById(user.getPostId()).getName());
         webVo.setDept(deptMapper.selectById(user.getDeptId()).getName());

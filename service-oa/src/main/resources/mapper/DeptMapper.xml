@@ -14,4 +14,7 @@
         AND `sys_user`.is_deleted = 0
         AND `dept`.is_deleted = 0
     </select>
+    <select id="getAllIdList" resultType="java.lang.Long">
+        SELECT `id` FROM `dept`
+    </select>
 </mapper>

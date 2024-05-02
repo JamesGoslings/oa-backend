@@ -20,5 +20,5 @@ public class SysUserWebVo extends SysUserVo {
 
     private List<SysRole> roleList;
 
-//    private  Boolean isChoose = false;
+    private  Boolean isChoose = false;
 }

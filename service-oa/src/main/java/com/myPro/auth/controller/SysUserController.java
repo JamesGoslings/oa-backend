@@ -63,18 +63,28 @@ public class SysUserController {
         Page<SysUser> pageParam = new Page<>(page,limit);
         LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>();
 
-        String username = sysUserQueryVo.getKeyword();
+        String keyword = sysUserQueryVo.getKeyword();
 
         //如果条件值不为空
-        if(!StringUtils.isEmpty(username)){
-            wrapper.like(SysUser::getUsername,username);
+        if(!StringUtils.isEmpty(keyword)){
+//            wrapper.like(SysUser::getUsername,keyword);
+            wrapper.or()
+                    .like(SysUser::getUsername, keyword)
+                    .or()
+                    .like(SysUser::getName, keyword)
+                    .or()
+                    .like(SysUser::getPhone, keyword);
         }
-        //ge大于等于
-        //le小于等于
         Page<SysUserWebVo> userPage = service.getUserWebVoPage(service.page(pageParam, wrapper));
         return Result.ok(userPage);
     }
 
+    // 拿到所有用户
+    @GetMapping("all")
+    public Result getAllUsersWebVo(){
+        List<SysUserWebVo> webVos = service.getAllUsersWebVo();
+        return Result.ok(webVos);
+    }
 
     @PostMapping("save")
     public Result save(@RequestBody SysUser user){

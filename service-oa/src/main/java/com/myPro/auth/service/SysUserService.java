@@ -7,6 +7,8 @@ import com.myPro.vo.app.SysUserVo;
 import com.myPro.vo.system.SysUserWebVo;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 public interface SysUserService extends IService<SysUser>{
     void updateStatus(Long id, Integer status);
 
@@ -42,4 +44,9 @@ public interface SysUserService extends IService<SysUser>{
      * 将获得到的page对象中的record的user改成sysUserWebVo,再返回这个page
      * */
     Page<SysUserWebVo> getUserWebVoPage(Page<SysUser> page);
+
+    /**
+     * 拿到所有的用户并封装成webVo返回
+     * */
+    List<SysUserWebVo> getAllUsersWebVo();
 }

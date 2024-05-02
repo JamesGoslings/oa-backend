@@ -1,9 +1,11 @@
 package com.myPro.auth.test;
 
 import com.myPro.auth.service.DeptService;
+import com.myPro.auth.service.PostService;
 import com.myPro.auth.service.PrivateLinkManService;
 import com.myPro.auth.service.PublicLinkManService;
 import com.myPro.model.app.PrivateLinkMan;
+import com.myPro.model.system.Post;
 import com.myPro.vo.app.LinkManVo;
 import com.myPro.vo.app.SysUserVo;
 import com.myPro.vo.app.TotalLinkManVo;
@@ -25,9 +27,16 @@ public class TestService {
     @Autowired
     private PublicLinkManService publicLinkManService;
 
+    @Autowired
+    private PostService postService;
+
     @Test
     public void deptServiceTest(){
-        List<LinkManVo> linkManVoList = deptService.getOriginListManByKey("李");
+//        List<LinkManVo> linkManVoList = deptService.getOriginListManByKey("李");
+        List<Long> list = deptService.getDeptIdListSelfAndChildren(3L);
+        System.out.println("==========================================");
+        list.forEach(System.out::println);
+        System.out.println("==========================================");
     }
 
     @Test
@@ -46,6 +55,12 @@ public class TestService {
         System.out.println("==========================================");
     }
 
-
+    @Test
+    public void PostServiceTest(){
+        List<Post> list = postService.getPostListByDeptId(0L);
+        System.out.println("==========================================");
+        list.forEach(System.out::println);
+        System.out.println("==========================================");
+    }
 
 }
