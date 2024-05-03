@@ -12,6 +12,11 @@ import java.util.List;
  * */
 @Data
 public class SysUserWebVo extends SysUserVo {
+
+    private Long deptId;
+
+    private Long postId;
+
     private String username;
 
     private Integer status;

@@ -27,6 +27,31 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper,SysRole> imple
 
     @Override
     public Map<String, Object> getRoleDataByUserId(Long userId) {
+//        //查询所有的角色
+//        List<SysRole> allRolesList = this.list();
+//
+//        //拥有的角色id
+//        List<SysUserRole> existUserRoleList = sysUserRoleMapper.selectList(
+//                new LambdaQueryWrapper<SysUserRole>().eq(SysUserRole::getUserId, userId).
+//                        select(SysUserRole::getRoleId));
+//        List<Long> existRoleIdList = existUserRoleList.stream().map(c->c.getRoleId()).collect(Collectors.toList());
+//
+//        //对角色进行分类
+//        List<SysRole> assginRoleList = new ArrayList<>();
+//        for (SysRole role : allRolesList) {
+//            //已分配
+//            if(existRoleIdList.contains(role.getId())) {
+//                assginRoleList.add(role);
+//            }
+//        }
+        Map<String, Object> roleMap = new HashMap<>();
+        roleMap.put("assginRoleList", getRolesByUserId(userId));
+        roleMap.put("allRolesList", list());
+        return roleMap;
+    }
+
+    @Override
+    public List<SysRole> getRolesByUserId(Long userId) {
         //查询所有的角色
         List<SysRole> allRolesList = this.list();
 
@@ -44,11 +69,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper,SysRole> imple
                 assginRoleList.add(role);
             }
         }
-
-        Map<String, Object> roleMap = new HashMap<>();
-        roleMap.put("assginRoleList", assginRoleList);
-        roleMap.put("allRolesList", allRolesList);
-        return roleMap;
+        return assginRoleList;
     }
 
     @Transactional
@@ -64,4 +85,5 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper,SysRole> imple
             sysUserRoleMapper.insert(userRole);
         }
     }
+
 }

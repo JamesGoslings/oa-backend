@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.myPro.auth.mapper.DeptMapper;
 import com.myPro.auth.mapper.PostMapper;
 import com.myPro.auth.mapper.SysUserMapper;
+import com.myPro.auth.service.SysRoleService;
 import com.myPro.auth.service.SysUserService;
 import com.myPro.common.utils.FileUtil;
 import com.myPro.model.system.SysUser;
@@ -28,6 +29,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Autowired
     private PostMapper postMapper;
+
+    @Autowired
+    private SysRoleService roleService;
 
     //更新状态
     @Override
@@ -84,6 +88,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
+    public SysUserWebVo getUserWebVoById(Long userId) {
+        return getUserWebVoByUser(getById(userId));
+    }
+
+    @Override
     public Page<SysUserWebVo> getUserWebVoPage(Page<SysUser> page) {
         // user列表
         List<SysUser> users = page.getRecords();
@@ -117,6 +126,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     // 将user对象封装成userWebVo
     private SysUserWebVo getUserWebVoByUser(SysUser user) {
         SysUserWebVo webVo = new SysUserWebVo();
+        webVo.setDeptId(user.getDeptId());
+        webVo.setPostId(user.getPostId());
         webVo.setName(user.getName());
         webVo.setPhone(user.getPhone());
         webVo.setCreateTime(user.getCreateTime());
@@ -128,6 +139,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         webVo.setAvatarUrl(getAvatarBase64StrByUser(user));
         webVo.setPost(postMapper.selectById(user.getPostId()).getName());
         webVo.setDept(deptMapper.selectById(user.getDeptId()).getName());
+        // 封装角色列表
+        webVo.setRoleList(roleService.getRolesByUserId(user.getId()));
         return webVo;
     }
 

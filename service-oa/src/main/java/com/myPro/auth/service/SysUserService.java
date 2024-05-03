@@ -33,12 +33,18 @@ public interface SysUserService extends IService<SysUser>{
 
     /**
      * 根据userId获取user对象并封装成SysUserVo对象,也用于获取移动端的初始化信息
-     * 要封装id
+     * 默认要封装userId
      * @param userId 待进行操作的id
      * @return 封装好的UserVo
      * */
     SysUserVo getUserVoById(Long userId);
 
+    /**
+     * 根据userId获取user对象并封装成SysUserWebVo对象,用于获取web端的初始化信息
+     * @param userId 待进行操作的id
+     * @return 封装好的UserWebVo
+     * */
+    SysUserWebVo getUserWebVoById(Long userId);
 
     /**
      * 将获得到的page对象中的record的user改成sysUserWebVo,再返回这个page

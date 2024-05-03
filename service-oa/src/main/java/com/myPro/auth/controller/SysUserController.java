@@ -29,9 +29,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * <p>
@@ -79,6 +77,15 @@ public class SysUserController {
         return Result.ok(userPage);
     }
 
+    // 查询用户是否已经存在,不存在返回false,存在是true
+    @PostMapping("isExist")
+    public Result isExist(@RequestBody String username){
+        List<SysUser> users = service.list(new LambdaQueryWrapper<SysUser>().eq(SysUser::getUsername, username));
+        Map<String, Boolean> map = new HashMap<>();
+        map.put("isExist", !users.isEmpty());
+        return Result.ok(map);
+    }
+
     // 拿到所有用户
     @GetMapping("all")
     public Result getAllUsersWebVo(){
@@ -95,14 +102,18 @@ public class SysUserController {
         return Result.fail();
     }
 
-    //根据id查询
+    //根据id查询返回webVo
     @GetMapping("get/{id}")
     public Result get(@PathVariable Long id){
-        return Result.ok(service.getById(id));
+        return Result.ok(service.getUserWebVoById(id));
     }
 
     @PutMapping("update")
     public Result update(@RequestBody SysUser user){
+        // 查看是否有密码信息来确定是否需要改密码
+        if(!StringUtils.isEmpty(user.getPassword())){
+            user.setPassword(MD5.encrypt(user.getPassword()));
+        }
         if(service.updateById(user)){
             return Result.ok();
         }

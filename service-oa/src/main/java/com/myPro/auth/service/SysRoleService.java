@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.myPro.model.system.SysRole;
 import com.myPro.vo.system.AssignRoleVo;
 
+import java.util.List;
 import java.util.Map;
 
 public interface SysRoleService extends IService<SysRole>{
@@ -17,4 +18,8 @@ public interface SysRoleService extends IService<SysRole>{
      * */
     void doAssign(AssignRoleVo assginRoleVo);
 
+    /**
+     * 根据userId获取对应角色的列表
+     * */
+    List<SysRole> getRolesByUserId(Long userId);
 }
