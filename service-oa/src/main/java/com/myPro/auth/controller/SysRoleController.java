@@ -55,9 +55,12 @@ public class SysRoleController {
                                 SysRoleQueryVo sysRoleQueryVo){
         Page<SysRole> pageParam = new Page<>(page,limit);
         LambdaQueryWrapper<SysRole> wrapper = new LambdaQueryWrapper<>();
-        String roleName = sysRoleQueryVo.getRoleName();
-        if(!StringUtils.isEmpty(roleName)){
-            wrapper.like(SysRole::getRoleName,roleName);
+        String keyword = sysRoleQueryVo.getKeyword();
+        if(!StringUtils.isEmpty(keyword)){
+            wrapper .or()
+                    .like(SysRole::getRoleName,keyword)
+                    .or()
+                    .like(SysRole::getRoleCode, keyword);
         }
         return Result.ok(sysRoleService.page(pageParam,wrapper));
     }

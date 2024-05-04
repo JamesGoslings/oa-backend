@@ -1,29 +1,19 @@
-//
-//
 package com.myPro.vo.system;
+
+import lombok.Data;
 
 import java.io.Serializable;
 
 /**
- * <p>
  * 角色查询实体
- * </p>
- *
- * @author qy
- * @since 2019-11-08
+ * @author dkh
  */
+@Data
 public class SysRoleQueryVo implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private String roleName;
+	private String keyword;
 
-	public String getRoleName() {
-		return roleName;
-	}
-
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
-	}
 }
 
