@@ -9,6 +9,7 @@ import com.myPro.auth.service.SysRoleMenuService;
 import com.myPro.auth.service.utils.MenuHelper;
 import com.myPro.common.exception.MyException;
 import com.myPro.model.system.SysMenu;
+import com.myPro.model.system.SysRole;
 import com.myPro.model.system.SysRoleMenu;
 import com.myPro.vo.system.AssignMenuVo;
 import com.myPro.vo.system.MetaVo;
@@ -20,6 +21,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -189,5 +191,28 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
                 .filter(item -> item.getType() == 2)
                 .map(SysMenu::getPerms)
                 .toList();
+    }
+
+    @Override
+    public List<Long> getMyIdsWithoutChildren(Long roleId) {
+        // 拿到该角色的所有菜单的list
+        List<SysMenu> menuList = baseMapper.getMenuListByRoleId(roleId);
+        // TODO 拿到menuList中没有子节点的menuId
+        List<Long> idListWithoutChildren = new ArrayList<>();
+
+        // 获取所有的id
+        List<Long> allIdList = new ArrayList<>();
+        // 装所有parentId
+        HashSet<Long> parentIdSet = new HashSet<>();
+        for (SysMenu sysMenu :menuList) {
+            parentIdSet.add(sysMenu.getParentId());
+            allIdList.add(sysMenu.getId());
+        }
+        for (Long id : allIdList) {
+            if(!parentIdSet.contains(id)){
+                idListWithoutChildren.add(id);
+            }
+        }
+        return idListWithoutChildren;
     }
 }

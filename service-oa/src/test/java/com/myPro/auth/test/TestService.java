@@ -1,9 +1,6 @@
 package com.myPro.auth.test;
 
-import com.myPro.auth.service.DeptService;
-import com.myPro.auth.service.PostService;
-import com.myPro.auth.service.PrivateLinkManService;
-import com.myPro.auth.service.PublicLinkManService;
+import com.myPro.auth.service.*;
 import com.myPro.model.app.PrivateLinkMan;
 import com.myPro.model.system.Post;
 import com.myPro.vo.app.LinkManVo;
@@ -30,6 +27,8 @@ public class TestService {
     @Autowired
     private PostService postService;
 
+    @Autowired
+    private SysMenuService menuService;
     @Test
     public void deptServiceTest(){
 //        List<LinkManVo> linkManVoList = deptService.getOriginListManByKey("李");
@@ -40,7 +39,7 @@ public class TestService {
     }
 
     @Test
-    public void PrivateLinkManServiceTest(){
+    public void privateLinkManServiceTest(){
         List<TotalLinkManVo> list = privateLinkManService.getLinkManListByUserIdAndKey(0L, "大");
         System.out.println("==========================================");
         list.forEach(System.out::println);
@@ -48,7 +47,7 @@ public class TestService {
     }
 
     @Test
-    public void PublicLinkManServiceTest(){
+    public void publicLinkManServiceTest(){
         List<TotalLinkManVo> list = publicLinkManService.getLinkManListByKey("爷");
         System.out.println("==========================================");
         list.forEach(System.out::println);
@@ -56,11 +55,16 @@ public class TestService {
     }
 
     @Test
-    public void PostServiceTest(){
+    public void postServiceTest(){
         List<Post> list = postService.getPostListByDeptId(0L);
         System.out.println("==========================================");
         list.forEach(System.out::println);
         System.out.println("==========================================");
+    }
+    @Test
+    public void menuServiceTest() {
+        List<Long> ids = menuService.getMyIdsWithoutChildren(2L);
+        ids.forEach(System.out::println);
     }
 
 }

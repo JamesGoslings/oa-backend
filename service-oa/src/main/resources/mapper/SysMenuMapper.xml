@@ -24,4 +24,16 @@
         WHERE `sys_menu`.id = t2.menu_id AND is_deleted = 0
 
     </select>
+    <select id="getMenuListByRoleId" resultType="com.myPro.model.system.SysMenu">
+        SELECT sys_menu.*
+        FROM `sys_menu`,(
+        SELECT menu_id FROM `sys_role_menu`
+        WHERE role_id = #{ roleId }
+        AND is_deleted = 0) AS t
+        WHERE t.menu_id = sys_menu.id
+        AND sys_menu.is_deleted = 0
+        AND `status` = 1
+    </select>
+
+
 </mapper>

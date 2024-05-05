@@ -11,4 +11,8 @@ import java.util.List;
 public interface SysMenuMapper extends BaseMapper<SysMenu> {
     List<SysMenu> getMenuListByUserId(@Param("userId") Long userId);
 
+    /**
+     * 通过roleId拿到所有可操作的菜单的parentId
+     * */
+    List<SysMenu> getMenuListByRoleId(@Param("roleId") Long roleId);
 }

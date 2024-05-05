@@ -3,6 +3,7 @@ package com.myPro.auth.controller;
 import com.myPro.auth.service.SysMenuService;
 import com.myPro.common.result.Result;
 import com.myPro.model.system.SysMenu;
+import com.myPro.model.system.SysRole;
 import com.myPro.vo.system.AssignMenuVo;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +30,14 @@ public class SysMenuController {
         return Result.ok();
     }
 
+    @GetMapping("getMyIdsWithoutChildren/{roleId}")
+    public Result getIdListWithoutChildrenByRoleId(@PathVariable Long roleId){
+        List<Long> idListWithoutChildren = sysMenuService.getMyIdsWithoutChildren(roleId);
+        return Result.ok(idListWithoutChildren);
+    }
 
-    @GetMapping("findNodes")
-    public Result findNodes() {
+    @GetMapping("getNodes")
+    public Result getNodes() {
         List<SysMenu> list = sysMenuService.getNodes();
         return Result.ok(list);
     }
