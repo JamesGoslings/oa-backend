@@ -1,5 +1,6 @@
 package com.myPro.auth.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.myPro.auth.service.SysMenuService;
 import com.myPro.common.result.Result;
 import com.myPro.model.system.SysMenu;
@@ -7,6 +8,7 @@ import com.myPro.model.system.SysRole;
 import com.myPro.vo.system.AssignMenuVo;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +30,12 @@ public class SysMenuController {
     public Result doAssign(@RequestBody AssignMenuVo assignMenuVo) {
         sysMenuService.doAssign(assignMenuVo);
         return Result.ok();
+    }
+
+    @GetMapping("/keyMenu")
+    public Result getMenuNodesByKeyword(String keyword){
+        List<SysMenu> keyMenuList = sysMenuService.getMenuNodesByKeyword(keyword);
+        return Result.ok(keyMenuList);
     }
 
     @GetMapping("getMyIdsWithoutChildren/{roleId}")

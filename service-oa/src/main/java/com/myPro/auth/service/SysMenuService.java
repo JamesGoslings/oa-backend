@@ -27,4 +27,12 @@ public interface SysMenuService extends IService<SysMenu>{
      * @return 没有子节点的菜单id列表
      * */
     List<Long> getMyIdsWithoutChildren(Long roleId);
+
+
+    /**
+     * 根据关键字查询菜单名相近的菜单
+     * @param keyword 关键字
+     * @return 相关菜单的树型列表
+     * **/
+    List<SysMenu> getMenuNodesByKeyword(String keyword);
 }

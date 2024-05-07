@@ -215,4 +215,16 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         }
         return idListWithoutChildren;
     }
+
+    @Override
+    public List<SysMenu> getMenuNodesByKeyword(String keyword) {
+        // TODO 拿到所有相关菜单（普通列表）
+        LambdaQueryWrapper<SysMenu> wrapper = new LambdaQueryWrapper<>();
+        if(!StringUtils.isEmpty(keyword)) {
+            wrapper.like(SysMenu::getName, keyword);
+        }
+        List<SysMenu> menuList = list(wrapper);
+
+        return MenuHelper.buildTree(menuList);
+    }
 }
