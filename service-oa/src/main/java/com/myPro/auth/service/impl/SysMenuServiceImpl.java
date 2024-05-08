@@ -216,20 +216,6 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     }
 
     @Override
-    public List<SysMenu> getMenusByKeyword(String keyword) {
-        // TODO 拿到所有相关菜单（普通列表）
-        LambdaQueryWrapper<SysMenu> wrapper = new LambdaQueryWrapper<>();
-        if(!StringUtils.isEmpty(keyword)) {
-            wrapper.like(SysMenu::getName, keyword);
-        }
-        List<SysMenu> menuList = list(wrapper);
-        for (SysMenu menu :menuList) {
-            menu.setParentName(getById(menu.getParentId()).getName());
-        }
-        return menuList;
-    }
-
-    @Override
     public List<ParentMenuVo> getAllParentMenuVo() {
         LambdaQueryWrapper<SysMenu> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(SysMenu::getType, 0)
@@ -252,6 +238,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
             }else {
                 vo.setTotalName(getOneTotalName(vo.getId(), map, menu.getParentId()));
             }
+            parentMenuVos.add(vo);
         }
         return parentMenuVos;
     }

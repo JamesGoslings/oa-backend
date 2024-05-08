@@ -13,6 +13,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("admin/system/sysMenu")
@@ -35,8 +36,13 @@ public class SysMenuController {
 
     @GetMapping("/keyMenu")
     public Result getMenuNodesByKeyword(String keyword){
-        List<SysMenu> keyMenuList = sysMenuService.getMenusByKeyword(keyword);
-        return Result.ok(keyMenuList);
+        // TODO 拿到所有相关菜单（普通列表）
+        LambdaQueryWrapper<SysMenu> wrapper = new LambdaQueryWrapper<>();
+        if(!StringUtils.isEmpty(keyword)) {
+            wrapper.like(SysMenu::getName, keyword);
+        }
+        List<SysMenu> menuList = sysMenuService.list(wrapper);
+        return Result.ok(menuList);
     }
 
     @GetMapping("getMyIdsWithoutChildren/{roleId}")
@@ -59,15 +65,25 @@ public class SysMenuController {
 
     @ApiOperation(value = "新增菜单")
     @PostMapping("save")
-    public Result save(@RequestBody SysMenu permission) {
-        sysMenuService.save(permission);
+    public Result save(@RequestBody SysMenu menu) {
+        // TODO 如果新建的菜单是非按钮菜单且path又是空，就将path赋随机值,防止动态生成路由时产生冲突
+        // 检测是否是将原本的按钮菜单改成了非按钮菜单
+        if((menu.getType() == 0 || menu.getType() == 1) && StringUtils.isEmpty(menu.getPath())) {
+            menu.setPath(UUID.randomUUID().toString());
+        }
+        sysMenuService.save(menu);
         return Result.ok();
     }
 
     @ApiOperation(value = "修改菜单")
     @PutMapping("update")
-    public Result updateById(@RequestBody SysMenu permission) {
-        sysMenuService.updateById(permission);
+    public Result updateById(@RequestBody SysMenu menu) {
+        // TODO 如果从按钮改成了非按钮菜单且path又没改，就将path赋随机值,防止动态生成路由时产生冲突
+        // 检测是否是将原本的按钮菜单改成了非按钮菜单
+        if((menu.getType() == 0 || menu.getType() == 1) && StringUtils.isEmpty(menu.getPath())) {
+            menu.setPath(UUID.randomUUID().toString());
+        }
+        sysMenuService.updateById(menu);
         return Result.ok();
     }
 

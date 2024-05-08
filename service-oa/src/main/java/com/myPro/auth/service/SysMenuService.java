@@ -30,12 +30,12 @@ public interface SysMenuService extends IService<SysMenu>{
     List<Long> getMyIdsWithoutChildren(Long roleId);
 
 
-    /**
-     * 根据关键字查询菜单名相近的菜单
-     * @param keyword 关键字
-     * @return 相关菜单的列表（带父级名）
-     * **/
-    List<SysMenu> getMenusByKeyword(String keyword);
+//    /**
+//     * 根据关键字查询菜单名相近的菜单
+//     * @param keyword 关键字
+//     * @return 相关菜单的列表（带父级名）
+//     * **/
+//    List<SysMenu> getMenusByKeyword(String keyword);
 
     /**
      * 获取所有的非按钮菜单及目录，并以字符串记录了层级关系表示
