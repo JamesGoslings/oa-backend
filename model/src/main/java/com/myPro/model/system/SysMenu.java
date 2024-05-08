@@ -52,6 +52,9 @@ public class SysMenu extends BaseEntity {
 	@TableField("status")
 	private Integer status;
 
+	@TableField(exist = false)
+	private String parentName;
+
 	// 下级列表
 	@TableField(exist = false)
 	private List<SysMenu> children;

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.myPro.model.system.SysMenu;
 import com.myPro.model.system.SysRole;
 import com.myPro.vo.system.AssignMenuVo;
+import com.myPro.vo.system.ParentMenuVo;
 import com.myPro.vo.system.RouterVo;
 
 import java.util.List;
@@ -32,7 +33,13 @@ public interface SysMenuService extends IService<SysMenu>{
     /**
      * 根据关键字查询菜单名相近的菜单
      * @param keyword 关键字
-     * @return 相关菜单的树型列表
+     * @return 相关菜单的列表（带父级名）
      * **/
-    List<SysMenu> getMenuNodesByKeyword(String keyword);
+    List<SysMenu> getMenusByKeyword(String keyword);
+
+    /**
+     * 获取所有的非按钮菜单及目录，并以字符串记录了层级关系表示
+     * @return 所有的parentVo
+     * */
+    List<ParentMenuVo> getAllParentMenuVo();
 }

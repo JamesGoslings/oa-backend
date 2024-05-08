@@ -141,7 +141,9 @@ public class SysUserController {
     // 上传并保存用户的头像并将新的图片转成base64字符串传回去
     @PostMapping("uploadAvatar")
     public Result uploadAvatar (HttpServletRequest  request) throws FileNotFoundException, UnknownHostException {
-        String classpath = FileUtil.classpath;
+//        String classpath = FileUtil.classpath;
+
+        String rootPath = FileUtil.rootPath;
 
         MultipartHttpServletRequest req = (MultipartHttpServletRequest) request;
         MultipartFile file = req.getFile("myFile");
@@ -153,7 +155,7 @@ public class SysUserController {
         String suffix = FileUtil.getFileSuffix(file);
 
         String fileName = userId + "-" + username + suffix;
-        if(!FileUtil.uploadFile(file, classpath + "/user-avatars/" , fileName)){
+        if(!FileUtil.uploadFile(file, rootPath + "/user-avatars/" , fileName)){
             return Result.build(503, "文件保存失败");
         }
         SysUser user = service.getById(userId);

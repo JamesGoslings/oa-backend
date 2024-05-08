@@ -6,6 +6,7 @@ import com.myPro.common.result.Result;
 import com.myPro.model.system.SysMenu;
 import com.myPro.model.system.SysRole;
 import com.myPro.vo.system.AssignMenuVo;
+import com.myPro.vo.system.ParentMenuVo;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -34,7 +35,7 @@ public class SysMenuController {
 
     @GetMapping("/keyMenu")
     public Result getMenuNodesByKeyword(String keyword){
-        List<SysMenu> keyMenuList = sysMenuService.getMenuNodesByKeyword(keyword);
+        List<SysMenu> keyMenuList = sysMenuService.getMenusByKeyword(keyword);
         return Result.ok(keyMenuList);
     }
 
@@ -42,6 +43,12 @@ public class SysMenuController {
     public Result getIdListWithoutChildrenByRoleId(@PathVariable Long roleId){
         List<Long> idListWithoutChildren = sysMenuService.getMyIdsWithoutChildren(roleId);
         return Result.ok(idListWithoutChildren);
+    }
+
+    @GetMapping("getParentMenuAll")
+    public Result getParentMenuAll(){
+        List<ParentMenuVo> parentMenuVoList = sysMenuService.getAllParentMenuVo();
+        return Result.ok(parentMenuVoList);
     }
 
     @GetMapping("getNodes")

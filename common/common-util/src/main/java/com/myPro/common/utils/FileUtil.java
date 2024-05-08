@@ -18,6 +18,8 @@ public class FileUtil {
 
     public static String classpath;
 
+    public static String rootPath = "D:\\Program\\JAVA\\Java-projects-me\\oa-user-avatar";
+
     static {
         try {
             classpath = new File(ResourceUtils.getURL("classpath:").getPath()).getAbsolutePath();

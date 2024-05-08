@@ -6,6 +6,7 @@ import com.myPro.model.system.Post;
 import com.myPro.vo.app.LinkManVo;
 import com.myPro.vo.app.SysUserVo;
 import com.myPro.vo.app.TotalLinkManVo;
+import com.myPro.vo.system.ParentMenuVo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -65,6 +66,14 @@ public class TestService {
     public void menuServiceTest() {
         List<Long> ids = menuService.getMyIdsWithoutChildren(2L);
         ids.forEach(System.out::println);
+    }
+
+    @Test
+    public void parentMenuService(){
+        System.out.println("==========================>>>>>>>>>>>>");
+        List<ParentMenuVo> allParentMenuVo = menuService.getAllParentMenuVo();
+        allParentMenuVo.forEach(System.out::println);
+        System.out.println("==========================>>>>>>>>>>>>");
     }
 
 }

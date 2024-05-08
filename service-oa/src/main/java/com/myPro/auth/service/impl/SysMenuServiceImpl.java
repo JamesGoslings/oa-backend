@@ -13,16 +13,15 @@ import com.myPro.model.system.SysRole;
 import com.myPro.model.system.SysRoleMenu;
 import com.myPro.vo.system.AssignMenuVo;
 import com.myPro.vo.system.MetaVo;
+import com.myPro.vo.system.ParentMenuVo;
 import com.myPro.vo.system.RouterVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -217,14 +216,62 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     }
 
     @Override
-    public List<SysMenu> getMenuNodesByKeyword(String keyword) {
+    public List<SysMenu> getMenusByKeyword(String keyword) {
         // TODO 拿到所有相关菜单（普通列表）
         LambdaQueryWrapper<SysMenu> wrapper = new LambdaQueryWrapper<>();
         if(!StringUtils.isEmpty(keyword)) {
             wrapper.like(SysMenu::getName, keyword);
         }
         List<SysMenu> menuList = list(wrapper);
+        for (SysMenu menu :menuList) {
+            menu.setParentName(getById(menu.getParentId()).getName());
+        }
+        return menuList;
+    }
 
-        return MenuHelper.buildTree(menuList);
+    @Override
+    public List<ParentMenuVo> getAllParentMenuVo() {
+        LambdaQueryWrapper<SysMenu> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(SysMenu::getType, 0)
+                .or()
+                .eq(SysMenu::getType, 1);
+        // 拿到所有非按钮的菜单
+        List<SysMenu> menuList = list(wrapper);
+        // 将id和自身name映射起来，存入Map
+        Map<Long, SysMenu> map = new HashMap<>();
+        for (SysMenu menu : menuList) {
+            map.put(menu.getId(), menu);
+        }
+        List<ParentMenuVo> parentMenuVos = new ArrayList<>();
+        for (SysMenu menu : menuList) {
+            ParentMenuVo vo = new ParentMenuVo();
+            vo.setId(menu.getId());
+            vo.setName(menu.getName());
+            if(menu.getParentId() == 0){
+                vo.setTotalName(menu.getName());
+            }else {
+                vo.setTotalName(getOneTotalName(vo.getId(), map, menu.getParentId()));
+            }
+        }
+        return parentMenuVos;
+    }
+
+    // 通过全菜单的map为单个vo(非顶级菜单对应的vo)设置全名称(带所有父级关系的字符串)
+    private String getOneTotalName(Long id,Map<Long, SysMenu> idMenuMap,Long parentId){
+        Long endParentId = -1L;
+        StringBuilder myTotalName = new StringBuilder(idMenuMap.get(id).getName());
+        while (endParentId != 0L){
+            SysMenu parentMenu = null;
+            if(endParentId == -1L){
+                parentMenu = idMenuMap.get(parentId);
+            }else {
+                parentMenu = idMenuMap.get(endParentId);
+            }
+            // 当前的直接父名称
+            String upParentName = parentMenu.getName();
+            endParentId = parentMenu.getParentId();
+            myTotalName.insert(0, upParentName + ">>");
+        }
+        return myTotalName.toString();
     }
 }

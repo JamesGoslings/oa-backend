@@ -57,7 +57,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         if(StringUtils.isEmpty(imgPath)){
             return "";
         }
-        String base64Str = FileUtil.convertImageToBase64Str(FileUtil.classpath + imgPath);
+        String base64Str = FileUtil.convertImageToBase64Str(FileUtil.rootPath + imgPath);
         String suffix = FileUtil.getFileSuffix(imgPath).substring(1);
         if(!suffix.equals("gif")){
             suffix = "png";
