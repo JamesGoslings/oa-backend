@@ -97,4 +97,11 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
         }
         return resList;
     }
+
+
+    // 拿到所有的部门含部门的直接人数
+    private List<Dept> getAllListHasMyCount(){
+        List<Dept> allList = baseMapper.selectAllListHasMyCount();
+        return allList;
+    }
 }

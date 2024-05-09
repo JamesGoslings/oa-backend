@@ -21,4 +21,9 @@ public interface DeptMapper extends BaseMapper<Dept> {
      * 拿到所有的部门id
      * */
     List<Long> getAllIdList();
+
+    /**
+     * 拿到所有的部门，且获取了部门直接工作人员人数
+     * */
+    List<Dept> selectAllListHasMyCount();
 }

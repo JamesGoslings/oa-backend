@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.myPro.auth.mapper.PostMapper;
 import com.myPro.auth.service.DeptService;
 import com.myPro.auth.service.PostService;
+import com.myPro.model.system.Dept;
 import com.myPro.model.system.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,5 +33,11 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
         }
 
         return postList;
+    }
+
+    @Override
+    public List<Post> getAllPostWithDeptAndCount() {
+        List<Post> totalPostList =  baseMapper.selectAllTotalPost();
+        return totalPostList;
     }
 }

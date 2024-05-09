@@ -53,6 +53,12 @@ public class Dept extends BaseEntity {
 //	@TableField("phone")
 //	private String phone;
 
+	@TableField(exist = false)
+	private Long myCount; // 记录本部门的直接工作人员
+
+	@TableField(exist = false)
+	private Long totalCount; // 记录该部门及其所有子部门的工作人员
+
 	@TableField("leader_id")
 	private Long leaderId;
 

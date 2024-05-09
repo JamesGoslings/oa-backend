@@ -23,4 +23,11 @@ public class PostController {
         List<Post> selfAndChildrenPostList = postService.getPostListByDeptId(deptId);
         return Result.ok(selfAndChildrenPostList);
     }
+
+
+    @GetMapping("all")
+    public Result getAllPostWithDept(){
+          List<Post> postList = postService.getAllPostWithDeptAndCount();
+          return Result.ok(postList);
+    }
 }

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.myPro.auth.mapper.PostMapper">
+
+    <select id="selectAllTotalPost" resultType="com.myPro.model.system.Post">
+        SELECT post.*, (
+            SELECT COUNT(*)
+            FROM `sys_user`
+            WHERE sys_user.post_id = post.id
+            ) AS `count`,(
+            SELECT `name`
+            FROM dept
+            WHERE dept.id = post.dept_id
+            ) AS deptName
+        FROM post
+    </select>
+</mapper>

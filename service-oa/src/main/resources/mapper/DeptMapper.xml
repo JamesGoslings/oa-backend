@@ -17,4 +17,11 @@
     <select id="getAllIdList" resultType="java.lang.Long">
         SELECT `id` FROM `dept`
     </select>
+    <select id="selectAllListHasMyCount" resultType="com.myPro.model.system.Dept">
+        SELECT dept.* ,(
+        SELECT COUNT(*) FROM `sys_user`
+        WHERE dept.id = `sys_user`.dept_id
+        ) AS myCount
+        FROM dept
+    </select>
 </mapper>

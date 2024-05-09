@@ -33,4 +33,10 @@ public class Post extends BaseEntity {
 	@TableField("status")
 	private Integer status;
 
+	@TableField(exist = false)
+	private String deptName;
+
+	@TableField(exist = false)
+	private Long count; // 岗位的人数
+
 }

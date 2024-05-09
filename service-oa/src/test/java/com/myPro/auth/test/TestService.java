@@ -76,4 +76,12 @@ public class TestService {
         System.out.println("==========================>>>>>>>>>>>>");
     }
 
+    @Test
+    public void getTotalPostListTest(){
+        List<Post> postList = postService.getAllPostWithDeptAndCount();
+        System.out.println("==========================>>>>>>>>>>>>");
+        postList.forEach(System.out::println);
+        System.out.println("==========================>>>>>>>>>>>>");
+
+    }
 }
