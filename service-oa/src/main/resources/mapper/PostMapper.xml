@@ -16,5 +16,6 @@
             WHERE dept.id = post.dept_id
             ) AS deptName
         FROM post
+        ORDER BY `count` DESC
     </select>
 </mapper>
