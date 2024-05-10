@@ -48,14 +48,14 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
         String deptCode = deptService.getById(deptId).getDeptCode();
         // 拿到序号部分
         String num = "";
-        // 非新建的code码序号
-        if(id != null){
-            String oldCode = getById(id).getPostCode();
-            num = oldCode.substring(oldCode.length() - 2);
-        }else {
+        if(id == null || id <= 0){
             long count = count(new LambdaQueryWrapper<Post>().eq(Post::getDeptId, deptId));
             count++;
             num = count < 10 ? "0" + count : count + "";
+        }else {
+            // 非新建的code码序号
+            String oldCode = getById(id).getPostCode();
+            num = oldCode.substring(oldCode.length() - 2);
         }
 
         // 拿到类型字符
