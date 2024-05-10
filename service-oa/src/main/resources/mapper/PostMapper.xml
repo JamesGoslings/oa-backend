@@ -18,4 +18,19 @@
         FROM post
         ORDER BY `count` DESC
     </select>
+    <select id="selectPostsWithDeptAndCountByKeyword" resultType="com.myPro.model.system.Post">
+        SELECT post.*, (
+            SELECT COUNT(*)
+            FROM `sys_user`
+            WHERE sys_user.post_id = post.id
+            ) AS `count`,(
+            SELECT `name`
+            FROM dept
+            WHERE dept.id = post.dept_id
+            ) AS deptName
+        FROM post
+        WHERE `name` LIKE CONCAT('%', #{keyword}, '%')
+        OR `post_code` LIKE CONCAT('%', #{keyword}, '%')
+        ORDER BY `count` DESC
+    </select>
 </mapper>

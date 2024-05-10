@@ -82,6 +82,13 @@ public class TestService {
         System.out.println("==========================>>>>>>>>>>>>");
         postList.forEach(System.out::println);
         System.out.println("==========================>>>>>>>>>>>>");
+    }
 
+    @Test
+    public void getTotalPostsByKeywordTest(){
+        List<Post> list = postService.getPostListWithDeptAndCountByKeyword(null);
+        System.out.println("==========================>>>>>>>>>>>>");
+        list.forEach(System.out::println);
+        System.out.println("==========================>>>>>>>>>>>>");
     }
 }

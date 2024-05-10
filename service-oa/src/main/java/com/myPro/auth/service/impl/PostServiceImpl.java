@@ -53,4 +53,9 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
         String t = PostUtil.types[type];
         return deptCode + t + num;
     }
+
+    @Override
+    public List<Post> getPostListWithDeptAndCountByKeyword(String keyword) {
+        return baseMapper.selectPostsWithDeptAndCountByKeyword(keyword);
+    }
 }

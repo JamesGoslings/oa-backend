@@ -27,4 +27,11 @@ public interface PostService extends IService<Post> {
      * @return 新的岗位编码
      */
     String getNewCode(Long id,Long deptId, Integer type);
+
+    /**
+     * 根据关键词查到对应的岗位附有人数部门信息
+     * @param keyword 查询使用的关键词
+     * @return 条件查询出来且处理好了的岗位的集合
+     */
+    List<Post> getPostListWithDeptAndCountByKeyword(String keyword);
 }
