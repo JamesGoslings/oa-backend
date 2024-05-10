@@ -25,6 +25,9 @@ public class Post extends BaseEntity {
 	@TableField("name")
 	private String name;
 
+	@TableField("type")
+	private Integer type;
+
 //	@ApiModelProperty(value = "显示顺序")
 //	@TableField("description")
 //	private String description;

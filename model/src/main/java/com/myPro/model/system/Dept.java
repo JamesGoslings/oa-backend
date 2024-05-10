@@ -37,6 +37,9 @@ public class Dept extends BaseEntity {
 	@TableField("parent_id")
 	private Long parentId;
 
+	@TableField("dept_code")
+	private String deptCode;
+
 //	@ApiModelProperty(value = "树结构")
 //	@TableField("tree_path")
 //	private String treePath;
