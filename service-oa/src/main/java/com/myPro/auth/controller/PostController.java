@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -29,5 +30,15 @@ public class PostController {
     public Result getAllPostWithDept(){
           List<Post> postList = postService.getAllPostWithDeptAndCount();
           return Result.ok(postList);
+    }
+
+    @GetMapping("newCode/{id}/{deptId}/{type}")
+    public Result getNewPostCode(@PathVariable Long id,
+                                @PathVariable Long deptId
+                                ,@PathVariable Integer type){
+        String newCode = postService.getNewCode(id,deptId,type);
+        HashMap<String, String> map = new HashMap<>();
+        map.put("newPostCode", newCode);
+        return Result.ok(map);
     }
 }

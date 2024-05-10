@@ -18,4 +18,13 @@ public interface PostService extends IService<Post> {
      * @return 全部的岗位的list
      */
     List<Post> getAllPostWithDeptAndCount();
+
+    /**
+     * 根据新的所属部门和新的类型生成新的编码
+     * @param id 该岗位的id
+     * @param deptId 新部门的id
+     * @param type  新的岗位类型
+     * @return 新的岗位编码
+     */
+    String getNewCode(Long id,Long deptId, Integer type);
 }
