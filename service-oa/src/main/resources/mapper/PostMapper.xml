@@ -16,6 +16,7 @@
             WHERE dept.id = post.dept_id
             ) AS deptName
         FROM post
+        WHERE `is_deleted` = 0
         ORDER BY `count` DESC
     </select>
     <select id="selectPostsWithDeptAndCountByKeyword" resultType="com.myPro.model.system.Post">
@@ -29,8 +30,9 @@
             WHERE dept.id = post.dept_id
             ) AS deptName
         FROM post
-        WHERE `name` LIKE CONCAT('%', #{keyword}, '%')
-        OR `post_code` LIKE CONCAT('%', #{keyword}, '%')
+        WHERE (`name` LIKE CONCAT('%', #{keyword}, '%')
+               OR `post_code` LIKE CONCAT('%', #{keyword}, '%'))
+        AND `is_deleted` = 0
         ORDER BY `count` DESC
     </select>
 </mapper>

@@ -85,6 +85,14 @@ public class TestService {
     }
 
     @Test
+    public void getNewCodeTest(){
+        String newCode = postService.getNewCode(15L, 11L, 0);
+        System.out.println("=======================================>>>>>>>>");
+        System.out.println("newCode = " + newCode);
+        System.out.println("=======================================>>>>>>>>");
+    }
+
+    @Test
     public void getTotalPostsByKeywordTest(){
         List<Post> list = postService.getPostListWithDeptAndCountByKeyword(null);
         System.out.println("==========================>>>>>>>>>>>>");

@@ -21,7 +21,7 @@ public interface PostService extends IService<Post> {
 
     /**
      * 根据新的所属部门和新的类型生成新的编码
-     * @param id 该岗位的id
+     * @param id 该岗位的id(如果id为空，就认定为新建的code码)
      * @param deptId 新部门的id
      * @param type  新的岗位类型
      * @return 新的岗位编码

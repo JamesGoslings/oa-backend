@@ -63,4 +63,10 @@ public class PostController {
         }
         return Result.ok(postList);
     }
+
+    @DeleteMapping("remove/{postId}")
+    public Result removePostOne(@PathVariable Long postId){
+        postService.removeById(postId);
+        return Result.ok();
+    }
 }

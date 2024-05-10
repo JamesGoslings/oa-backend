@@ -47,8 +47,17 @@ public class PostServiceImpl extends ServiceImpl<PostMapper, Post> implements Po
         // 拿到所属部门的部门编码
         String deptCode = deptService.getById(deptId).getDeptCode();
         // 拿到序号部分
-        String oldCode = getById(id).getPostCode();
-        String num = oldCode.substring(oldCode.length() - 2);
+        String num = "";
+        // 非新建的code码序号
+        if(id != null){
+            String oldCode = getById(id).getPostCode();
+            num = oldCode.substring(oldCode.length() - 2);
+        }else {
+            long count = count(new LambdaQueryWrapper<Post>().eq(Post::getDeptId, deptId));
+            count++;
+            num = count < 10 ? "0" + count : count + "";
+        }
+
         // 拿到类型字符
         String t = PostUtil.types[type];
         return deptCode + t + num;
