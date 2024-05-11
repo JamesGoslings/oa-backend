@@ -2,6 +2,7 @@ package com.myPro.auth.test;
 
 import com.myPro.auth.service.*;
 import com.myPro.model.app.PrivateLinkMan;
+import com.myPro.model.system.Dept;
 import com.myPro.model.system.Post;
 import com.myPro.vo.app.LinkManVo;
 import com.myPro.vo.app.SysUserVo;
@@ -98,5 +99,14 @@ public class TestService {
         System.out.println("==========================>>>>>>>>>>>>");
         list.forEach(System.out::println);
         System.out.println("==========================>>>>>>>>>>>>");
+    }
+
+    @Test
+    public void getAllTreeDeptListTest(){
+        List<Dept> treeDeptList = deptService.getAllTreeDeptList();
+        System.out.println("==========================>>>>>>>>>>>>");
+        treeDeptList.forEach(System.out::println);
+        System.out.println("==========================>>>>>>>>>>>>");
+
     }
 }

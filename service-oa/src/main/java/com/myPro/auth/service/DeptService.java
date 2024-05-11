@@ -25,4 +25,10 @@ public interface DeptService extends IService<Dept> {
      * @param deptId 根部门id
      * */
     List<Long> getDeptIdListSelfAndChildren(Long deptId);
+
+    /**
+     * 获取全部的树型的部门信息
+     * @return 树型部门列表
+     */
+    List<Dept> getAllTreeDeptList();
 }

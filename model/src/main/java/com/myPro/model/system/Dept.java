@@ -2,6 +2,7 @@ package com.myPro.model.system;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.myPro.model.base.BaseEntity;
+import com.myPro.vo.system.SysUserWebVo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -40,22 +41,6 @@ public class Dept extends BaseEntity {
 	@TableField("dept_code")
 	private String deptCode;
 
-//	@ApiModelProperty(value = "树结构")
-//	@TableField("tree_path")
-//	private String treePath;
-//
-//	@ApiModelProperty(value = "排序")
-//	@TableField("sort_value")
-//	private Integer sortValue;
-
-//	@ApiModelProperty(value = "负责人")
-//	@TableField("leader")
-//	private String leader;
-//
-//	@ApiModelProperty(value = "电话")
-//	@TableField("phone")
-//	private String phone;
-
 	@TableField(exist = false)
 	private Long myCount; // 记录本部门的直接工作人员
 
@@ -65,12 +50,16 @@ public class Dept extends BaseEntity {
 	@TableField("leader_id")
 	private Long leaderId;
 
+	@TableField("is_add_children_count")
+	private Integer isAddChildrenCount;
+
+	@TableField(exist = false)
+	private SysUserWebVo leader;// 存负责人信息
+
 	@ApiModelProperty(value = "状态（1正常 0停用）")
 	@TableField("status")
 	private Integer status;
 
-
-	@ApiModelProperty(value = "下级部门")
 	@TableField(exist = false)
 	private List<Dept> children;
 

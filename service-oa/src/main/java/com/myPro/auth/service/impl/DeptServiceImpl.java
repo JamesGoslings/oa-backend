@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.myPro.auth.mapper.DeptMapper;
 import com.myPro.auth.service.DeptService;
 import com.myPro.auth.service.SysUserService;
+import com.myPro.auth.service.utils.DeptHelper;
 import com.myPro.auth.service.utils.LinkManListHelper;
 import com.myPro.model.system.Dept;
 import com.myPro.vo.app.LinkManVo;
@@ -11,9 +12,7 @@ import com.myPro.vo.app.SysUserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements DeptService {
@@ -64,11 +63,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
     @Override
     public List<LinkManVo> getOriginListManByKey(String key) {
         List<Dept> deptListByKey = deptMapper.getDeptListByKey(key);
-        List<LinkManVo> originLinkManList = getOriginLinkManList(deptListByKey);
-        System.out.println("====================NB=====================");
-        originLinkManList.forEach(System.out::println);
-        System.out.println("====================NB=====================");
-        return originLinkManList;
+        return getOriginLinkManList(deptListByKey);
     }
 
     @Override
@@ -84,6 +79,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
         idList.add(deptId);
         return getChildrenId(deptId, orginDeptList,idList);
     }
+
     /**
      * 递归拿到给的根id的所有子id
      * */
@@ -99,9 +95,38 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
     }
 
 
-    // 拿到所有的部门含部门的直接人数
-    private List<Dept> getAllListHasMyCount(){
-        List<Dept> allList = baseMapper.selectAllListHasMyCount();
-        return allList;
+    @Override
+    public List<Dept> getAllTreeDeptList() {
+        // 获取所有的部门，每个部门附有该部门直接的人数
+        List<Dept> originDeptList = baseMapper.selectAllListHasMyCount();
+        // 创建一个Map来存储已经计算过的部门的totalCount，避免重复计算
+        Map<Long, Long> totalCountMap = new HashMap<>();
+        // 获取每个dept的总人数
+        for (Dept dept : originDeptList) {
+            if(dept.getIsAddChildrenCount() == 0){
+                dept.setTotalCount(dept.getMyCount());
+            }else {
+                dept.setTotalCount(getOneDeptTotalCount(dept, originDeptList, totalCountMap));
+            }
+        }
+        // 构建成树型列表
+        return DeptHelper.buildTree(originDeptList);
+    }
+
+    private Long getOneDeptTotalCount(Dept dept,List<Dept> allList, Map<Long, Long> totalCountMap){
+        // 计算过了，直接返回
+        if(totalCountMap.containsKey(dept.getId())){
+            return totalCountMap.get(dept.getId());
+        }
+        Long total = dept.getMyCount();
+        for (Dept childDept : allList) {
+            // 找到子部门，子部门再递归
+            if(Objects.equals(childDept.getParentId(), dept.getId())){
+                total += getOneDeptTotalCount(childDept,allList,totalCountMap);
+            }
+        }
+        // 记录计算
+        totalCountMap.put(dept.getId(), total);
+        return total;
     }
 }
