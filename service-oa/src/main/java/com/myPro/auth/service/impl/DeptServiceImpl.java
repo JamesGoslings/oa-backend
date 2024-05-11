@@ -97,6 +97,12 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
 
     @Override
     public List<Dept> getAllTreeDeptList() {
+        // 构建成树型列表
+        return DeptHelper.buildTree(getAllTotalDeptList());
+    }
+
+    @Override
+    public List<Dept> getAllTotalDeptList() {
         // 获取所有的部门，每个部门附有该部门直接的人数
         List<Dept> originDeptList = baseMapper.selectAllListHasMyCount();
         // 创建一个Map来存储已经计算过的部门的totalCount，避免重复计算
@@ -109,8 +115,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
                 dept.setTotalCount(getOneDeptTotalCount(dept, originDeptList, totalCountMap));
             }
         }
-        // 构建成树型列表
-        return DeptHelper.buildTree(originDeptList);
+        return originDeptList;
     }
 
     private Long getOneDeptTotalCount(Dept dept,List<Dept> allList, Map<Long, Long> totalCountMap){

@@ -136,7 +136,13 @@ public class SysUserController {
         return Result.ok(userVo);
     }
 
-
+    // 获取用户总人数
+    @GetMapping("totalCount")
+    public Result getUserTotalCount(){
+        HashMap<String, Long> map = new HashMap<>();
+        map.put("totalCount", service.count());
+        return Result.ok(map);
+    }
 
     // 上传并保存用户的头像并将新的图片转成base64字符串传回去
     @PostMapping("uploadAvatar")

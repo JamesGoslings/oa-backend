@@ -40,4 +40,10 @@ public class DeptController {
         List<Dept> treeDeptList = deptService.getAllTreeDeptList();
         return Result.ok(treeDeptList);
     }
+    // 获取所有部门的完整信息（列表结构）
+    @GetMapping("allList")
+    public Result getAllTotalDeptList(){
+        List<Dept> deptList = deptService.getAllTotalDeptList();
+        return Result.ok(deptList);
+    }
 }

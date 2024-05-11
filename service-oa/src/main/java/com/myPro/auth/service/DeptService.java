@@ -31,4 +31,10 @@ public interface DeptService extends IService<Dept> {
      * @return 树型部门列表
      */
     List<Dept> getAllTreeDeptList();
+
+    /**
+     * 获取全部的部门信息
+     * @return 部门列表
+     */
+    List<Dept> getAllTotalDeptList();
 }
