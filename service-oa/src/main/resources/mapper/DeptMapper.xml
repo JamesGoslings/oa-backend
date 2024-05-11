@@ -21,8 +21,10 @@
         SELECT dept.* ,(
             SELECT COUNT(*) FROM `sys_user`
             WHERE dept.id = `sys_user`.dept_id
+            AND `sys_user`.is_deleted = 0
             ) AS myCount
         FROM dept
+        WHERE `dept`.is_deleted = 0
         ORDER BY `myCount` DESC
     </select>
 </mapper>
