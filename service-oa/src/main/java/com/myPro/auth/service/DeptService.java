@@ -37,4 +37,12 @@ public interface DeptService extends IService<Dept> {
      * @return 部门列表
      */
     List<Dept> getAllTotalDeptList();
+
+    /**
+     * 动态获取新的部门编码
+     * @param deptId 待操作的部门的id，如果id为小于等于0或null就按新增部门来生成编码
+     * @param parentId 该部门的上级部门的id
+     * @return 生成的新的部门编码
+     */
+    String getNewCode(Long deptId, Long parentId);
 }

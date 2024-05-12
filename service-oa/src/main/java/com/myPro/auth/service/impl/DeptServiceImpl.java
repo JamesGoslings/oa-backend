@@ -1,5 +1,6 @@
 package com.myPro.auth.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.myPro.auth.mapper.DeptMapper;
 import com.myPro.auth.service.DeptService;
@@ -114,6 +115,11 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
             }else {
                 dept.setTotalCount(getOneDeptTotalCount(dept, originDeptList, totalCountMap));
             }
+            // 封装负责人到dept中
+            dept.setLeader(userService.getUserWebVoById(dept.getLeaderId()));
+            if(dept.getParentId() != 0){
+                dept.setParentName(getById(dept.getParentId()).getName());
+            }
         }
         return originDeptList;
     }
@@ -133,5 +139,27 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
         // 记录计算
         totalCountMap.put(dept.getId(), total);
         return total;
+    }
+
+
+    @Override
+    public String getNewCode(Long deptId, Long parentId) {
+        if(parentId == 0){
+            return count(new LambdaQueryWrapper<Dept>().eq(Dept::getParentId, 0)) + 1 + "";
+        }
+        // 拿到父级的编码
+        String parentCode = getById(parentId).getDeptCode();
+        // 拿到自己的序号
+        String num = "";
+        // 新建的序号
+        if(deptId == null || deptId <= 0){
+            long count = count(new LambdaQueryWrapper<Dept>().eq(Dept::getParentId, parentId));
+            count++;
+            num = count < 10 ? "0" + count : count + "";
+        }else {
+            String oldCode = getById(deptId).getDeptCode();
+            num = oldCode.substring(oldCode.length() - 2);
+        }
+        return parentCode + num;
     }
 }

@@ -38,6 +38,9 @@ public class Dept extends BaseEntity {
 	@TableField("parent_id")
 	private Long parentId;
 
+	@TableField(exist = false)
+	private String parentName;
+
 	@TableField("dept_code")
 	private String deptCode;
 

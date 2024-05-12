@@ -5,10 +5,7 @@ import com.myPro.common.result.Result;
 import com.myPro.model.system.Dept;
 import com.myPro.vo.app.LinkManVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -45,5 +42,26 @@ public class DeptController {
     public Result getAllTotalDeptList(){
         List<Dept> deptList = deptService.getAllTotalDeptList();
         return Result.ok(deptList);
+    }
+
+    @PutMapping("update")
+    public Result updateDept(@RequestBody Dept dept){
+        deptService.updateById(dept);
+        return Result.ok();
+    }
+
+    @PostMapping("save")
+    public Result saveDept(@RequestBody Dept dept){
+        deptService.save(dept);
+        return Result.ok();
+    }
+
+    @GetMapping("newCode/{deptId}/{parentId}")
+    public Result getNewDeptCode(@PathVariable Long deptId,
+                                 @PathVariable Long parentId){
+        String newCode = deptService.getNewCode(deptId,parentId);
+        HashMap<String, String> map = new HashMap<>();
+        map.put("newDeptCode", newCode);
+        return Result.ok(map);
     }
 }
