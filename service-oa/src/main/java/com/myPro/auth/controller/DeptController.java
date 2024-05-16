@@ -3,8 +3,10 @@ package com.myPro.auth.controller;
 import com.myPro.auth.service.DeptService;
 import com.myPro.common.result.Result;
 import com.myPro.model.system.Dept;
+import com.myPro.model.system.Post;
 import com.myPro.vo.app.LinkManVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -64,4 +66,11 @@ public class DeptController {
         map.put("newDeptCode", newCode);
         return Result.ok(map);
     }
+
+    @DeleteMapping("remove/{deptId}")
+    public Result removeOneDept(@PathVariable Long deptId){
+        deptService.removeById(deptId);
+        return Result.ok();
+    }
+
 }

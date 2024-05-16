@@ -1,6 +1,7 @@
 package com.myPro.process.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.myPro.common.exception.MyException;
@@ -8,8 +9,10 @@ import com.myPro.common.result.Result;
 import com.myPro.model.process.ProcessTemplate;
 import com.myPro.process.service.ProcessTemplateService;
 
+import com.myPro.vo.system.ProcessTemplateQueryVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ResourceUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,6 +20,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -30,14 +34,27 @@ public class ProcessTemplateController {
 
     @GetMapping("{page}/{limit}")
     public Result page(@PathVariable Long page,
-                       @PathVariable Long limit){
+                       @PathVariable Long limit,
+                       ProcessTemplateQueryVo queryVo){
+        LambdaQueryWrapper<ProcessTemplate> wrapper = new LambdaQueryWrapper<>();
+        String keyword = queryVo.getKeyword();
+        if(!StringUtils.isEmpty(keyword)){
+            wrapper.or()
+                    .like(ProcessTemplate::getName, keyword)
+                    .or()
+                    .like(ProcessTemplate::getDescription, keyword);
+        }
         Page<ProcessTemplate> pageParam = new Page<>(page, limit);
         //根据类型id把审批类型对应名称查询出来放到返回的page中
         IPage<ProcessTemplate> pageModel =
-                processTemplateService.selectPageProcessTemplate(pageParam);
+                processTemplateService.selectPageProcessTemplate(pageParam,wrapper);
         return Result.ok(pageModel);
     }
 
+    @GetMapping("all")
+    public Result getAllTemlate(){
+        return Result.ok(processTemplateService.getAllTemplate());
+    }
     //部署流程定义(发布)
     @GetMapping("/publish/{id}")
     public Result publish(@PathVariable Long id){
@@ -98,5 +115,12 @@ public class ProcessTemplateController {
         return Result.ok(map);
     }
 
+    @DeleteMapping("batchRemove")
+    public Result batchRemove(@RequestBody List<Long> idList){
+        if(processTemplateService.removeByIds(idList)){
+            return Result.ok();
+        }
+        return Result.fail();
+    }
 
 }

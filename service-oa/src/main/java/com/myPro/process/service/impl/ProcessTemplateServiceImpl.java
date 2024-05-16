@@ -28,7 +28,25 @@ public class ProcessTemplateServiceImpl extends ServiceImpl<ProcessTemplateMappe
 
     @Override
     public IPage<ProcessTemplate> selectPageProcessTemplate(Page<ProcessTemplate> pageParam) {
-        Page<ProcessTemplate> processTemplatePage = baseMapper.selectPage(pageParam, null);
+//        Page<ProcessTemplate> processTemplatePage = baseMapper.selectPage(pageParam, null);
+//
+//        List<ProcessTemplate> processTemplateList = processTemplatePage.getRecords();
+//
+//        for (ProcessTemplate processTemplate :processTemplateList) {
+//            Long typeId = processTemplate.getProcessTypeId();
+//            ProcessType processType = processTypeService.getOne
+//                    (new LambdaQueryWrapper<ProcessType>().eq(ProcessType::getId, typeId));
+//            if(processType == null){
+//                continue;
+//            }
+//            processTemplate.setProcessTypeName(processType.getName());
+//        }
+        return selectPageProcessTemplate(pageParam, null);
+    }
+
+    @Override
+    public IPage<ProcessTemplate> selectPageProcessTemplate(Page<ProcessTemplate> pageParam, LambdaQueryWrapper<ProcessTemplate> wrapper) {
+        Page<ProcessTemplate> processTemplatePage = baseMapper.selectPage(pageParam, wrapper);
 
         List<ProcessTemplate> processTemplateList = processTemplatePage.getRecords();
 
@@ -57,5 +75,14 @@ public class ProcessTemplateServiceImpl extends ServiceImpl<ProcessTemplateMappe
             processService.deployByZip(processTemplate.getProcessDefinitionPath());
         }
 
+    }
+
+    @Override
+    public List<ProcessTemplate> getAllTemplate() {
+        List<ProcessTemplate> list = list();
+        for (ProcessTemplate template : list) {
+            template.setProcessTypeName(processTypeService.getById(template.getProcessTypeId()).getName());
+        }
+        return list;
     }
 }
