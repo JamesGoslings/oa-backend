@@ -1,4 +1,4 @@
-package com.myPro.auth.service;
+package com.myPro.attendance.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.myPro.model.app.ClockInRecord;

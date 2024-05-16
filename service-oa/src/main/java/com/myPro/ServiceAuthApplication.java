@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
-@MapperScan({"com.myPro.auth.mapper","com.myPro.process.mapper"})
+@MapperScan({"com.myPro.auth.mapper","com.myPro.process.mapper","com.myPro.attendance.mapper"})
 @SpringBootApplication(scanBasePackages = {"com.myPro"})
 //@EnableSwagger2WebMvc
 public class ServiceAuthApplication {

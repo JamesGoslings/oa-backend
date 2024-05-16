@@ -1,6 +1,6 @@
-package com.myPro.auth.controller;
+package com.myPro.attendance.controller;
 
-import com.myPro.auth.service.ClockInRecordService;
+import com.myPro.attendance.service.ClockInRecordService;
 import com.myPro.common.result.Result;
 import com.myPro.model.app.ClockInRecord;
 import org.springframework.beans.factory.annotation.Autowired;

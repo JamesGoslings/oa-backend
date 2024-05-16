@@ -1,4 +1,4 @@
-package com.myPro.auth.mapper;
+package com.myPro.attendance.mapper;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;

@@ -1,14 +1,12 @@
-package com.myPro.auth.service.impl;
+package com.myPro.attendance.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.myPro.auth.mapper.ClockInRecordMapper;
-import com.myPro.auth.service.ClockInRecordService;
+import com.myPro.attendance.mapper.ClockInRecordMapper;
+import com.myPro.attendance.service.ClockInRecordService;
 import com.myPro.model.app.ClockInRecord;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @Service
