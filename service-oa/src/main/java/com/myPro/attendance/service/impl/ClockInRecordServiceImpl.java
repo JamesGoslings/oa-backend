@@ -28,4 +28,12 @@ public class ClockInRecordServiceImpl extends ServiceImpl<ClockInRecordMapper, C
     public int getCountThisMonth(Long userId) {
         return baseMapper.selectCountThisMonth(userId);
     }
+
+    @Override
+    public Double[] getRadiusByDays(Integer days) {
+        // TODO 拿到一定时间内所有的记录数据
+        List<ClockInRecord> records = baseMapper.getRecordsByDays(days);
+
+        return new Double[0];
+    }
 }

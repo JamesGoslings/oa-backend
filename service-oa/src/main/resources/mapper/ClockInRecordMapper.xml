@@ -19,4 +19,8 @@
         AND user_id = #{ userId }
         AND is_deleted = 0;
     </select>
+    <select id="getRecordsByDays" resultType="com.myPro.model.app.ClockInRecord">
+        SELECT * FROM `clock_in_record`
+        WHERE DATE(clock_in_time) BETWEEN DATE_SUB(CURDATE(), INTERVAL #{ days } DAY) AND CURDATE();
+    </select>
 </mapper>

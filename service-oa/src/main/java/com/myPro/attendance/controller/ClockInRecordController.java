@@ -57,4 +57,14 @@ public class ClockInRecordController {
         map.put("recordCountThisMonth", count);
         return Result.ok(map);
     }
-}
+
+    /***
+     * 获取一定时间内的全公司的·打卡率
+     * @param days
+     * @return 全公司的·打卡率
+     */
+    @GetMapping("radius/{days}")
+    public Result getClockInRadiusByDays(@PathVariable Integer days){
+        Double[] dayRadius = clockInRecordService.getRadiusByDays(days);
+        return Result.ok(dayRadius);
+    }}

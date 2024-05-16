@@ -24,4 +24,11 @@ public interface ClockInRecordService extends IService<ClockInRecord> {
      * @return 本月的考勤记录数
      * */
     int getCountThisMonth(Long userId);
+
+    /**
+     * 获取一定时间内对的打卡率
+     * @param days
+     * @return
+     */
+    Double[] getRadiusByDays(Integer days);
 }

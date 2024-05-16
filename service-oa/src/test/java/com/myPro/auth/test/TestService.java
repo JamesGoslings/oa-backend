@@ -1,9 +1,13 @@
 package com.myPro.auth.test;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.myPro.attendance.service.ClockInRecordService;
+import com.myPro.attendance.utils.RecordInitDataUtil;
 import com.myPro.auth.service.*;
 import com.myPro.model.app.PrivateLinkMan;
 import com.myPro.model.system.Dept;
 import com.myPro.model.system.Post;
+import com.myPro.model.system.SysUser;
 import com.myPro.vo.app.LinkManVo;
 import com.myPro.vo.app.SysUserVo;
 import com.myPro.vo.app.TotalLinkManVo;
@@ -12,7 +16,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 @SpringBootTest
@@ -30,7 +36,17 @@ public class TestService {
     private PostService postService;
 
     @Autowired
+    private ClockInRecordService clockInRecordService;
+
+    @Autowired
     private SysMenuService menuService;
+
+    @Autowired
+    private SysUserService userService;
+
+    @Autowired
+    private RecordInitDataUtil recordInitDataUtil;
+
     @Test
     public void deptServiceTest(){
 //        List<LinkManVo> linkManVoList = deptService.getOriginListManByKey("李");
@@ -107,6 +123,15 @@ public class TestService {
         System.out.println("==========================>>>>>>>>>>>>");
         treeDeptList.forEach(System.out::println);
         System.out.println("==========================>>>>>>>>>>>>");
+    }
 
+    @Test
+    public void getRecordsByDaysTest(){
+        Double[] radiusByDays = clockInRecordService.getRadiusByDays(1);
+    }
+
+    @Test
+    public void RecordUtilTest(){
+        recordInitDataUtil.initData();
     }
 }
