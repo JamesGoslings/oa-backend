@@ -19,8 +19,12 @@
         AND user_id = #{ userId }
         AND is_deleted = 0;
     </select>
-    <select id="getRecordsByDays" resultType="com.myPro.model.app.ClockInRecord">
-        SELECT * FROM `clock_in_record`
-        WHERE DATE(clock_in_time) BETWEEN DATE_SUB(CURDATE(), INTERVAL #{ days } DAY) AND CURDATE();
+    <select id="getRecordsByDays" resultType="com.myPro.Do.ClockInRecordDo">
+        SELECT DATE(clock_in_time) AS clockInRecordDate,COUNT(*) AS recordNum FROM `clock_in_record`
+        WHERE clock_in_time >= DATE_SUB(CURDATE(),INTERVAL 7 DAY)
+        AND `is_deleted` = 0
+        GROUP BY DATE(clock_in_time)
+        ORDER BY clockInRecordDate DESC
     </select>
+
 </mapper>

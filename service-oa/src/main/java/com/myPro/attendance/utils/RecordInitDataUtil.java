@@ -30,17 +30,12 @@ public class RecordInitDataUtil {
     public void initData(){
         // TODO 初始化这个月的所有员工的上下班打卡数据(并制造部分不打卡情况)
         // 拿到所有用户的id
-        List<Long> userIds = userService.listObjs(Wrappers.<SysUser>lambdaQuery().select(SysUser::getId));
+        List<Long> userIds = userService.listObjs(Wrappers.<SysUser>lambdaQuery().eq(SysUser::getIsDeleted, 0)
+                .select(SysUser::getId));
         for (int i = 1; i <= new Date().getDate(); i++) {
             for (int j = 0; j < 2; j++) {
                 for (Long userId : userIds) {
-                    ClockInRecord record = new ClockInRecord();
-                    record.setType(j);
-                    record.setWay(0);
-                    record.setUserId(userId);
-                    Date date = new Date();
-                    date.setDate(i);
-                    record.setClockInTime(date);
+                    ClockInRecord record = getClockInRecord(userId, j, i);
                     // 制造不打卡情况
                     int randNum = new Random().nextInt(20);
                     if(userId != randNum){
@@ -49,8 +44,24 @@ public class RecordInitDataUtil {
                 }
             }
         }
+    }
 
-
+    private static ClockInRecord getClockInRecord(Long userId, int j, int i) {
+        ClockInRecord record = new ClockInRecord();
+        record.setType(j);
+        record.setWay(0);
+        record.setUserId(userId);
+        Date date = new Date();
+        date.setDate(i);
+        if(j == 0){
+            date.setHours(8);
+            date.setMinutes(40);
+        }else {
+            date.setHours(18);
+            date.setMinutes(11);
+        }
+        record.setClockInTime(date);
+        return record;
     }
 
 }

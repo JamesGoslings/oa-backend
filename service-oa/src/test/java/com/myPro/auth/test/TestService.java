@@ -11,11 +11,13 @@ import com.myPro.model.system.SysUser;
 import com.myPro.vo.app.LinkManVo;
 import com.myPro.vo.app.SysUserVo;
 import com.myPro.vo.app.TotalLinkManVo;
+import com.myPro.vo.attendance.ClockInRecordVo;
 import com.myPro.vo.system.ParentMenuVo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -127,11 +129,24 @@ public class TestService {
 
     @Test
     public void getRecordsByDaysTest(){
-        Double[] radiusByDays = clockInRecordService.getRadiusByDays(1);
+        List<ClockInRecordVo> radiusByDays = clockInRecordService.getRadiusByDays(15);
+        System.out.println("==========================>>>>>>>>>>>>");
+        radiusByDays.forEach(System.out::println);
+        System.out.println("==========================>>>>>>>>>>>>");
     }
 
     @Test
     public void RecordUtilTest(){
         recordInitDataUtil.initData();
+    }
+
+    @Test
+    public void dateTest(){
+        System.out.println(new Date().getTime());
+//        Date date = new Date();
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        String format = dateFormat.format(date);
+//        System.out.println(format);
     }
 }

@@ -2,6 +2,7 @@ package com.myPro.attendance.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.myPro.model.app.ClockInRecord;
+import com.myPro.vo.attendance.ClockInRecordVo;
 
 import java.util.List;
 
@@ -30,5 +31,5 @@ public interface ClockInRecordService extends IService<ClockInRecord> {
      * @param days
      * @return
      */
-    Double[] getRadiusByDays(Integer days);
+    List<ClockInRecordVo> getRadiusByDays(Integer days);
 }

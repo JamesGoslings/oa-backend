@@ -2,6 +2,7 @@ package com.myPro.attendance.mapper;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.myPro.Do.ClockInRecordDo;
 import com.myPro.model.app.ClockInRecord;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -24,9 +25,9 @@ public interface ClockInRecordMapper extends BaseMapper<ClockInRecord> {
     int selectCountThisMonth(Long userId);
 
     /**
-     * 获取一定时间内的所有打卡记录
+     * 获取一定时间内的所有打卡记录数目统计并按时间降序排列
      * @param days
-     * @return 一定时间内的所有打卡记录
+     * @return 一定时间内的所有打卡记录数目
      */
-    List<ClockInRecord> getRecordsByDays(Integer days);
+    List<ClockInRecordDo> getRecordsByDays(Integer days);
 }

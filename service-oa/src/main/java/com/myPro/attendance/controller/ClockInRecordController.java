@@ -3,6 +3,7 @@ package com.myPro.attendance.controller;
 import com.myPro.attendance.service.ClockInRecordService;
 import com.myPro.common.result.Result;
 import com.myPro.model.app.ClockInRecord;
+import com.myPro.vo.attendance.ClockInRecordVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -65,6 +66,6 @@ public class ClockInRecordController {
      */
     @GetMapping("radius/{days}")
     public Result getClockInRadiusByDays(@PathVariable Integer days){
-        Double[] dayRadius = clockInRecordService.getRadiusByDays(days);
+        List<ClockInRecordVo> dayRadius = clockInRecordService.getRadiusByDays(days);
         return Result.ok(dayRadius);
     }}
