@@ -49,23 +49,19 @@ public class ClockInRecordServiceImpl extends ServiceImpl<ClockInRecordMapper, C
         // 获取公司总人数
         long userNum = userService.count();
         List<ClockInRecordVo> recordVos = new ArrayList<>();
-//        Date lastDate = new Date();
-        //lastDate.setDate(lastDate.getDate() + 1);
         Date date = DateUtil.clearTime(new Date());
 
         int j = 0;
         for (int i = 0; i < days; i++) {
             // 本次待封装数据对象
             ClockInRecordVo myVo = new ClockInRecordVo();
-
-            ClockInRecordDo recordDo = records.get(j);
-            Date recordDate = recordDo.getClockInRecordDate();
-            // 没有缺少天数，直接添加数据
-            if(DateUtil.isCommonDay(recordDate, date)){
+                // 没有缺少天数，直接添加数据
+            if(j < records.size() && DateUtil.isCommonDay(records.get(j).getClockInRecordDate(), date)){
+                Date recordDate = records.get(j).getClockInRecordDate();
                 myVo.setClockInRecordDate(recordDate);
-                myVo.setRecordRadius(recordDo.getRecordNum() / ((double)userNum * 2.0));
+                myVo.setRecordRadius(records.get(j).getRecordNum() / ((double)userNum * 2.0));
                 j++;
-            }else{
+            } else{
                 // 缺天数的时候，填上0%的数据
                 myVo.setRecordRadius(0.0);
                 // 进行深拷贝再添加
