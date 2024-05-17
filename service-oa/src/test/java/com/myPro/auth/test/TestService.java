@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.myPro.attendance.service.ClockInRecordService;
 import com.myPro.attendance.utils.RecordInitDataUtil;
 import com.myPro.auth.service.*;
+import com.myPro.common.utils.DateUtil;
 import com.myPro.model.app.PrivateLinkMan;
 import com.myPro.model.system.Dept;
 import com.myPro.model.system.Post;
@@ -142,11 +143,11 @@ public class TestService {
 
     @Test
     public void dateTest(){
-        System.out.println(new Date().getTime());
-//        Date date = new Date();
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//        String format = dateFormat.format(date);
-//        System.out.println(format);
+        Date date = new Date();
+        date.setSeconds(0);
+        date.setHours(9);
+        date.setMinutes(0);
+        //        System.out.println(date);
+//        System.out.println(DateUtil.isPreviousDay(date, new Date()));
     }
 }

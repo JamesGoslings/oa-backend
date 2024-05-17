@@ -21,7 +21,7 @@
     </select>
     <select id="getRecordsByDays" resultType="com.myPro.Do.ClockInRecordDo">
         SELECT DATE(clock_in_time) AS clockInRecordDate,COUNT(*) AS recordNum FROM `clock_in_record`
-        WHERE clock_in_time >= DATE_SUB(CURDATE(),INTERVAL 7 DAY)
+        WHERE clock_in_time >= DATE_SUB(CURDATE(),INTERVAL #{ days } DAY)
         AND `is_deleted` = 0
         GROUP BY DATE(clock_in_time)
         ORDER BY clockInRecordDate DESC

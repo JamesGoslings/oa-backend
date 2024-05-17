@@ -49,22 +49,30 @@ public class ClockInRecordServiceImpl extends ServiceImpl<ClockInRecordMapper, C
         // 获取公司总人数
         long userNum = userService.count();
         List<ClockInRecordVo> recordVos = new ArrayList<>();
-        Date lastDate = new Date();
+//        Date lastDate = new Date();
         //lastDate.setDate(lastDate.getDate() + 1);
-        for (ClockInRecordDo myDo : records) {
-            // 缺天数的时候，填上0%的数据
-            while (!DateUtil.isPreviousDay(myDo.getClockInRecordDate(), lastDate)){
-                ClockInRecordVo myVo = new ClockInRecordVo();
+        Date date = DateUtil.clearTime(new Date());
+
+        int j = 0;
+        for (int i = 0; i < days; i++) {
+            // 本次待封装数据对象
+            ClockInRecordVo myVo = new ClockInRecordVo();
+
+            ClockInRecordDo recordDo = records.get(j);
+            Date recordDate = recordDo.getClockInRecordDate();
+            // 没有缺少天数，直接添加数据
+            if(DateUtil.isCommonDay(recordDate, date)){
+                myVo.setClockInRecordDate(recordDate);
+                myVo.setRecordRadius(recordDo.getRecordNum() / ((double)userNum * 2.0));
+                j++;
+            }else{
+                // 缺天数的时候，填上0%的数据
                 myVo.setRecordRadius(0.0);
-                lastDate.setDate(lastDate.getDate() - 1);
-                myVo.setClockInRecordDate(lastDate);
-                recordVos.add(myVo);
+                // 进行深拷贝再添加
+                myVo.setClockInRecordDate(new Date(date.getTime()));
             }
-            ClockInRecordVo vo = new ClockInRecordVo();
-            vo.setClockInRecordDate(myDo.getClockInRecordDate());
-            vo.setRecordRadius(myDo.getRecordNum() / ((double)userNum * 2.0));
-            recordVos.add(vo);
-            lastDate = new Date(myDo.getClockInRecordDate().getTime());
+            date.setDate(date.getDate() - 1);
+            recordVos.add(myVo);
         }
         // 导入数据进入
         return recordVos;

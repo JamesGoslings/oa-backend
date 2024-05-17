@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/admin/system/clockInRecord")
+@RequestMapping("/admin/attendance/clockInRecord")
 public class ClockInRecordController {
     @Autowired
     private ClockInRecordService clockInRecordService;
@@ -61,7 +61,7 @@ public class ClockInRecordController {
 
     /***
      * 获取一定时间内的全公司的·打卡率
-     * @param days
+     * @param days 待统计的天数
      * @return 全公司的·打卡率
      */
     @GetMapping("radius/{days}")
