@@ -12,4 +12,6 @@ public class ClockInRecordVo {
     private Double recordRadius;
 
     private Date clockInRecordDate;
+
+    private String deptName;
 }

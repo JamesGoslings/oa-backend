@@ -13,4 +13,6 @@ public class ClockInRecordDo {
     private Long recordNum;
 
     private Date clockInRecordDate;
+
+    private String deptName;
 }

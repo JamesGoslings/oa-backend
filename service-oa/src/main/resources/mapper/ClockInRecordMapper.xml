@@ -26,5 +26,17 @@
         GROUP BY DATE(clock_in_time)
         ORDER BY clockInRecordDate DESC
     </select>
+    <select id="getOneDeptCountByDays" resultType="com.myPro.Do.ClockInRecordDo">
+        SELECT COUNT(*) AS recordNum,(
+        SELECT `name` FROM dept
+        WHERE id = #{ deptId }
+        ) AS deptName
+        FROM `clock_in_record`
+        WHERE user_id IN(
+        SELECT id AS user_id FROM `sys_user`
+        WHERE dept_id = #{ deptId }
+        )
+        AND clock_in_time >= DATE_SUB(CURDATE(),INTERVAL #{ days } DAY)
+    </select>
 
 </mapper>

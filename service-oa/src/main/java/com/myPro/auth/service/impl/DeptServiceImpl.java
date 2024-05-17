@@ -8,6 +8,7 @@ import com.myPro.auth.service.SysUserService;
 import com.myPro.auth.service.utils.DeptHelper;
 import com.myPro.auth.service.utils.LinkManListHelper;
 import com.myPro.model.system.Dept;
+import com.myPro.model.system.SysUser;
 import com.myPro.vo.app.LinkManVo;
 import com.myPro.vo.app.SysUserVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -161,5 +162,10 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements De
             num = oldCode.substring(oldCode.length() - 2);
         }
         return parentCode + num;
+    }
+
+    @Override
+    public Long getDeptNum(Long deptId) {
+        return userService.count(new LambdaQueryWrapper<SysUser>().eq(SysUser::getDeptId, deptId));
     }
 }

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.myPro.Do.ClockInRecordDo;
 import com.myPro.attendance.mapper.ClockInRecordMapper;
 import com.myPro.attendance.service.ClockInRecordService;
+import com.myPro.auth.service.DeptService;
 import com.myPro.auth.service.SysUserService;
 import com.myPro.common.utils.DateUtil;
 import com.myPro.model.app.ClockInRecord;
@@ -22,6 +23,9 @@ public class ClockInRecordServiceImpl extends ServiceImpl<ClockInRecordMapper, C
 
     @Autowired
     private SysUserService userService;
+
+    @Autowired
+    private DeptService deptService;
 
     @Override
     public List<ClockInRecord> getListByUserIdDesc(Long userId) {
@@ -71,6 +75,22 @@ public class ClockInRecordServiceImpl extends ServiceImpl<ClockInRecordMapper, C
             recordVos.add(myVo);
         }
         // 导入数据进入
+        return recordVos;
+    }
+
+    @Override
+    public List<ClockInRecordVo> getDeptRedius(Long days, List<Long> idList) {
+        ArrayList<ClockInRecordVo> recordVos = new ArrayList<>();
+        // TODO 获取每个部门的打卡数目和名称封装到vo中
+        for (Long id : idList) {
+            ClockInRecordDo deptDo = baseMapper.getOneDeptCountByDays(days, id);
+            ClockInRecordVo vo = new ClockInRecordVo();
+            vo.setDeptName(deptDo.getDeptName());
+            // TODO 根据数目获取打卡率
+            Long deptNum = deptService.getDeptNum(id);
+            vo.setRecordRadius(deptDo.getRecordNum() / ((double) deptNum * 2.0 * days));
+            recordVos.add(vo);
+        }
         return recordVos;
     }
 }

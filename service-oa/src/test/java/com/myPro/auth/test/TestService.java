@@ -19,10 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 @SpringBootTest
 public class TestService {
@@ -149,5 +146,17 @@ public class TestService {
         date.setMinutes(0);
         //        System.out.println(date);
 //        System.out.println(DateUtil.isPreviousDay(date, new Date()));
+    }
+
+    @Test
+    public void getDeptRediusTest(){
+        ArrayList<Long> idList = new ArrayList<>();
+        idList.add(11L);
+        idList.add(1L);
+        idList.add(10L);
+        List<ClockInRecordVo> deptRedius = clockInRecordService.getDeptRedius(7L, idList);
+        System.out.println("==========================>>>>>>>>>>>>");
+        deptRedius.forEach(System.out::println);
+        System.out.println("==========================>>>>>>>>>>>>");
     }
 }

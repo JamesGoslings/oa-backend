@@ -68,4 +68,18 @@ public class ClockInRecordController {
     public Result getClockInRadiusByDays(@PathVariable Integer days){
         List<ClockInRecordVo> dayRadius = clockInRecordService.getRadiusByDays(days);
         return Result.ok(dayRadius);
-    }}
+    }
+
+    /**
+     * 获取一些部门的打卡率
+     * @param days 获取的打卡率的时间范围
+     * @param idList 部门的id集合
+     * @return 部门们的打卡率集合
+     */
+    @GetMapping("deptRedius/{days}")
+    public Result getDeptRadius(@PathVariable Long days,
+                                List<Long> idList){
+        List<ClockInRecordVo> deptRecordRedius  = clockInRecordService.getDeptRedius(days,idList);
+        return Result.ok(deptRecordRedius);
+    }
+}

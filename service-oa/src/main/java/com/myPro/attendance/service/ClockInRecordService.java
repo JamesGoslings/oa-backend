@@ -32,4 +32,12 @@ public interface ClockInRecordService extends IService<ClockInRecord> {
      * @return
      */
     List<ClockInRecordVo> getRadiusByDays(Integer days);
+
+    /**
+     * 获取部门的打卡率
+     * @param days 打卡记录的时间范围
+     * @param idList 部门的id集合
+     * @return 部门的打卡率集合
+     */
+    List<ClockInRecordVo> getDeptRedius(Long days, List<Long> idList);
 }

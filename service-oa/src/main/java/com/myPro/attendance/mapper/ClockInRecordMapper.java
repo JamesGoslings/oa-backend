@@ -30,4 +30,12 @@ public interface ClockInRecordMapper extends BaseMapper<ClockInRecord> {
      * @return 一定时间内的所有打卡记录数目
      */
     List<ClockInRecordDo> getRecordsByDays(Integer days);
+
+    /**
+     * 获取单个部门的打卡记录数目
+     * @param days 记录的时间（距离今天多少天）
+     * @param deptId 部门的id
+     * @return 该部门的打卡记录数目和部门名称
+     */
+    ClockInRecordDo getOneDeptCountByDays(Long days, Long deptId);
 }

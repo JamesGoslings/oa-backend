@@ -45,4 +45,11 @@ public interface DeptService extends IService<Dept> {
      * @return 生成的新的部门编码
      */
     String getNewCode(Long deptId, Long parentId);
+
+    /**
+     * 获取当前部门的总人数
+     * @param deptId 当前部门的id
+     * @return 部门的总人数
+     */
+    Long getDeptNum(Long deptId);
 }
