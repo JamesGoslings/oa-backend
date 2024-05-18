@@ -38,5 +38,18 @@
         )
         AND clock_in_time >= DATE_SUB(CURDATE(),INTERVAL #{ days } DAY)
     </select>
+    <select id="getUserRecordNumInOneDay" resultType="com.myPro.model.system.SysUser">
+        SELECT `sys_user`.*
+        FROM `sys_user`
+        ,(
+        SELECT COUNT(*) AS num
+        FROM `clock_in_record`
+        WHERE `type` = #{ type }
+        AND user_id = #{ userId }
+        AND DATE(clock_in_time) = DATE_SUB(CURDATE(),INTERVAL #{ days } DAY)
+        ) AS t
+        WHERE id = #{ userId }
+        AND t.num = 0
+    </select>
 
 </mapper>

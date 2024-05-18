@@ -123,8 +123,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         return webVos;
     }
 
-    // 将user对象封装成userWebVo
-    private SysUserWebVo getUserWebVoByUser(SysUser user) {
+    @Override
+    public SysUserWebVo getUserWebVoByUser(SysUser user) {
         SysUserWebVo webVo = new SysUserWebVo();
         webVo.setDeptId(user.getDeptId());
         webVo.setPostId(user.getPostId());

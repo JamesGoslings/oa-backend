@@ -2,7 +2,9 @@ package com.myPro.attendance.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.myPro.model.app.ClockInRecord;
+import com.myPro.model.system.SysUser;
 import com.myPro.vo.attendance.ClockInRecordVo;
+import com.myPro.vo.system.SysUserWebVo;
 
 import java.util.List;
 
@@ -40,4 +42,13 @@ public interface ClockInRecordService extends IService<ClockInRecord> {
      * @return 部门的打卡率集合
      */
     List<ClockInRecordVo> getDeptRedius(Long days, List<Long> idList);
+
+    /**
+     * 获取某一天某个部门的未打卡员工信息
+     * @param deptId 部门的id
+     * @param type 打卡的类型
+     * @param days 统计的日期距今天的天数
+     * @return  该部门某天内未打卡人员列表
+     */
+    List<SysUserWebVo> getNotUserInDept(Long deptId, Long type, Long days);
 }

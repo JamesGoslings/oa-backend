@@ -9,7 +9,9 @@ import com.myPro.auth.service.DeptService;
 import com.myPro.auth.service.SysUserService;
 import com.myPro.common.utils.DateUtil;
 import com.myPro.model.app.ClockInRecord;
+import com.myPro.model.system.SysUser;
 import com.myPro.vo.attendance.ClockInRecordVo;
+import com.myPro.vo.system.SysUserWebVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -92,5 +94,21 @@ public class ClockInRecordServiceImpl extends ServiceImpl<ClockInRecordMapper, C
             recordVos.add(vo);
         }
         return recordVos;
+    }
+
+    @Override
+    public List<SysUserWebVo> getNotUserInDept(Long deptId, Long type, Long days) {
+        // TODO 获取该部门下的所有员工的id
+        List<Long> userIds = userService.listObjs(new LambdaQueryWrapper<SysUser>()
+                .eq(SysUser::getDeptId, deptId).select(SysUser::getId));
+        List<SysUserWebVo> notUsers = new ArrayList<>();
+        for (Long userId : userIds) {
+            SysUser notUser = baseMapper.getUserRecordNumInOneDay(userId,type,days);
+            if(notUser != null && notUser.getId() != null){
+                notUser.setPassword("");
+                notUsers.add(userService.getUserWebVoByUser(notUser));
+            }
+        }
+        return notUsers;
     }
 }

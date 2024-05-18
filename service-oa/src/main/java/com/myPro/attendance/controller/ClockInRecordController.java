@@ -3,8 +3,11 @@ package com.myPro.attendance.controller;
 import com.myPro.attendance.service.ClockInRecordService;
 import com.myPro.common.result.Result;
 import com.myPro.model.app.ClockInRecord;
+import com.myPro.model.system.SysUser;
 import com.myPro.vo.attendance.ClockInRecordVo;
+import com.myPro.vo.system.SysUserWebVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -81,5 +84,20 @@ public class ClockInRecordController {
                                 @RequestBody List<Long> idList){
         List<ClockInRecordVo> deptRecordRedius  = clockInRecordService.getDeptRedius(days,idList);
         return Result.ok(deptRecordRedius);
+    }
+
+    /**
+     * 获取某一天某个部门的未打卡员工信息
+     * @param deptId 部门的id
+     * @param type 打卡的类型
+     * @param days 统计的日期距今天的天数
+     * @return  该部门某天内未打卡人员列表
+     */
+    @GetMapping("notUsers/{deptId}/{type}/{days}")
+    public Result listNotClockInUsers(@PathVariable Long deptId,
+                                      @PathVariable Long type,
+                                      @PathVariable Long days){
+        List<SysUserWebVo> userList = clockInRecordService.getNotUserInDept(deptId,type,days);
+        return Result.ok(userList);
     }
 }

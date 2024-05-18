@@ -4,6 +4,7 @@ package com.myPro.attendance.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.myPro.Do.ClockInRecordDo;
 import com.myPro.model.app.ClockInRecord;
+import com.myPro.model.system.SysUser;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -38,4 +39,13 @@ public interface ClockInRecordMapper extends BaseMapper<ClockInRecord> {
      * @return 该部门的打卡记录数目和部门名称
      */
     ClockInRecordDo getOneDeptCountByDays(Long days, Long deptId);
+
+    /**
+     * 判断该用户在某天是否完成了某种打卡
+     * @param userId  用户的id
+     * @param type 打卡的类型
+     * @param days 统计天数距离今天的天数
+     * @return 如果打卡了就返回null，否则返回该用户的信息
+     */
+    SysUser getUserRecordNumInOneDay(Long userId, Long type, Long days);
 }

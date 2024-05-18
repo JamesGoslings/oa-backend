@@ -159,4 +159,12 @@ public class TestService {
         deptRedius.forEach(System.out::println);
         System.out.println("==========================>>>>>>>>>>>>");
     }
+
+    @Test
+    public void getNotUserInDeptTest(){
+        List<SysUser> notUserInDept = clockInRecordService.getNotUserInDept(15L, 0L, 0L);
+        System.out.println("==========================>>>>>>>>>>>>");
+        notUserInDept.forEach(System.out::println);
+        System.out.println("==========================>>>>>>>>>>>>");
+    }
 }

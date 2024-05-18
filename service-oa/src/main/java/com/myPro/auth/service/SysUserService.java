@@ -55,4 +55,11 @@ public interface SysUserService extends IService<SysUser>{
      * 拿到所有的用户并封装成webVo返回
      * */
     List<SysUserWebVo> getAllUsersWebVo();
+
+    /**
+     * 将user对象封装成userWebVo
+     * @param user 待封装的user对象
+     * @return 封装好的WebVo
+     */
+    SysUserWebVo getUserWebVoByUser(SysUser user);
 }
