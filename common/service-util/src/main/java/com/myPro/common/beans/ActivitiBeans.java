@@ -29,29 +29,31 @@ public class ActivitiBeans {
         this.engine = processEngine;
         return processEngine;
     }
+//    @Autowired
+//    private ProcessEngine processEngine;
 
-//    @Bean
-//    public RepositoryService repositoryService(){
-//        return engine.getRepositoryService();
-//    }
-//
-//    @Bean
-//    public RuntimeService runtimeService(){
-//        return engine.getRuntimeService();
-//    }
-//
-//    @Bean
-//    public HistoryService historyService(){
-//        return engine.getHistoryService();
-//    }
-//
-//    @Bean
-//    public TaskService taskService(){
-//        return engine.getTaskService();
-//    }
-//
-//    @Bean
-//    public ManagementService managementService(){
-//        return engine.getManagementService();
-//    }
+    @Bean
+    public RepositoryService repositoryService(){
+        return engine.getRepositoryService();
+    }
+
+    @Bean
+    public RuntimeService runtimeService(){
+        return engine.getRuntimeService();
+    }
+
+    @Bean
+    public HistoryService historyService(){
+        return engine.getHistoryService();
+    }
+
+    @Bean
+    public TaskService taskService(){
+        return engine.getTaskService();
+    }
+
+    @Bean
+    public ManagementService managementService(){
+        return engine.getManagementService();
+    }
 }

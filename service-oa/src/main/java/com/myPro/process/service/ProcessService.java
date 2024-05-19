@@ -9,9 +9,24 @@ import com.myPro.vo.process.ProcessVo;
 
 public interface ProcessService extends IService<Process> {
 
-    //审批管理列表
+    /**
+     * 获取审批列表
+     * @param pageParam 查询的分页信息
+     * @param processQueryVo 查询的条件
+     * @return  查询封装到vo中的结果
+     */
     IPage<ProcessVo> selectPage(Page<ProcessVo> pageParam, ProcessQueryVo processQueryVo);
 
-    //部署流程定义
+    /**
+     * 部署zip文件的流程
+     * @param deployPath zip文件的路径
+     */
     void deployByZip(String deployPath);
+
+    /**
+     * 部署xmL文件的路径
+     * @param filePath xml文件的路径（除去根目录的部分）
+     * @return 是否成功
+     */
+    boolean deployByXml(String filePath);
 }

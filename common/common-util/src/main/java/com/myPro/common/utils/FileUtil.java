@@ -130,7 +130,7 @@ public class FileUtil {
      */
     public static boolean setStrToFile(String dataStr, String path, String name){
         // TODO 创建目录（如果不存在）
-        Path dirPath = Paths.get(rootPath + "/" + path);
+        Path dirPath = Paths.get(classpath + "/" + path);
         if(!Files.exists(dirPath)){
             try {
                 Files.createDirectories(dirPath);
@@ -140,7 +140,7 @@ public class FileUtil {
             }
         }
         // TODO 写入文件
-        String filePath = rootPath + "/" + path + "/" + name;
+        String filePath = classpath + "/" + path + "/" + name;
         try {
             Path totalFilePath = Paths.get(filePath);
             Files.writeString(totalFilePath, dataStr, StandardOpenOption.CREATE);
@@ -153,8 +153,8 @@ public class FileUtil {
 
     /**
      * 获取一个bpmn的xml中的流程id
-     * @param xmlData
-     * @return
+     * @param xmlData xml的数据字符串
+     * @return 该流程id，如果查找失败返回空串
      */
     public static String getBpmnXmlId(String xmlData) {
         String regex = "<bpmn:process[^>]*id=\"([^\"]+)\"";

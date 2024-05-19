@@ -10,6 +10,7 @@ import com.myPro.common.utils.FileUtil;
 import com.myPro.model.process.ProcessTemplate;
 import com.myPro.process.service.ProcessTemplateService;
 
+import com.myPro.vo.process.ProcessTemplateXmlVo;
 import com.myPro.vo.system.ProcessTemplateQueryVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ResourceUtils;
@@ -89,6 +90,12 @@ public class ProcessTemplateController {
         return Result.ok();
     }
 
+    /**
+     * 上传zip文件进行初始化
+     * @param file
+     * @return
+     * @throws FileNotFoundException
+     */
     @PostMapping("uploadProcessDefinition")
     public Result uploadProcessDefinition(MultipartFile file) throws FileNotFoundException {
          //TODO 获取classes目录路径
@@ -125,16 +132,47 @@ public class ProcessTemplateController {
     }
 
     /**
-     * 保存模板的流程图的xml文件
+     * 保存模板的流程图的xml文件并进行发布
      * @param xmlStr xml的字符串形式
      * @param tempId 模板的id
      * @return
      */
     @PostMapping("saveXml")
-    public Result saveXml(@RequestBody String xmlStr,@RequestBody Long tempId){
+//    public Result saveXml(@RequestBody String xmlStr,@RequestBody Long tempId){
+    public Result saveXml(@RequestBody ProcessTemplateXmlVo xmlVo){
+        String xmlStr = xmlVo.getXmlStr();
+        Long tempId = xmlVo.getTempId();
+        // TODO 存储xml文件
         String suffix = ".bpmn20.xml";
-        if(!FileUtil.setXmlStrToFile(xmlStr, "process-bpmn", suffix)){
+        String parentPath = "process-bpmn";
+        if(!FileUtil.setXmlStrToFile(xmlStr, "/" + parentPath, suffix)){
             return Result.fail("xml文件创建失败");
+        }
+        String xmlKey = FileUtil.getBpmnXmlId(xmlStr);
+        String xmlName = xmlKey + suffix;
+
+        // TODO 保存xml文件的信息
+        ProcessTemplate template = processTemplateService.getById(tempId);
+        template.setProcessDefinitionPath(parentPath + "/" + xmlName);
+        template.setProcessDefinitionKey(xmlKey);
+        processTemplateService.updateById(template);
+//        // TODO 进行发布（流程部署）
+//        if(!processTemplateService.publishByXml(tempId)){
+//            return Result.fail("流程部署失败，需将流程设置为可执行文件！");
+//        }
+        return Result.ok();
+    }
+
+    /**
+     * 对该模板的流程进行发布
+     * @param tempId 模板idpublishXml
+     * @return
+     */
+    @PostMapping("publishXml/{tempId}")
+    public Result publishXml(@PathVariable Long tempId){
+        // TODO 进行发布（流程部署）
+        if(!processTemplateService.publishByXml(tempId)){
+            return Result.fail("流程部署失败，需将流程设置为可执行文件！");
         }
         return Result.ok();
     }
