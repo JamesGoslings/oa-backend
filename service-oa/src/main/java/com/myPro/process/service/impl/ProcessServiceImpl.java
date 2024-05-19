@@ -5,14 +5,19 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.myPro.common.utils.FileUtil;
 import com.myPro.model.process.Process;
+import com.myPro.model.process.ProcessTemplate;
 import com.myPro.process.mapper.ProcessMapper;
+import com.myPro.process.mapper.ProcessTemplateMapper;
 import com.myPro.process.service.ProcessService;
+import com.myPro.process.service.ProcessTemplateService;
 import com.myPro.vo.process.ProcessQueryVo;
 import com.myPro.vo.process.ProcessVo;
 import org.activiti.engine.ActivitiException;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.RepositoryService;
+import org.activiti.engine.RuntimeService;
 import org.activiti.engine.repository.Deployment;
+import org.activiti.engine.runtime.ProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,11 +32,16 @@ import java.util.zip.ZipInputStream;
 public class ProcessServiceImpl extends ServiceImpl<ProcessMapper, Process> implements ProcessService {
 
     @Autowired
-//    private RepositoryService repositoryService;
     private ProcessEngine processEngine;
 
-//    @Autowired
-//    private RepositoryService repositoryService;
+    @Autowired
+    private ProcessTemplateMapper processTemplateMapper;
+
+    @Autowired
+    private RepositoryService repositoryService;
+
+    @Autowired
+    private RuntimeService runtimeService;
 
     //审批管理列表
     @Override
@@ -51,18 +61,11 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper, Process> impl
                 .addZipInputStream(zipInputStream)
                 .deploy();
 
-        System.out.println("=============================================");
-        System.out.println(deployment.getId());
-        System.out.println(deployment.getName());
-        System.out.println("=============================================");
-
     }
 
     @Override
-    public boolean deployByXml(String filePath) {
+    public boolean deployByXml(String filePath,Long tempId) {
         String totalPath = FileUtil.rootPath + "\\" + filePath;
-//        String totalPath = filePath;
-        RepositoryService repositoryService = processEngine.getRepositoryService();
         // 通过路径拿到文件名
         Pattern pattern = Pattern.compile("([^\\\\]+\\.[a-zA-Z0-9]+)$");
         Matcher matcher = pattern.matcher(filePath);
@@ -78,11 +81,10 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper, Process> impl
                     .addInputStream(fileName, new FileInputStream(new File(totalPath)))
                     .name("新审批流程")
                     .deploy();
-            System.out.println("=============================================");
-            System.out.println(deploy.getId());
-            System.out.println(deploy.getKey());
-            System.out.println(deploy.getName());
-            System.out.println("=============================================");
+            // TODO 将流程id存入模板
+            ProcessTemplate template = processTemplateMapper.selectById(tempId);
+            template.setProcessModelId(deploy.getId());
+            processTemplateMapper.updateById(template);
         }catch (ActivitiException e){
             // 用户未将文件设置为可执行
             e.printStackTrace();
@@ -91,5 +93,14 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper, Process> impl
             e.printStackTrace();
         }
         return true;
+    }
+
+    @Override
+    public String startUpProcess(Process process) {
+        // TODO 拿到流程的key
+        String definitionKey = processTemplateMapper.selectById(process.getProcessTemplateId()).getProcessDefinitionKey();
+        // 启动一个流程实例
+        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(definitionKey);
+        return processInstance.getId();
     }
 }

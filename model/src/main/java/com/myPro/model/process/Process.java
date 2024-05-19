@@ -9,14 +9,10 @@ import lombok.Data;
 
 @Data
 @ApiModel(description = "Process")
-@TableName("oa_process")
+@TableName("process")
 public class Process extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
-
-	@ApiModelProperty(value = "审批code")
-	@TableField("process_code")
-	private String processCode;
 
 	@ApiModelProperty(value = "用户id")
 	@TableField("user_id")
@@ -30,7 +26,6 @@ public class Process extends BaseEntity {
 	@TableField("process_type_id")
 	private Long processTypeId;
 
-	@ApiModelProperty(value = "标题")
 	@TableField("title")
 	private String title;
 

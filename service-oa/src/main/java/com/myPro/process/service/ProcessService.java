@@ -26,7 +26,15 @@ public interface ProcessService extends IService<Process> {
     /**
      * 部署xmL文件的路径
      * @param filePath xml文件的路径（除去根目录的部分）
+     * @param tempId 流程模板的id
      * @return 是否成功
      */
-    boolean deployByXml(String filePath);
+    boolean deployByXml(String filePath,Long tempId);
+
+    /**
+     * 启动该审批流程实例并返回实例id
+     * @param process 审批流程对象
+     * @return 流程实例id
+     */
+    String startUpProcess(Process process);
 }

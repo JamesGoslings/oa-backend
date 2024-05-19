@@ -73,7 +73,7 @@ public class ProcessTemplateServiceImpl extends ServiceImpl<ProcessTemplateMappe
         baseMapper.updateById(processTemplate);
         //TODO 流程定义部署
         if(!StringUtils.isEmpty(processTemplate.getProcessDefinitionPath())){
-            return processService.deployByXml(processTemplate.getProcessDefinitionPath());
+            return processService.deployByXml(processTemplate.getProcessDefinitionPath(),id);
         }
         return false;
     }
