@@ -6,8 +6,9 @@
 <mapper namespace="com.myPro.process.mapper.ProcessMapper">
 
     <select id="selectPage" resultType="com.myPro.vo.process.ProcessVo">
-        SELECT pro.*, `user`.name, `pte`.name AS processTemplateName,`pty`.name AS processTypeName
-        FROM `oa_process` pro,`sys_user` `user`,`oa_process_template` pte,`oa_process_type` pty
+        SELECT pro.*, `user`.name, `pte`.name AS processTemplateName,`pty`.name AS processTypeName,
+        `pte`.form_props AS formProps,`pte`.form_options AS formOptions
+        FROM `process` pro,`sys_user` `user`,`oa_process_template` pte,`oa_process_type` pty
         WHERE pro.user_id = `user`.id
         AND pro.`process_template_id` = pte.id
         AND pro.`process_type_id` = pty.id
@@ -23,6 +24,12 @@
         </if>
         <if test="vo.userId != null and vo.userId != ''">
             and pro.user_id = #{vo.userId}
+        </if>
+        <if test="vo.processTypeId != null and vo.processTypeId != ''">
+            and pty.id = #{vo.processTypeId}
+        </if>
+        <if test="vo.processTemplateId != null and vo.processTemplateId != ''">
+            and pte.id = #{vo.processTemplateId}
         </if>
         <if test="vo.status != null and vo.status != ''">
             and pro.status = #{vo.status}
