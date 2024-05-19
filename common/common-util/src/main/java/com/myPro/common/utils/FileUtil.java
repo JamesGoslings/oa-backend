@@ -180,5 +180,37 @@ public class FileUtil {
         }
         return setStrToFile(dataStr, path, bpmnXmlId + suffix);
     }
+
+    /**
+     * 将xml文件转成xml的字符串
+     * @param mainPath xml文件的路径（除去根路径部分）
+     * @return xml字符串
+     */
+    public static String setFileToXmlStr(String mainPath){
+        String totalPath = rootPath + "/" + mainPath;
+        StringBuffer dataBuffer = new StringBuffer();
+        BufferedReader reader = null;
+        try{
+            reader = new BufferedReader(new FileReader(totalPath));
+            String line = null;
+            while ((line = reader.readLine()) != null){
+                dataBuffer.append(line);
+                dataBuffer.append("\n");
+            }
+        } catch (IOException e) {
+           e.printStackTrace();
+           return "";
+        } finally {
+            if(reader != null){
+                try {
+                    reader.close();
+                }catch (IOException e){
+                    e.printStackTrace();
+                    return "";
+                }
+            }
+        }
+        return dataBuffer.toString();
+    }
 }
 

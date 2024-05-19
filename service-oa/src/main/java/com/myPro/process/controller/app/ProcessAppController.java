@@ -1,4 +1,4 @@
-package com.myPro.process.controller.api;
+package com.myPro.process.controller.app;
 
 
 import com.myPro.common.result.Result;
@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin/api/process")
 @CrossOrigin
-public class ProcessApiController {
+public class ProcessAppController {
 
     @Autowired
     private ProcessTypeService processTypeService;

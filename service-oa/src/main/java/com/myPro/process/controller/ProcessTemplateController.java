@@ -177,4 +177,19 @@ public class ProcessTemplateController {
         return Result.ok();
     }
 
+    /**
+     * 获取当前模板的xml数据字符串
+     * @param tempId 模板的id
+     * @return xml字符串
+     */
+    @GetMapping("xml/{tempId}")
+    public Result getXml(@PathVariable Long tempId){
+        String xmlStr = FileUtil.setFileToXmlStr(processTemplateService.getById(tempId).getProcessDefinitionPath());
+        if(StringUtils.isEmpty(xmlStr)){
+            return Result.fail();
+        }
+        HashMap<String, String> map = new HashMap<>();
+        map.put("xmlStr", xmlStr);
+        return Result.ok(map);
+    }
 }
