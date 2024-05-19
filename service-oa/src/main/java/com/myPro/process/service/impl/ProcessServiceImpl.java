@@ -16,7 +16,11 @@ import org.activiti.engine.repository.Deployment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.ZipInputStream;
 
 @Service
@@ -56,12 +60,22 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper, Process> impl
 
     @Override
     public boolean deployByXml(String filePath) {
-//        String totalPath = FileUtil.rootPath + "\\" + filePath;
-        String totalPath = filePath;
+        String totalPath = FileUtil.rootPath + "\\" + filePath;
+//        String totalPath = filePath;
         RepositoryService repositoryService = processEngine.getRepositoryService();
+        // 通过路径拿到文件名
+        Pattern pattern = Pattern.compile("([^\\\\]+\\.[a-zA-Z0-9]+)$");
+        Matcher matcher = pattern.matcher(filePath);
+        String fileName = "";
+        if (matcher.find()) {
+            fileName = matcher.group(1);
+        }else {
+            return false;
+        }
         try{
             Deployment deploy = repositoryService.createDeployment()
-                    .addClasspathResource(totalPath)
+//                    .addClasspathResource(totalPath)
+                    .addInputStream(fileName, new FileInputStream(new File(totalPath)))
                     .name("新审批流程")
                     .deploy();
             System.out.println("=============================================");
@@ -73,6 +87,8 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper, Process> impl
             // 用户未将文件设置为可执行
             e.printStackTrace();
             return false;
+        }catch (Exception e){
+            e.printStackTrace();
         }
         return true;
     }

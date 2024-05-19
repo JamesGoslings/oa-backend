@@ -130,7 +130,7 @@ public class FileUtil {
      */
     public static boolean setStrToFile(String dataStr, String path, String name){
         // TODO 创建目录（如果不存在）
-        Path dirPath = Paths.get(classpath + "/" + path);
+        Path dirPath = Paths.get(rootPath + "/" + path);
         if(!Files.exists(dirPath)){
             try {
                 Files.createDirectories(dirPath);
@@ -140,7 +140,7 @@ public class FileUtil {
             }
         }
         // TODO 写入文件
-        String filePath = classpath + "/" + path + "/" + name;
+        String filePath = rootPath + "/" + path + "/" + name;
         try {
             Path totalFilePath = Paths.get(filePath);
             Files.writeString(totalFilePath, dataStr, StandardOpenOption.CREATE);
