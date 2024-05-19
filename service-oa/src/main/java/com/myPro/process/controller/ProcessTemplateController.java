@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.myPro.common.exception.MyException;
 import com.myPro.common.result.Result;
+import com.myPro.common.utils.FileUtil;
 import com.myPro.model.process.ProcessTemplate;
 import com.myPro.process.service.ProcessTemplateService;
 
@@ -121,6 +122,21 @@ public class ProcessTemplateController {
             return Result.ok();
         }
         return Result.fail();
+    }
+
+    /**
+     * 保存模板的流程图的xml文件
+     * @param xmlStr xml的字符串形式
+     * @param tempId 模板的id
+     * @return
+     */
+    @PostMapping("saveXml")
+    public Result saveXml(@RequestBody String xmlStr,@RequestBody Long tempId){
+        String suffix = ".bpmn20.xml";
+        if(!FileUtil.setXmlStrToFile(xmlStr, "process-bpmn", suffix)){
+            return Result.fail("xml文件创建失败");
+        }
+        return Result.ok();
     }
 
 }

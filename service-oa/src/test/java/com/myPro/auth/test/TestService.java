@@ -14,6 +14,7 @@ import com.myPro.vo.app.SysUserVo;
 import com.myPro.vo.app.TotalLinkManVo;
 import com.myPro.vo.attendance.ClockInRecordVo;
 import com.myPro.vo.system.ParentMenuVo;
+import com.myPro.vo.system.SysUserWebVo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -162,7 +163,7 @@ public class TestService {
 
     @Test
     public void getNotUserInDeptTest(){
-        List<SysUser> notUserInDept = clockInRecordService.getNotUserInDept(15L, 0L, 0L);
+        List<SysUserWebVo> notUserInDept = clockInRecordService.getNotUserInDept(15L, 0L, 0L);
         System.out.println("==========================>>>>>>>>>>>>");
         notUserInDept.forEach(System.out::println);
         System.out.println("==========================>>>>>>>>>>>>");
