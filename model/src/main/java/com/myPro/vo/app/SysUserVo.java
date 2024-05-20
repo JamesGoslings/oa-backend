@@ -13,6 +13,8 @@ public class SysUserVo {
 
     private Long userId;
 
+    private String username;
+
     private String name;
 
     private String post;

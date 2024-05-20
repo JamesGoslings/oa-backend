@@ -70,6 +70,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         SysUser user = getById(userId);
         SysUserVo userVo = new SysUserVo();
         userVo.setName(user.getName());
+        userVo.setUsername(user.getUsername());
         if(hasId) {
             userVo.setUserId(userId);
         }
