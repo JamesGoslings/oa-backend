@@ -15,11 +15,14 @@ public class ProcessVo {
 
 	private Date createTime;
 
+	private Long processId;
+
 	@ApiModelProperty(value = "审批code")
 	private String processCode;
 
 	@ApiModelProperty(value = "用户id")
 	private Long userId;
+	@ApiModelProperty(value = "申请人姓名")
 	private String name;
 
 	@TableField("process_template_id")
@@ -48,7 +51,7 @@ public class ProcessVo {
 	@ApiModelProperty(value = "流程实例id")
 	private String processInstanceId;
 
-	@ApiModelProperty(value = "当前审批人")
+	@ApiModelProperty(value = "当前审批人（用户名）")
 	private String currentAuditor;
 
 	@ApiModelProperty(value = "状态（0：默认 1：审批中 2：审批通过 -1：驳回）")

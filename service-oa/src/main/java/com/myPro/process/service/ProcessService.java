@@ -56,9 +56,24 @@ public interface ProcessService extends IService<Process> {
     List<ProcessVo> listMyDoingProcess(Long userId);
 
     /**
-     * 对当前流程进行记录并返回
+     * 对当前流程生成新记录并返回
      * @param processId 流程的id
      * @return 生成的记录对象
      */
     ProcessRecord recordThisProcess(Long processId);
+
+    /**
+     * 通过流程对象获取封装出来的vo
+     * @param process 流程对象
+     * @return 封装好的vo
+     */
+    ProcessVo getProcessVoByProcess(Process process);
+
+    /**
+     * 通过流程id来推动该流程
+     * @param processId 流程的id
+     * @param userId 操作用户的id
+     * @return 如果不是该当前用户操作就返回false
+     */
+    boolean doTaskByProcessId(Long processId, Long userId);
 }

@@ -40,14 +40,17 @@ public class ProcessAppController {
         // TODO 启动该流程实例并存下实例id
         process.setProcessInstanceId(processService.startUpProcess(process));
         process.setStatus(1);
-        // 拿到第一个任务的审批人
+        // TODO 拿到第一个任务的审批人
         process.setCurrentAuditor(processService.getCurrentAuditorByInstanceId(process.getProcessInstanceId()));
+        // TODO 保存审批
         processService.save(process);
+        // TODO 对当前审批添加一条记录
+        processService.recordThisProcess(process.getId());
         return Result.ok();
     }
 
     /**
-     * 查看当前用户有无待处理的他人发过来的审批
+     * 查看当前用户待处理的他人发过来的审批
      * @param userId 当前用户的id
      * @return 待处理的审批
      */
@@ -55,5 +58,20 @@ public class ProcessAppController {
     public Result listDoingProcess(@PathVariable Long userId){
         List<ProcessVo> processVos = processService.listMyDoingProcess(userId);
         return Result.ok(processVos);
+    }
+
+    /**
+     * 通过流程的id来推动当前流程
+     * @param processId 流程id
+     * @param userId 操作用户的id
+     *@return
+     */
+    @PostMapping("doTask/{processId}/{userId}")
+    public Result doTask(@PathVariable Long processId,
+                         @PathVariable Long userId){
+        if(!processService.doTaskByProcessId(processId,userId)){
+            return Result.fail("你不是当前审批的人，不能推动该流程");
+        }
+        return Result.ok();
     }
 }

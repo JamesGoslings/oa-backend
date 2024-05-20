@@ -12,8 +12,10 @@ import com.myPro.model.process.ProcessTemplate;
 import com.myPro.model.system.SysUser;
 import com.myPro.process.mapper.ProcessMapper;
 import com.myPro.process.mapper.ProcessTemplateMapper;
+import com.myPro.process.service.ProcessRecordService;
 import com.myPro.process.service.ProcessService;
 import com.myPro.process.service.ProcessTemplateService;
+import com.myPro.process.service.ProcessTypeService;
 import com.myPro.vo.process.ProcessQueryVo;
 import com.myPro.vo.process.ProcessVo;
 import org.activiti.engine.*;
@@ -26,7 +28,9 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipInputStream;
@@ -41,6 +45,9 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper, Process> impl
     private ProcessTemplateMapper processTemplateMapper;
 
     @Autowired
+    private ProcessTypeService processTypeService;
+
+    @Autowired
     private RepositoryService repositoryService;
 
     @Autowired
@@ -51,6 +58,10 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper, Process> impl
 
     @Autowired
     private SysUserService userService;
+
+    @Autowired
+    private ProcessRecordService recordService;
+
 
     //审批管理列表
     @Override
@@ -100,6 +111,7 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper, Process> impl
             return false;
         }catch (Exception e){
             e.printStackTrace();
+            return false;
         }
         return true;
     }
@@ -121,10 +133,15 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper, Process> impl
 
     @Override
     public List<ProcessVo> listMyDoingProcess(Long userId) {
-        // 拿到该用户的用户名
-        String username = userService.getById(userId).getUsername();
-        // TODO 拿到当前所有待办任务,遍历
-        return null;
+        // TODO 查审批记录获取该用户待审批的他人的申请的id集合
+        List<Long> processIdList = recordService.listObjs(new LambdaQueryWrapper<ProcessRecord>()
+                .eq(ProcessRecord::getDoingUserId, userId).select(ProcessRecord::getProcessId));
+        List<ProcessVo> processVos = new ArrayList<>();
+        for (Long processId : processIdList) {
+            ProcessVo processVo = getProcessVoByProcess(getById(processId));
+            processVos.add(processVo);
+        }
+        return processVos;
     }
 
     @Override
@@ -138,8 +155,69 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper, Process> impl
         // 拿到当前审批的管理者
         SysUser user = userService.getUserByUsername(process.getCurrentAuditor());
         record.setDoingUserId(user.getId());
-        record.setDoingUserName(user.getName());
-
+        recordService.save(record);
         return record;
+    }
+
+    @Override
+    public ProcessVo getProcessVoByProcess(Process process) {
+        ProcessVo processVo = new ProcessVo();
+        processVo.setProcessId(process.getId());
+        processVo.setProcessInstanceId(process.getProcessInstanceId());
+        processVo.setCreateTime(processVo.getCreateTime());
+        processVo.setProcessTemplateId(process.getProcessTemplateId());
+        processVo.setProcessTypeId(process.getProcessTypeId());
+        processVo.setDescription(process.getDescription());
+        processVo.setCurrentAuditor(process.getCurrentAuditor());
+        processVo.setFormValues(process.getFormValues());
+        processVo.setStatus(process.getStatus());
+        processVo.setTitle(process.getTitle());
+        processVo.setUserId(process.getUserId());
+        processVo.setCreateTime(process.getCreateTime());
+        processVo.setProcessTypeName(processTypeService.getById(process.getProcessTypeId()).getName());
+        ProcessTemplate template = processTemplateMapper.selectById(process.getProcessTemplateId());
+        processVo.setFormOptions(template.getFormOptions());
+        processVo.setFormProps(template.getFormProps());
+        processVo.setProcessTemplateName(template.getName());
+        SysUser user = userService.getById(process.getUserId());
+        processVo.setName(user.getName());
+        return processVo;
+    }
+
+    @Override
+    public boolean doTaskByProcessId(Long processId, Long userId) {
+        // 拿到流程的操作用户和流程实例id
+        Process process = getById(processId);
+        // TODO 拿用户名拿到userId 来比对
+        Long currentAuditorId = userService.getUserByUsername(process.getCurrentAuditor()).getId();
+        if(!Objects.equals(currentAuditorId, userId)){
+            return false;
+        }
+        // TODO 是正确的审批人，推动任务
+        String processInstanceId = process.getProcessInstanceId();
+        Task task = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
+        taskService.complete(task.getId());
+        // 检测是否结束，结束更新状态
+        if(isEndProcess(processInstanceId)){
+            process.setStatus(2);
+        }
+        // 更新流程的执行人
+        process.setCurrentAuditor(getCurrentAuditorByInstanceId(processInstanceId));
+        updateById(process);
+        // 更新记录
+        recordThisProcess(processId);
+        return true;
+    }
+
+    /**
+     * 确定流程是否接收了
+     * @param processInstanceId
+     * @return
+     */
+    private boolean isEndProcess(String processInstanceId){
+        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
+                .processInstanceId(processInstanceId)
+                .singleResult();
+        return processInstance == null;
     }
 }
