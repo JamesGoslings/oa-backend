@@ -196,17 +196,23 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper, Process> impl
         // TODO 是正确的审批人，推动任务
         String processInstanceId = process.getProcessInstanceId();
         Task task = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
+        if(task == null){
+            return false;
+        }
         taskService.complete(task.getId());
         // 检测是否结束，结束更新状态
-        if(isEndProcess(processInstanceId)){
+        if(isEndProcess(processInstanceId)) {
             process.setStatus(2);
-        }else {
-            // 更新流程的执行人,未结束=》还有流程人
-            process.setCurrentAuditor(getCurrentAuditorByInstanceId(processInstanceId));
+            process.setCurrentAuditor(null);
+            updateById(process);
+            return true;
         }
+        // 更新流程的执行人,未结束=》还有流程人
+        process.setCurrentAuditor(getCurrentAuditorByInstanceId(processInstanceId));
         updateById(process);
         // 更新记录
         recordThisProcess(processId);
+
         return true;
     }
 
