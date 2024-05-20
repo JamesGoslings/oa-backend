@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.myPro.auth.service.SysUserService;
 import com.myPro.common.utils.FileUtil;
 import com.myPro.model.process.Process;
+import com.myPro.model.process.ProcessRecord;
 import com.myPro.model.process.ProcessTemplate;
 import com.myPro.model.system.SysUser;
 import com.myPro.process.mapper.ProcessMapper;
@@ -124,5 +125,21 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper, Process> impl
         String username = userService.getById(userId).getUsername();
         // TODO 拿到当前所有待办任务,遍历
         return null;
+    }
+
+    @Override
+    public ProcessRecord recordThisProcess(Long processId) {
+        // 拿到process对象
+        Process process = getById(processId);
+        // 封装到记录中
+        ProcessRecord record = new ProcessRecord();
+        record.setProcessId(processId);
+        record.setStatus(process.getStatus());
+        // 拿到当前审批的管理者
+        SysUser user = userService.getUserByUsername(process.getCurrentAuditor());
+        record.setDoingUserId(user.getId());
+        record.setDoingUserName(user.getName());
+
+        return record;
     }
 }

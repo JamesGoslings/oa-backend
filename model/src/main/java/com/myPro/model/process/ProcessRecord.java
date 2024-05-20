@@ -15,7 +15,7 @@ public class ProcessRecord extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
 	@ApiModelProperty(value = "审批流程id")
-	@TableField("process_id")
+	@TableField("process_instance_id")
 	private Long processId;
 
 	@ApiModelProperty(value = "审批描述")
@@ -31,7 +31,7 @@ public class ProcessRecord extends BaseEntity {
 	private Long doingUserId;
 
 	@ApiModelProperty(value = "操作用户")
-	@TableField("doing_user")
-	private String doingUser;
+	@TableField("doing_user_name")
+	private String doingUserName;
 
 }

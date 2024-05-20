@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.myPro.model.process.Process;
+import com.myPro.model.process.ProcessRecord;
 import com.myPro.vo.process.ProcessQueryVo;
 import com.myPro.vo.process.ProcessVo;
 
@@ -42,8 +43,8 @@ public interface ProcessService extends IService<Process> {
 
     /**
      * 获取当前审批正在进行的任务的审批人的用户名
-     * @param processInstanceId
-     * @return
+     * @param processInstanceId 当前审批的流程实例的id
+     * @return 正在进行的任务的审批人的用户名
      */
     String getCurrentAuditorByInstanceId(String processInstanceId);
 
@@ -53,4 +54,11 @@ public interface ProcessService extends IService<Process> {
      * @return 待处理审批封装成vo的集合返回
      */
     List<ProcessVo> listMyDoingProcess(Long userId);
+
+    /**
+     * 对当前流程进行记录并返回
+     * @param processId 流程的id
+     * @return 生成的记录对象
+     */
+    ProcessRecord recordThisProcess(Long processId);
 }
