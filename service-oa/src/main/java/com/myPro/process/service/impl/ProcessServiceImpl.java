@@ -203,7 +203,7 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper, Process> impl
         // 检测是否结束，结束更新状态
         if(isEndProcess(processInstanceId)) {
             process.setStatus(2);
-            process.setCurrentAuditor(null);
+            process.setCurrentAuditor("");
             updateById(process);
             return true;
         }
