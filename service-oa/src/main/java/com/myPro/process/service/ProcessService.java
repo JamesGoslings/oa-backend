@@ -7,6 +7,8 @@ import com.myPro.model.process.Process;
 import com.myPro.vo.process.ProcessQueryVo;
 import com.myPro.vo.process.ProcessVo;
 
+import java.util.List;
+
 public interface ProcessService extends IService<Process> {
 
     /**
@@ -37,4 +39,18 @@ public interface ProcessService extends IService<Process> {
      * @return 流程实例id
      */
     String startUpProcess(Process process);
+
+    /**
+     * 获取当前审批正在进行的任务的审批人的用户名
+     * @param processInstanceId
+     * @return
+     */
+    String getCurrentAuditorByInstanceId(String processInstanceId);
+
+    /**
+     * 查看当前用户的待处理审批（处理他人的）
+     * @param userId 当前用户的id
+     * @return 待处理审批封装成vo的集合返回
+     */
+    List<ProcessVo> listMyDoingProcess(Long userId);
 }

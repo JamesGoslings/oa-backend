@@ -1,29 +1,31 @@
 package com.myPro.process.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.myPro.auth.service.SysUserService;
 import com.myPro.common.utils.FileUtil;
 import com.myPro.model.process.Process;
 import com.myPro.model.process.ProcessTemplate;
+import com.myPro.model.system.SysUser;
 import com.myPro.process.mapper.ProcessMapper;
 import com.myPro.process.mapper.ProcessTemplateMapper;
 import com.myPro.process.service.ProcessService;
 import com.myPro.process.service.ProcessTemplateService;
 import com.myPro.vo.process.ProcessQueryVo;
 import com.myPro.vo.process.ProcessVo;
-import org.activiti.engine.ActivitiException;
-import org.activiti.engine.ProcessEngine;
-import org.activiti.engine.RepositoryService;
-import org.activiti.engine.RuntimeService;
+import org.activiti.engine.*;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipInputStream;
@@ -42,6 +44,12 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper, Process> impl
 
     @Autowired
     private RuntimeService runtimeService;
+
+    @Autowired
+    private TaskService taskService;
+
+    @Autowired
+    private SysUserService userService;
 
     //审批管理列表
     @Override
@@ -102,5 +110,19 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper, Process> impl
         // 启动一个流程实例
         ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(definitionKey);
         return processInstance.getId();
+    }
+
+    @Override
+    public String getCurrentAuditorByInstanceId(String processInstanceId) {
+        List<Task> list = taskService.createTaskQuery().processInstanceId(processInstanceId).list();
+        return list.get(0).getAssignee();
+    }
+
+    @Override
+    public List<ProcessVo> listMyDoingProcess(Long userId) {
+        // 拿到该用户的用户名
+        String username = userService.getById(userId).getUsername();
+        // TODO 拿到当前所有待办任务,遍历
+        return null;
     }
 }
