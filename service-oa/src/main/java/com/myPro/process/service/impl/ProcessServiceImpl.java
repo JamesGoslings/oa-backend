@@ -200,9 +200,10 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper, Process> impl
         // 检测是否结束，结束更新状态
         if(isEndProcess(processInstanceId)){
             process.setStatus(2);
+        }else {
+            // 更新流程的执行人,未结束=》还有流程人
+            process.setCurrentAuditor(getCurrentAuditorByInstanceId(processInstanceId));
         }
-        // 更新流程的执行人
-        process.setCurrentAuditor(getCurrentAuditorByInstanceId(processInstanceId));
         updateById(process);
         // 更新记录
         recordThisProcess(processId);
