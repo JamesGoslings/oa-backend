@@ -74,4 +74,19 @@ public class ProcessAppController {
         }
         return Result.ok();
     }
+
+    /**
+     * 实现流程的驳回操作
+     * @param processId 流程的id
+     * @param userId 操作者id
+     * @return
+     */
+    @DeleteMapping("quit/{processId}/{userId}")
+    public Result quitProcess(@PathVariable Long processId,
+                              @PathVariable Long userId){
+        if(!processService.quitProcessInstance(processId,userId)){
+            return Result.fail("一边去，你不是当前的审批者，没有驳回权限");
+        }
+        return Result.ok();
+    }
 }

@@ -216,6 +216,22 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper, Process> impl
         return true;
     }
 
+    @Override
+    public boolean quitProcessInstance(Long processId, Long userId) {
+        Process process = getById(processId);
+        // TODO 校对是不是正确的操作者
+        if(!userService.getById(userId).getUsername().equals(process.getCurrentAuditor())){
+            return false;
+        }
+        // 删除该流程实例来实现驳回
+        runtimeService.deleteProcessInstance(process.getProcessInstanceId(), "驳回");
+        // 更新流程
+        process.setStatus(-1);
+        process.setProcessInstanceId("");
+        updateById(process);
+        return true;
+    }
+
     /**
      * 确定流程是否接收了
      * @param processInstanceId

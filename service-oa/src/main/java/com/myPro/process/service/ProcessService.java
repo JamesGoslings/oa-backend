@@ -76,4 +76,11 @@ public interface ProcessService extends IService<Process> {
      * @return 如果不是该当前用户操作就返回false
      */
     boolean doTaskByProcessId(Long processId, Long userId);
+
+    /**
+     * 删除一个流程实例
+     * @param processId 流程实例对应的流程
+     * @param userId 操作者id
+     */
+    boolean quitProcessInstance(Long processId, Long userId);
 }
