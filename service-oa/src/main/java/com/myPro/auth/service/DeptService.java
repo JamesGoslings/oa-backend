@@ -1,8 +1,8 @@
 package com.myPro.auth.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.myPro.model.system.Dept;
-import com.myPro.vo.app.LinkManVo;
+import com.myPro.model.web.Dept;
+import com.myPro.VO.app.LinkManVo;
 
 import java.util.List;
 

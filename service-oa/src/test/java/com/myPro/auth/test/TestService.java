@@ -1,25 +1,18 @@
 package com.myPro.auth.test;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.myPro.attendance.service.ClockInRecordService;
 import com.myPro.attendance.utils.RecordInitDataUtil;
 import com.myPro.auth.service.*;
-import com.myPro.common.utils.DateUtil;
-import com.myPro.model.app.PrivateLinkMan;
-import com.myPro.model.system.Dept;
-import com.myPro.model.system.Post;
-import com.myPro.model.system.SysUser;
-import com.myPro.vo.app.LinkManVo;
-import com.myPro.vo.app.SysUserVo;
-import com.myPro.vo.app.TotalLinkManVo;
-import com.myPro.vo.attendance.ClockInRecordVo;
-import com.myPro.vo.system.ParentMenuVo;
-import com.myPro.vo.system.SysUserWebVo;
+import com.myPro.model.web.Dept;
+import com.myPro.model.web.Post;
+import com.myPro.VO.app.TotalLinkManVo;
+import com.myPro.VO.attendance.ClockInRecordVo;
+import com.myPro.VO.system.ParentMenuVo;
+import com.myPro.VO.system.SysUserWebVo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @SpringBootTest

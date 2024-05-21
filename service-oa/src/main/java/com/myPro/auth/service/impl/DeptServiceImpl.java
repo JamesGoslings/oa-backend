@@ -7,10 +7,10 @@ import com.myPro.auth.service.DeptService;
 import com.myPro.auth.service.SysUserService;
 import com.myPro.auth.service.utils.DeptHelper;
 import com.myPro.auth.service.utils.LinkManListHelper;
-import com.myPro.model.system.Dept;
-import com.myPro.model.system.SysUser;
-import com.myPro.vo.app.LinkManVo;
-import com.myPro.vo.app.SysUserVo;
+import com.myPro.model.web.Dept;
+import com.myPro.model.web.SysUser;
+import com.myPro.VO.app.LinkManVo;
+import com.myPro.VO.app.SysUserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

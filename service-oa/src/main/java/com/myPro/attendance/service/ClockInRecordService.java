@@ -2,9 +2,8 @@ package com.myPro.attendance.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.myPro.model.app.ClockInRecord;
-import com.myPro.model.system.SysUser;
-import com.myPro.vo.attendance.ClockInRecordVo;
-import com.myPro.vo.system.SysUserWebVo;
+import com.myPro.VO.attendance.ClockInRecordVo;
+import com.myPro.VO.system.SysUserWebVo;
 
 import java.util.List;
 

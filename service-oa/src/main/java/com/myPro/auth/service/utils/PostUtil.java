@@ -3,8 +3,8 @@ package com.myPro.auth.service.utils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.myPro.auth.service.DeptService;
 import com.myPro.auth.service.PostService;
-import com.myPro.model.system.Dept;
-import com.myPro.model.system.Post;
+import com.myPro.model.web.Dept;
+import com.myPro.model.web.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

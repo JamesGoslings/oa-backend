@@ -10,8 +10,8 @@ import com.myPro.common.utils.FileUtil;
 import com.myPro.model.process.ProcessTemplate;
 import com.myPro.process.service.ProcessTemplateService;
 
-import com.myPro.vo.process.ProcessTemplateXmlVo;
-import com.myPro.vo.system.ProcessTemplateQueryVo;
+import com.myPro.VO.process.ProcessTemplateXmlVo;
+import com.myPro.VO.system.ProcessTemplateQueryVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ResourceUtils;
 import org.springframework.util.StringUtils;

@@ -1,7 +1,7 @@
 package com.myPro.auth.test;
 
 import com.myPro.auth.mapper.SysRoleMapper;
-import com.myPro.model.system.SysRole;
+import com.myPro.model.web.SysRole;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

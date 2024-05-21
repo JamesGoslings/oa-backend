@@ -5,8 +5,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.myPro.model.process.Process;
 import com.myPro.model.process.ProcessRecord;
-import com.myPro.vo.process.ProcessQueryVo;
-import com.myPro.vo.process.ProcessVo;
+import com.myPro.VO.process.ProcessQueryVo;
+import com.myPro.VO.process.ProcessVo;
 
 import java.util.List;
 

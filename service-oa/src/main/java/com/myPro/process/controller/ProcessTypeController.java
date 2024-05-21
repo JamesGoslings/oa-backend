@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.myPro.common.result.Result;
 import com.myPro.model.process.ProcessType;
 import com.myPro.process.service.ProcessTypeService;
-import com.myPro.vo.system.ProcessTypeQueryVo;
+import com.myPro.VO.system.ProcessTypeQueryVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;

@@ -3,11 +3,9 @@ package com.myPro.attendance.controller;
 import com.myPro.attendance.service.ClockInRecordService;
 import com.myPro.common.result.Result;
 import com.myPro.model.app.ClockInRecord;
-import com.myPro.model.system.SysUser;
-import com.myPro.vo.attendance.ClockInRecordVo;
-import com.myPro.vo.system.SysUserWebVo;
+import com.myPro.VO.attendance.ClockInRecordVo;
+import com.myPro.VO.system.SysUserWebVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;

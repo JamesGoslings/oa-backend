@@ -2,7 +2,7 @@ package com.myPro.auth.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.myPro.model.app.PrivateLinkMan;
-import com.myPro.vo.app.TotalLinkManVo;
+import com.myPro.VO.app.TotalLinkManVo;
 
 import java.util.List;
 

@@ -1,7 +1,6 @@
 package com.myPro.auth.service.utils;
 
-import com.myPro.model.system.Dept;
-import com.myPro.model.system.SysMenu;
+import com.myPro.model.web.Dept;
 
 import java.util.ArrayList;
 import java.util.List;

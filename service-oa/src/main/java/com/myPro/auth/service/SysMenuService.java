@@ -1,11 +1,10 @@
 package com.myPro.auth.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.myPro.model.system.SysMenu;
-import com.myPro.model.system.SysRole;
-import com.myPro.vo.system.AssignMenuVo;
-import com.myPro.vo.system.ParentMenuVo;
-import com.myPro.vo.system.RouterVo;
+import com.myPro.model.web.SysMenu;
+import com.myPro.VO.system.AssignMenuVo;
+import com.myPro.VO.system.ParentMenuVo;
+import com.myPro.VO.system.RouterVo;
 
 import java.util.List;
 

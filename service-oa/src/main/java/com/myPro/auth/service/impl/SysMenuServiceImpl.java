@@ -8,21 +8,18 @@ import com.myPro.auth.service.SysMenuService;
 import com.myPro.auth.service.SysRoleMenuService;
 import com.myPro.auth.service.utils.MenuHelper;
 import com.myPro.common.exception.MyException;
-import com.myPro.model.system.SysMenu;
-import com.myPro.model.system.SysRole;
-import com.myPro.model.system.SysRoleMenu;
-import com.myPro.vo.system.AssignMenuVo;
-import com.myPro.vo.system.MetaVo;
-import com.myPro.vo.system.ParentMenuVo;
-import com.myPro.vo.system.RouterVo;
+import com.myPro.model.web.SysMenu;
+import com.myPro.model.web.SysRoleMenu;
+import com.myPro.VO.system.AssignMenuVo;
+import com.myPro.VO.system.MetaVo;
+import com.myPro.VO.system.ParentMenuVo;
+import com.myPro.VO.system.RouterVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> implements SysMenuService {

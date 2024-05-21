@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.myPro.auth.mapper.SysRoleMenuMapper;
 import com.myPro.auth.service.SysRoleMenuService;
 
-import com.myPro.model.system.SysRoleMenu;
+import com.myPro.model.web.SysRoleMenu;
 import org.springframework.stereotype.Service;
 
 @Service

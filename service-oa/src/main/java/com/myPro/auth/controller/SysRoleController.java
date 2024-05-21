@@ -4,9 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.myPro.auth.service.SysRoleService;
 
-import com.myPro.model.system.SysRole;
-import com.myPro.vo.system.AssignRoleVo;
-import com.myPro.vo.system.SysRoleQueryVo;
+import com.myPro.model.web.SysRole;
+import com.myPro.VO.system.AssignRoleVo;
+import com.myPro.VO.system.SysRoleQueryVo;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

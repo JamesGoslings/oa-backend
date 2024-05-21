@@ -2,7 +2,7 @@ package com.myPro.auth.service.impl;
 
 import com.myPro.auth.service.SysMenuService;
 import com.myPro.auth.service.SysUserService;
-import com.myPro.model.system.SysUser;
+import com.myPro.model.web.SysUser;
 //import com.myPro.security.custom.UserDetailsService;
 import com.myPro.security.custom.CustomUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service

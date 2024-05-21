@@ -1,6 +1,6 @@
 package com.myPro.security.custom;
 
-import com.myPro.model.system.SysUser;
+import com.myPro.model.web.SysUser;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;

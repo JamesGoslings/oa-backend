@@ -1,21 +1,18 @@
 package com.myPro.auth.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.myPro.auth.service.DeptService;
 import com.myPro.auth.service.PrivateLinkManService;
 import com.myPro.auth.service.PublicLinkManService;
 import com.myPro.common.result.Result;
 import com.myPro.model.app.PrivateLinkMan;
-import com.myPro.model.app.PublicLinkMan;
-import com.myPro.vo.app.LinkManVo;
-import com.myPro.vo.app.TotalLinkManVo;
+import com.myPro.VO.app.LinkManVo;
+import com.myPro.VO.app.TotalLinkManVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
 
 @RestController
 @RequestMapping("admin/system/linkMan")

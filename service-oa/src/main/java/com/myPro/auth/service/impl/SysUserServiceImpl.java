@@ -10,13 +10,12 @@ import com.myPro.auth.mapper.SysUserMapper;
 import com.myPro.auth.service.SysRoleService;
 import com.myPro.auth.service.SysUserService;
 import com.myPro.common.utils.FileUtil;
-import com.myPro.model.system.SysUser;
-import com.myPro.vo.app.SysUserVo;
-import com.myPro.vo.system.SysUserWebVo;
+import com.myPro.model.web.SysUser;
+import com.myPro.VO.app.SysUserVo;
+import com.myPro.VO.system.SysUserWebVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,9 +1,8 @@
 package com.myPro.auth.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.myPro.auth.service.PostService;
 import com.myPro.common.result.Result;
-import com.myPro.model.system.Post;
+import com.myPro.model.web.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;

@@ -6,7 +6,7 @@ import com.myPro.model.process.Process;
 import com.myPro.model.process.ProcessType;
 import com.myPro.process.service.ProcessService;
 import com.myPro.process.service.ProcessTypeService;
-import com.myPro.vo.process.ProcessVo;
+import com.myPro.VO.process.ProcessVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

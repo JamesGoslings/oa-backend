@@ -1,8 +1,7 @@
 package com.myPro.auth.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.myPro.model.system.SysUser;
-import org.apache.ibatis.annotations.Mapper;
+import com.myPro.model.web.SysUser;
 import org.springframework.stereotype.Repository;
 
 @Repository

@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.myPro.auth.mapper.PrivateLinkManMapper;
 import com.myPro.auth.service.PrivateLinkManService;
 import com.myPro.model.app.PrivateLinkMan;
-import com.myPro.vo.app.TotalLinkManVo;
+import com.myPro.VO.app.TotalLinkManVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

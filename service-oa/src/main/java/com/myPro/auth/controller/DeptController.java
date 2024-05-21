@@ -2,16 +2,13 @@ package com.myPro.auth.controller;
 
 import com.myPro.auth.service.DeptService;
 import com.myPro.common.result.Result;
-import com.myPro.model.system.Dept;
-import com.myPro.model.system.Post;
-import com.myPro.vo.app.LinkManVo;
+import com.myPro.model.web.Dept;
+import com.myPro.VO.app.LinkManVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/admin/system/dept")

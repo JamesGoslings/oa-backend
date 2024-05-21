@@ -1,8 +1,8 @@
 package com.myPro.auth.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.myPro.model.system.SysRole;
-import com.myPro.vo.system.AssignRoleVo;
+import com.myPro.model.web.SysRole;
+import com.myPro.VO.system.AssignRoleVo;
 
 import java.util.List;
 import java.util.Map;

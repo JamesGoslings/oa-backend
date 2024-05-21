@@ -2,9 +2,9 @@ package com.myPro.attendance.mapper;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.myPro.Do.ClockInRecordDo;
+import com.myPro.DO.ClockInRecordDo;
 import com.myPro.model.app.ClockInRecord;
-import com.myPro.model.system.SysUser;
+import com.myPro.model.web.SysUser;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 

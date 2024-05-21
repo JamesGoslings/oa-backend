@@ -2,10 +2,9 @@ package com.myPro.auth.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.myPro.model.system.SysUser;
-import com.myPro.vo.app.SysUserVo;
-import com.myPro.vo.system.SysUserWebVo;
-import org.springframework.web.multipart.MultipartFile;
+import com.myPro.model.web.SysUser;
+import com.myPro.VO.app.SysUserVo;
+import com.myPro.VO.system.SysUserWebVo;
 
 import java.util.List;
 

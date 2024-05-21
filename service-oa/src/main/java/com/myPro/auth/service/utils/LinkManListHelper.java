@@ -1,6 +1,6 @@
 package com.myPro.auth.service.utils;
 
-import com.myPro.vo.app.LinkManVo;
+import com.myPro.VO.app.LinkManVo;
 
 import java.util.ArrayList;
 import java.util.List;

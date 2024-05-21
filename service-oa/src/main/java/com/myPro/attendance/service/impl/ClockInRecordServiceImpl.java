@@ -2,20 +2,19 @@ package com.myPro.attendance.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.myPro.Do.ClockInRecordDo;
+import com.myPro.DO.ClockInRecordDo;
 import com.myPro.attendance.mapper.ClockInRecordMapper;
 import com.myPro.attendance.service.ClockInRecordService;
 import com.myPro.auth.service.DeptService;
 import com.myPro.auth.service.SysUserService;
 import com.myPro.common.utils.DateUtil;
 import com.myPro.model.app.ClockInRecord;
-import com.myPro.model.system.SysUser;
-import com.myPro.vo.attendance.ClockInRecordVo;
-import com.myPro.vo.system.SysUserWebVo;
+import com.myPro.model.web.SysUser;
+import com.myPro.VO.attendance.ClockInRecordVo;
+import com.myPro.VO.system.SysUserWebVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

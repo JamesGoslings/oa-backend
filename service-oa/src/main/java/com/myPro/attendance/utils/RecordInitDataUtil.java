@@ -1,12 +1,10 @@
 package com.myPro.attendance.utils;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.myPro.attendance.service.ClockInRecordService;
 import com.myPro.auth.service.SysUserService;
 import com.myPro.model.app.ClockInRecord;
-import com.myPro.model.system.SysUser;
+import com.myPro.model.web.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -5,7 +5,7 @@
 
 <mapper namespace="com.myPro.auth.mapper.PostMapper">
 
-    <select id="selectAllTotalPost" resultType="com.myPro.model.system.Post">
+    <select id="selectAllTotalPost" resultType="com.myPro.model.web.Post">
         SELECT post.*, (
             SELECT COUNT(*)
             FROM `sys_user`
@@ -19,7 +19,7 @@
         WHERE `is_deleted` = 0
         ORDER BY `count` DESC
     </select>
-    <select id="selectPostsWithDeptAndCountByKeyword" resultType="com.myPro.model.system.Post">
+    <select id="selectPostsWithDeptAndCountByKeyword" resultType="com.myPro.model.web.Post">
         SELECT post.*, (
             SELECT COUNT(*)
             FROM `sys_user`
