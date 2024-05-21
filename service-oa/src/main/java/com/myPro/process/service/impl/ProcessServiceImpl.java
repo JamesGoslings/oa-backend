@@ -232,6 +232,21 @@ public class ProcessServiceImpl extends ServiceImpl<ProcessMapper, Process> impl
         return true;
     }
 
+    @Override
+    public List<ProcessVo> listMyProcess(Long userId,Integer status) {
+        LambdaQueryWrapper<Process> wrapper = new LambdaQueryWrapper<Process>()
+                .eq(Process::getUserId, userId);
+        if(status != -2){
+            wrapper.eq(Process::getStatus, status);
+        }
+        List<Process> processList = list(wrapper);
+        List<ProcessVo> processVos = new ArrayList<>();
+        for (Process process : processList) {
+            processVos.add(getProcessVoByProcess(process));
+        }
+        return processVos;
+    }
+
     /**
      * 确定流程是否接收了
      * @param processInstanceId

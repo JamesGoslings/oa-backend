@@ -89,4 +89,17 @@ public class ProcessAppController {
         }
         return Result.ok();
     }
+
+    /**
+     * 获取该用户自己发出申请
+     * @param userId 用户的id
+     * @param status 申请的状态
+     * @return 申请的list
+     */
+    @GetMapping("myProcess/{userId}/{status}")
+    public Result listMyProcess(@PathVariable Long userId,
+                                @PathVariable Integer status){
+        List<ProcessVo> processVos = processService.listMyProcess(userId,status);
+        return Result.ok(processVos);
+    }
 }

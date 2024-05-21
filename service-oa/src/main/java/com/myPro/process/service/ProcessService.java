@@ -83,4 +83,12 @@ public interface ProcessService extends IService<Process> {
      * @param userId 操作者id
      */
     boolean quitProcessInstance(Long processId, Long userId);
+
+    /**
+     * 获取该用户自己发出的申请
+     * @param userId 用户的id
+     * @param status 申请的状态
+     * @return 封装到vo之后的集合
+     */
+    List<ProcessVo> listMyProcess(Long userId,Integer status);
 }
